@@ -14,7 +14,9 @@ env/
 
 # Large or regenerated experiment outputs
 external/
-results/raw/
+results/raw/*
+!results/raw/smoke/
+!results/raw/smoke/**
 results/checkpoints/
 wandb/
 runs/

@@ -7,7 +7,7 @@ import argparse
 from collections import defaultdict
 from pathlib import Path
 
-from collect_progress import discover_progress_files, read_progress_rows
+from collect_progress import deduplicate_rows, discover_progress_files, read_progress_rows
 
 
 def main() -> None:
@@ -17,9 +17,9 @@ def main() -> None:
         nargs="*",
         type=Path,
         default=[
+            Path("results/raw"),
             Path("external/HARL/examples/results"),
             Path("external/HARL/results"),
-            Path("results/raw"),
         ],
         help="Progress files or directories to scan.",
     )
@@ -42,11 +42,14 @@ def main() -> None:
     except ImportError as exc:
         raise SystemExit("matplotlib is required: python -m pip install matplotlib") from exc
 
-    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    rows = []
     for path in discover_progress_files(args.roots):
-        for row in read_progress_rows(path):
-            if row["map"] in args.maps:
-                grouped[row["map"]].append(row)
+        rows.extend(read_progress_rows(path))
+
+    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in deduplicate_rows(rows):
+        if row["map"] in args.maps:
+            grouped[row["map"]].append(row)
 
     if not grouped:
         raise SystemExit("No matching progress rows found.")

@@ -10,12 +10,19 @@ from pathlib import Path
 
 def discover_progress_files(roots: list[Path]) -> list[Path]:
     files: list[Path] = []
+    seen: set[Path] = set()
     for root in roots:
+        candidates: list[Path] = []
         if root.is_file() and root.name == "progress.txt":
-            files.append(root)
+            candidates = [root]
         elif root.exists():
-            files.extend(root.rglob("progress.txt"))
-    return sorted(set(files))
+            candidates = sorted(root.rglob("progress.txt"))
+        for candidate in candidates:
+            if candidate in seen:
+                continue
+            seen.add(candidate)
+            files.append(candidate)
+    return files
 
 
 def parse_metadata(path: Path) -> dict[str, str]:
@@ -55,6 +62,26 @@ def read_progress_rows(path: Path) -> list[dict[str, str]]:
     return rows
 
 
+def deduplicate_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    unique_rows: list[dict[str, str]] = []
+    seen: set[tuple[str, str, str, str, str, str, str]] = set()
+    for row in rows:
+        key = (
+            row["map"],
+            row["algo"],
+            row["exp"],
+            row["run"],
+            row["step"],
+            row["eval_average_episode_reward"],
+            row["eval_win_rate"],
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        unique_rows.append(row)
+    return unique_rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -62,9 +89,9 @@ def main() -> None:
         nargs="*",
         type=Path,
         default=[
+            Path("results/raw"),
             Path("external/HARL/examples/results"),
             Path("external/HARL/results"),
-            Path("results/raw"),
         ],
         help="Progress files or directories to scan.",
     )
@@ -80,6 +107,7 @@ def main() -> None:
     rows: list[dict[str, str]] = []
     for path in progress_files:
         rows.extend(read_progress_rows(path))
+    rows = deduplicate_rows(rows)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = [
