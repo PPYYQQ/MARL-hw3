@@ -31,7 +31,10 @@ fi
 
 python -m pip install -e "${HARL_DIR}"
 python -m pip install "numpy<1.24" smac matplotlib pandas
-python -m pip install gym==0.21.0 pyglet==1.5.0 importlib-metadata==4.13.0
+if ! python -m pip install gym==0.21.0 pyglet==1.5.0 importlib-metadata==4.13.0; then
+  conda install -y -c conda-forge gym=0.21.0
+  python -m pip install pyglet==1.5.0 importlib-metadata==4.13.0
+fi
 
 python - <<'PY'
 import importlib.util
