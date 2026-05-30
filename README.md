@@ -34,14 +34,13 @@
 
 ## GitHub
 
-本地 Git 仓库已初始化，但当前未配置 remote，且当前系统没有 `gh`。配置后可执行：
+本地 Git 仓库已初始化，`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。当前系统没有 `gh`，且非交互式 HTTPS push 缺少 GitHub 凭据：
 
 ```bash
-git remote add origin <your-github-repo-url>
-git push -u origin main
+GIT_TERMINAL_PROMPT=0 git push -u origin main
 ```
 
-之后每个关键修改继续使用独立 commit，并同步更新 `PROGRESS.md`。
+当前错误为 `fatal: could not read Username for 'https://github.com': terminal prompts disabled`。配置 GitHub token/credential helper 后重新执行 push。之后每个关键修改继续使用独立 commit，并同步更新 `PROGRESS.md`。
 
 ## 提交
 

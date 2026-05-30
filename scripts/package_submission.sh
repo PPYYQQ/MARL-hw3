@@ -74,6 +74,7 @@ REQUIRED_PATHS=(
   logs
   results/processed
   results/raw/smoke
+  results/raw/pilot
 )
 
 for path in "${REQUIRED_PATHS[@]}"; do

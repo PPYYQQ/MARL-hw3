@@ -6,9 +6,10 @@
 - GPU：NVIDIA GeForce RTX 5090, 32607 MiB, driver 580.159.04
 - 当前 Python：3.13.12
 - 当前 `torch`：`2.12.0+cu130`，CUDA 可用
+- 当前 `numpy`：`2.2.6`
 - Conda：可用，当前激活 `base`
 - `SC2PATH`：未设置，但 PySC2 默认路径 `/home/yongqian/StarCraftII` 已可用
-- GitHub remote：未配置
+- GitHub remote：`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`；push 仍需 GitHub 凭据
 
 ## HARL
 
@@ -25,7 +26,7 @@ conda run -n harl_hw3 python -c "import torch, numpy; from smac.env import StarC
 结果：
 
 ```text
-2.12.0+cu130 True 1.23.5 StarCraft2Env
+2.12.0+cu130 True 2.2.6 StarCraft2Env
 ```
 
 ```bash
@@ -44,8 +45,9 @@ conda run -n harl_hw3 python -m smac.bin.map_list
 
 ## 仍需补齐
 
-- 正式训练尚未运行，当前只有 1000-step smoke test。
-- 本机没有 LaTeX 编译器，无法在当前环境导出 PDF。
+- 正式训练尚未运行，当前已有 1000-step smoke test 和 HAPPO `3s5z` 10000-step pilot。
+- 本机没有 LaTeX 编译器，但已通过 Chrome HTML 流程导出 PDF。
+- GitHub push 需要配置 token/credential helper；非交互式 push 当前报错 `fatal: could not read Username for 'https://github.com': terminal prompts disabled`。
 
 ## 验证命令
 

@@ -1,4 +1,16 @@
 map,algo,exp,run,step,eval_average_episode_reward,eval_win_rate,path
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,800,4.635761589403976,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,1600,5.306291390728482,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,2400,3.9056291390728552,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,3200,4.569536423841065,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,4000,7.12913907284768,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,4800,4.158940397350997,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,5600,6.056291390728469,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,6400,9.579470198675503,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,7200,4.516556291390733,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,8000,4.2516556291390755,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,8800,4.649006622516562,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
+3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,9600,4.062913907284774,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
 3s5z,happo,hw3_smoke_happo_3s5z,seed-00001-2026-05-30-22-49-11,160,5.036423841059604,0.0,results/raw/smoke/smac/3s5z/happo/hw3_smoke_happo_3s5z/seed-00001-2026-05-30-22-49-11/progress.txt
 3s5z,happo,hw3_smoke_happo_3s5z,seed-00001-2026-05-30-22-49-11,320,5.2632450331125895,0.0,results/raw/smoke/smac/3s5z/happo/hw3_smoke_happo_3s5z/seed-00001-2026-05-30-22-49-11/progress.txt
 3s5z,happo,hw3_smoke_happo_3s5z,seed-00001-2026-05-30-22-49-11,480,4.2781456953642465,0.0,results/raw/smoke/smac/3s5z/happo/hw3_smoke_happo_3s5z/seed-00001-2026-05-30-22-49-11/progress.txt

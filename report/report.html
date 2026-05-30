@@ -136,11 +136,11 @@
 
     <h2>5. 复现流程</h2>
     <p>复现过程被拆分为环境安装、命令生成、短训练验证、日志汇总和绘图五个阶段。环境安装由 <code>scripts/setup_env.sh</code> 管理，目标是避免在 base Python 3.13 环境中混装 PyTorch、SMAC 和 HARL。脚本会创建 <code>harl_hw3</code> 环境、安装 HARL editable package、安装 oxwhirl SMAC、安装 gym 0.21，并执行导入检查。</p>
-    <p>训练命令由 <code>scripts/run_smac_experiments.sh</code> 管理。该脚本提供三种模式：<code>dry-run</code> 打印四组实验命令；<code>smoke</code> 把训练步数、并行环境数和评估 episode 降到很小，用于确认 SC2 可以启动且 HARL 可以写出日志；<code>full</code> 保留 tuned config 的正式训练设置。这样可以先快速验证链路，再把同一套命令用于长时间正式训练。</p>
+    <p>训练命令由 <code>scripts/run_smac_experiments.sh</code> 管理。该脚本提供四种模式：<code>dry-run</code> 打印四组实验命令；<code>smoke</code> 把训练步数、并行环境数和评估 episode 降到很小，用于确认 SC2 可以启动且 HARL 可以写出日志；<code>pilot</code> 默认使用 10000 environment steps，用于正式训练前的短跑检查；<code>full</code> 保留 tuned config 的正式训练设置。这样可以先快速验证链路，再把同一套命令用于长时间正式训练。</p>
     <p>日志处理由 <code>scripts/collect_progress.py</code> 和 <code>scripts/plot_win_rate.py</code> 完成。HARL 的 SMAC logger 在 evaluation 阶段将 <code>total_num_steps</code>、平均 episode reward 和 <code>eval_win_rate</code> 写入 <code>progress.txt</code>。收集脚本会扫描 HARL 输出目录和本作业保存的 raw 目录，按地图、算法、实验名、run 和 step 去重，再输出统一 CSV。绘图脚本读取同一批数据，按地图生成 MAPPO/HAPPO 曲线。</p>
 
     <h2>6. 实验设置</h2>
-    <p>实验矩阵包括 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。</p>
+    <p>实验矩阵包括 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。当前脚本已经覆盖 dry-run、smoke、pilot 和 full 四种运行模式。</p>
     <table>
       <thead>
         <tr><th>算法</th><th>地图</th><th>配置来源</th></tr>
@@ -154,22 +154,22 @@
     </table>
 
     <h2>7. 结果与分析</h2>
-    <p>目前已完成 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。由于步数很少，四组实验的 eval win rate 均为 0，因此这些曲线不能作为最终算法性能结论。</p>
+    <p>目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了 HAPPO 在 <code>3s5z</code> 上的 10000-step pilot run，最后一次 evaluation 记录在 9600 environment steps，eval average episode reward 为 4.0629，eval win rate 仍为 0。由于步数仍远低于 tuned config 的正式训练规模，这些曲线只能作为流程和短跑验证，不能作为最终算法性能结论。</p>
     <figure>
       <img src="../figures/win_rate_3s5z.png" alt="3s5z win rate">
-      <figcaption><code>3s5z</code> smoke test eval win rate。</figcaption>
+      <figcaption><code>3s5z</code> smoke/pilot eval win rate。</figcaption>
     </figure>
     <figure>
       <img src="../figures/win_rate_8m_vs_9m.png" alt="8m_vs_9m win rate">
       <figcaption><code>8m_vs_9m</code> smoke test eval win rate。</figcaption>
     </figure>
-    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于 smoke test，主要结论是训练、评估、日志、汇总和绘图链路已经打通；但 1000 步远低于 HARL tuned config 中的 2000 万步。</p>
+    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前 smoke 和 pilot 结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；但 1000 到 10000 步仍远低于 HARL tuned config 中的 2000 万步。</p>
 
     <h2>8. 局限性</h2>
-    <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此 smoke test 的 win rate 为 0 并不说明算法无效，只说明当前运行仅覆盖了流程验证。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>
+    <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证和一次短跑检查。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>
 
     <h2>9. 结论</h2>
-    <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test 和自动绘图。后续正式训练完成后，应把 smoke 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。</p>
+    <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、一次 HAPPO <code>3s5z</code> pilot run 和自动绘图。后续正式训练完成后，应把 smoke/pilot 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。</p>
 
     <h2>参考文献</h2>
     <div class="refs">

@@ -8,24 +8,24 @@
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
-- `results/processed/progress_summary.csv`：smoke test 的汇总结果。
-- `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke test 曲线。
+- `results/raw/pilot/`：HAPPO + `3s5z` 10000-step pilot 的原始 `progress.txt`。
+- `results/processed/progress_summary.csv`：smoke test 与 pilot 的汇总结果。
+- `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
 
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
-- GitHub remote：当前本地仓库没有 remote，且未安装 `gh`，无法自动 push 到 GitHub。
-- LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`，无法在本机直接导出 PDF。
-- 正式训练：当前只完成 1000-step smoke test，未完成 HARL tuned config 的完整训练。
+- GitHub push：`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`，但非交互式 HTTPS push 缺少 GitHub 凭据；当前系统也未安装 `gh`。
+- LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
+- 正式训练：当前完成 1000-step smoke test 和一个 10000-step pilot，未完成 HARL tuned config 的完整训练。
 
 ## GitHub 同步
 
-配置 remote 后执行：
+配置 GitHub 凭据后执行：
 
 ```bash
-git remote add origin <your-github-repo-url>
 git push -u origin main
 ```
 
@@ -97,6 +97,7 @@ xelatex main.tex
 - `logs/`
 - `results/processed/progress_summary.csv`
 - `results/raw/smoke/`
+- `results/raw/pilot/`
 
 不要包含：
 

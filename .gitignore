@@ -17,6 +17,8 @@ external/
 results/raw/*
 !results/raw/smoke/
 !results/raw/smoke/**
+!results/raw/pilot/
+!results/raw/pilot/**
 results/checkpoints/
 wandb/
 runs/
