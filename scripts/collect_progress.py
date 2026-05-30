@@ -61,7 +61,11 @@ def main() -> None:
         "roots",
         nargs="*",
         type=Path,
-        default=[Path("external/HARL/results"), Path("results/raw")],
+        default=[
+            Path("external/HARL/examples/results"),
+            Path("external/HARL/results"),
+            Path("results/raw"),
+        ],
         help="Progress files or directories to scan.",
     )
     parser.add_argument(
