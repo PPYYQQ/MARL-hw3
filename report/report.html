@@ -98,7 +98,7 @@
 
   <div class="abstract">
     <strong>摘要：</strong>
-    本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、<code>progress.txt</code> 汇总和 win rate 绘图。由于正式长训练尚未完成，本文现阶段报告重点是复现流程、代码对应关系和初步验证结果。
+    本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、<code>progress.txt</code> 汇总和 win rate 绘图；单 seed 正式训练已启动，并同步到 <code>3s5z</code> MAPPO 的 240000-step checkpoint。由于完整长训练尚未结束，本文现阶段报告重点是复现流程、代码对应关系和阶段性验证结果。
   </div>
 
   <div class="columns">
@@ -154,7 +154,7 @@
     </table>
 
     <h2>7. 结果与分析</h2>
-    <p>目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 <code>3s5z</code>/<code>8m_vs_9m</code> 的完整实验矩阵。由于步数仍远低于 tuned config 的正式训练规模，这些曲线只能作为流程和短跑验证，不能作为最终算法性能结论。</p>
+    <p>目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 <code>3s5z</code>/<code>8m_vs_9m</code> 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config，并同步到 <code>3s5z</code> MAPPO 的前三个 evaluation，当前最新 step 为 240000。由于正式训练仍在运行，这些结果只能作为流程、短跑和早期 full checkpoint 证据，不能作为最终算法性能结论。</p>
     <table>
       <caption>Pilot run 最后一次 evaluation 结果</caption>
       <thead>
@@ -167,21 +167,30 @@
         <tr><td><code>8m_vs_9m</code></td><td>MAPPO</td><td>9600</td><td>7.5108 / 0.0</td></tr>
       </tbody>
     </table>
+    <table>
+      <caption>Full run 阶段性 checkpoint</caption>
+      <thead>
+        <tr><th>地图</th><th>算法</th><th>Step</th><th>Eval reward / win rate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>3s5z</code></td><td>MAPPO</td><td>240000</td><td>10.5995 / 0.0</td></tr>
+      </tbody>
+    </table>
     <figure>
       <img src="../figures/win_rate_3s5z.png" alt="3s5z win rate">
-      <figcaption><code>3s5z</code> smoke/pilot eval win rate。</figcaption>
+      <figcaption><code>3s5z</code> smoke/pilot 与阶段性 full eval win rate。</figcaption>
     </figure>
     <figure>
       <img src="../figures/win_rate_8m_vs_9m.png" alt="8m_vs_9m win rate">
-      <figcaption><code>8m_vs_9m</code> smoke/pilot eval win rate。</figcaption>
+      <figcaption><code>8m_vs_9m</code> smoke/pilot eval win rate；该地图 full run 尚未到达第一轮评估。</figcaption>
     </figure>
-    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前 smoke 和 pilot 结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；但 1000 到 10000 步仍远低于 HARL tuned config 中的 2000 万步。</p>
+    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/<code>3s5z</code> 训练并写出 evaluation。但 80000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。</p>
 
     <h2>8. 局限性</h2>
-    <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证和四组短跑检查。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>
+    <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证、四组短跑检查和一个早期 full checkpoint。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>
 
     <h2>9. 结论</h2>
-    <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、四组 10000-step pilot run 和自动绘图。后续正式训练完成后，应把 smoke/pilot 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。</p>
+    <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、四组 10000-step pilot run、单 seed 正式训练启动和自动绘图。后续正式训练完成后，应把阶段性曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证和阶段性 full checkpoint，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。</p>
 
     <h2>参考文献</h2>
     <div class="refs">

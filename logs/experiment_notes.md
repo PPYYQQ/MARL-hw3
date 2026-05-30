@@ -4,9 +4,9 @@
 
 | 算法 | 地图 | 配置来源 | 状态 |
 | --- | --- | --- | --- |
-| HAPPO | `3s5z` | HARL tuned config | smoke test 与 10000-step pilot 通过 |
+| HAPPO | `3s5z` | HARL tuned config | smoke test 与 10000-step pilot 通过，full 队列中 |
 | HAPPO | `8m_vs_9m` | HARL tuned config | smoke test 与 10000-step pilot 通过 |
-| MAPPO | `3s5z` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过 |
+| MAPPO | `3s5z` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过，full 已启动并同步到 240000-step checkpoint |
 | MAPPO | `8m_vs_9m` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过 |
 
 ## dry-run 结果
@@ -69,6 +69,21 @@ conda run -n harl_hw3 python scripts/plot_win_rate.py
 
 该短跑进一步验证了四组目标实验都能稳定运行到 10000-step 量级，但仍不能代表正式复现性能。
 
+## full 阶段性结果
+
+已启动：
+
+```bash
+SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full
+```
+
+阶段性结果：
+
+- tmux 会话 `hw3_full_20260531_seed1` 仍在运行。
+- 当前已同步 `MAPPO` + `3s5z` 的前三个 full evaluation 到 `results/raw/full/`。
+- `results/processed/progress_summary.csv` 当前共有 75 行，其中 full 贡献 3 行。
+- 当前最新 full checkpoint 位于 240000 environment steps，eval reward 为 10.5995，eval win rate 为 0.0。
+
 ## 运行记录模板
 
 | 时间 | 命令 | seed | 输出目录 | 结果 |
@@ -77,9 +92,10 @@ conda run -n harl_hw3 python scripts/plot_win_rate.py
 | 2026-05-30 | `MAPS=3s5z ALGOS=happo EXP_PREFIX=hw3_pilot SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25` | 10000-step pilot 通过 |
 | 2026-05-30 | `MAPS=3s5z ALGOS=mappo EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/3s5z/mappo/hw3_pilot_mappo_3s5z/seed-00001-2026-05-30-23-20-22` | 10000-step pilot 通过 |
 | 2026-05-30 | `MAPS=8m_vs_9m ALGOS="mappo happo" EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/8m_vs_9m/...` | 2 组 10000-step pilot 通过 |
+| 2026-05-31 | `SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full` | 1 | `external/HARL/examples/results/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56` | 正式训练运行中；已同步到 240000-step checkpoint |
 
 ## 观察模板
 
-- `3s5z`：smoke/pilot 曲线已生成，正式训练后记录收敛速度、最终 win rate、波动情况。
+- `3s5z`：smoke/pilot/阶段性 full 曲线已生成，正式训练后记录收敛速度、最终 win rate、波动情况。
 - `8m_vs_9m`：smoke 曲线已生成，正式训练后记录收敛速度、最终 win rate、波动情况。
 - MAPPO vs HAPPO：正式训练后比较 sample efficiency、稳定性和最终性能。

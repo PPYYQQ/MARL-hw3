@@ -82,7 +82,8 @@ def render_markdown(summaries: list[dict[str, str]], source: Path) -> str:
             "",
             "- `smoke` rows verify the end-to-end training, logging, collection and plotting pipeline.",
             "- `pilot` rows cover the complete MAPPO/HAPPO x `3s5z`/`8m_vs_9m` matrix at 10000 environment steps.",
-            "- These short runs are not final performance evidence; full HARL tuned configs use 20000000 environment steps.",
+            "- `full` rows are checkpoints from HARL tuned configs; they are final performance evidence only after the full run completes.",
+            "- Smoke, pilot and early full checkpoints are not final performance evidence; full HARL tuned configs use 20000000 environment steps.",
             "",
         ]
     )
