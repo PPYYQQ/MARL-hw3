@@ -19,6 +19,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `logs/assignment_summary.md` | 1339 | `c7202a238d582b3ccf44116add27e4354d689326faa6debd780fa7f19efc80c6` |
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
 | `logs/experiment_notes.md` | 4211 | `49abfb1f37d480f4d38ce30b8e886c6388bd51655bc5929cbe06c29528d10dde` |
+| `logs/full_training_status.md` | 1990 | `05d58a6e1cd61fde4098aec3b12567c41c4fa2c90ca03b28133630d5cd938d38` |
 | `logs/setup.md` | 2191 | `c04663b40de6e898df593188c25d1c29c6aab83aab2bd412a936d7631f2af25e` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
@@ -63,6 +64,6 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 
 ## Summary
 
-- Files: 56
-- Total bytes: 1142480
+- Files: 57
+- Total bytes: 1144470
 - Excludes generated validation and manifest files to avoid self-referential churn.
