@@ -8,6 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。
 - GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，且 `main` 尚无 upstream，尚未同步到远端。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -59,6 +60,8 @@
 | 2026-05-30 | `7dcbc73` | 生成提交产物 SHA256/大小 manifest，并接入最终准备、校验和打包流程 | `generate_artifact_manifest.py`、`validate_submission.py`、`package_submission.sh` |
 | 2026-05-30 | `111cd09` | 记录提交产物 manifest 进度 | `git log --oneline` |
 | 2026-05-31 | `5d343c6` | 增加正式训练 `progress.txt` 同步脚本，并将 `results/raw/full` 纳入 manifest、校验和打包流程 | `sync_harl_results.py`、`validate_submission.py`、`package_submission.sh` |
+| 2026-05-31 | `78f6aaa` | 记录正式训练结果同步脚本进度 | `git log --oneline` |
+| 2026-05-31 | `7ce16d7` | 启动单 seed 正式训练 tmux 会话，并记录资源、命令和结果整理入口 | `logs/full_training_status.md`、`tmux has-session` |
 
 ## 任务清单
 
@@ -109,6 +112,7 @@
 - [x] 完成 smoke test。
 - [x] 增加 `pilot` 短跑模式和 `PRINT_ONLY=true` 预览开关。
 - [x] 完成 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 四组 10000-step pilot。
+- [x] 启动单 seed 正式训练 tmux 会话。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -130,7 +134,7 @@
 
 1. 配置 GitHub 凭据后执行 `git push -u origin main`，或运行 `GITHUB_TOKEN=<token> bash scripts/push_to_github.sh`。
 2. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python3 scripts/apply_student_info.py`，再重新导出 PDF。
-3. 运行正式训练：`bash scripts/launch_training_tmux.sh full`。
-4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
+3. 监控正式训练：`tmux attach -t hw3_full_20260531_seed1`，或查看 `logs/full_training_status.md`。
+4. 正式训练完成后运行 `python scripts/sync_harl_results.py --mode full`、`python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
 5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
 6. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。
