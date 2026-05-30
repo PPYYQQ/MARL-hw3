@@ -93,3 +93,5 @@ bash scripts/build_report_pdf.sh
 ```bash
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
 ```
+
+GitHub 凭据准备好后，可用 `GITHUB_TOKEN=<token> bash scripts/push_to_github.sh` 推送本地提交。

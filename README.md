@@ -53,6 +53,12 @@ GIT_TERMINAL_PROMPT=0 git push -u origin main
 
 当前错误为 `fatal: could not read Username for 'https://github.com': terminal prompts disabled`。配置 GitHub token/credential helper 后重新执行 push。之后每个关键修改继续使用独立 commit，并同步更新 `PROGRESS.md`。
 
+有 GitHub token 时可以用辅助脚本推送，脚本不会把 token 写入 remote URL：
+
+```bash
+GITHUB_TOKEN=<token> bash scripts/push_to_github.sh
+```
+
 ## 提交
 
 交付前按 `SUBMISSION.md` 检查 PDF、补充材料、压缩包命名和 GitHub 同步状态。

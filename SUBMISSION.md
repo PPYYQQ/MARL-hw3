@@ -31,6 +31,12 @@
 git push -u origin main
 ```
 
+或使用不会修改 remote URL 的 token 辅助脚本：
+
+```bash
+GITHUB_TOKEN=<token> bash scripts/push_to_github.sh
+```
+
 验证：
 
 ```bash
