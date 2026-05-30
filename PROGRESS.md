@@ -28,6 +28,8 @@
 | 2026-05-30 | `2730a64` | 更新文档，记录 SC2/SMAC/smoke test 成功状态 | `git log --oneline` |
 | 2026-05-30 | `522ab67` | 扩写报告草稿、代码阅读笔记和提交检查清单 | `py_compile`、`bash -n`、`rg` |
 | 2026-05-30 | `57e1afd` | 增加 HTML 报告、Chrome PDF 构建脚本，并导出 3 页 PDF | `bash scripts/build_report_pdf.sh`、`pdfinfo` |
+| 2026-05-30 | `6d201b9` | 记录已生成 PDF 的进度状态 | `git log --oneline` |
+| 2026-05-30 | `55fd9a8` | 增加 pilot/PRINT_ONLY 模式、正式训练交接文档和交付压缩包脚本 | `bash -n`、`py_compile`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -39,6 +41,8 @@
 - [x] 建立项目 README、目录结构和报告骨架。
 - [x] 建立提交检查清单。
 - [x] 导出当前 3 页 PDF 报告草稿。
+- [x] 建立正式训练交接文档。
+- [x] 建立 smoke 版交付压缩包脚本。
 - [ ] 配置 GitHub remote 并 push 提交。本地当前没有 remote。
 
 ### 2. 环境与依赖
@@ -65,6 +69,7 @@
 - [x] 准备 `happo` + `8m_vs_9m` 训练命令。
 - [x] 完成 dry-run，打印 4 个实验命令。
 - [x] 完成 smoke test。
+- [x] 增加 `pilot` 短跑模式和 `PRINT_ONLY=true` 预览开关。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -82,6 +87,8 @@
 ## 下一步
 
 1. 配置 GitHub remote 后执行 `git push -u origin main`。
-2. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
-3. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
-4. 用正式训练曲线替换或补充报告中的 smoke 曲线。
+2. 补全 `report/main.tex` 和 `report/report.html` 中的姓名、学号和邮箱。
+3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
+4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
+5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
+6. 设置 `STUDENT_ID`、`STUDENT_NAME` 后运行 `bash scripts/package_submission.sh` 生成压缩包。
