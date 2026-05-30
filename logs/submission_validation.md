@@ -15,6 +15,7 @@
 | `figures/win_rate_8m_vs_9m.png` | OK | file present |
 | `results/processed/progress_summary.csv` | OK | file present |
 | `results/processed/progress_summary.md` | OK | file present |
+| `logs/artifact_manifest.md` | OK | file present |
 | `scripts` | OK | directory present |
 | `configs/smac` | OK | directory present |
 | `logs` | OK | directory present |

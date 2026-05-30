@@ -64,6 +64,7 @@ python3 scripts/summarize_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 bash scripts/snapshot_configs.sh
 bash scripts/build_report_pdf.sh
+python3 scripts/generate_artifact_manifest.py
 python3 scripts/validate_submission.py
 ```
 
@@ -75,6 +76,7 @@ python3 scripts/validate_submission.py
 - `figures/win_rate_8m_vs_9m.png`
 - `configs/smac/`
 - `report/main.pdf`
+- `logs/artifact_manifest.md`
 - `logs/submission_validation.md`
 
 最后更新报告中的正式训练结果讨论，并为关键修改建立 Git commit。

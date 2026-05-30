@@ -31,6 +31,7 @@ REQUIRED_FILES = [
     Path("figures/win_rate_8m_vs_9m.png"),
     Path("results/processed/progress_summary.csv"),
     Path("results/processed/progress_summary.md"),
+    Path("logs/artifact_manifest.md"),
 ]
 
 REQUIRED_DIRS = [

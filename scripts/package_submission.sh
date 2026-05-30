@@ -104,7 +104,7 @@ ZIP_PATH="${DIST_DIR}/${ZIP_NAME}"
 rm -f "${ZIP_PATH}"
 (
   cd "${STAGE_DIR}"
-  zip -qr "${ZIP_PATH}" .
+  zip -qr "${ZIP_PATH}" . -x '*/__pycache__/*' '*/__pycache__/' '*.pyc' '*.pyo'
 )
 
 echo "Wrote ${ZIP_PATH}"

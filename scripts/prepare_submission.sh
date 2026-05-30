@@ -51,5 +51,6 @@ run_step python3 scripts/collect_progress.py
 run_step python3 scripts/summarize_progress.py
 run_step conda run -n "${CONDA_ENV}" python scripts/plot_win_rate.py
 run_step bash scripts/build_report_pdf.sh
+run_step python3 scripts/generate_artifact_manifest.py
 run_step python3 scripts/validate_submission.py
 run_step bash scripts/package_submission.sh
