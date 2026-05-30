@@ -26,6 +26,7 @@
 | 2026-05-30 | `ec9259a` | 加入 HARL NumPy 2 兼容补丁脚本 | `torch.from_numpy(np.zeros(...))` |
 | 2026-05-30 | `7e106a7` | 完成 4 组 SMAC smoke test，提交 raw progress、汇总 CSV 和 win rate 图 | `bash scripts/run_smac_experiments.sh smoke`、`plot_win_rate.py` |
 | 2026-05-30 | `2730a64` | 更新文档，记录 SC2/SMAC/smoke test 成功状态 | `git log --oneline` |
+| 2026-05-30 | `522ab67` | 扩写报告草稿、代码阅读笔记和提交检查清单 | `py_compile`、`bash -n`、`rg` |
 
 ## 任务清单
 
