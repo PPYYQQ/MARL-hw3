@@ -33,6 +33,12 @@
 15. 运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
 16. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
 
+也可以在学生信息确定后运行一键准备脚本：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
+```
+
 ## 关键说明
 
 当前 HARL commit `b1af98b0dbab72a2eee9d160751cd09aedbb8ce2` 的 `tuned_configs/smac` 中，`3s5z` 和 `8m_vs_9m` 只提供 `happo`、`hatrpo`、`hasac` 配置，没有 MAPPO tuned config。脚本对 HAPPO 使用官方 tuned config；对 MAPPO 会基于同地图 HAPPO tuned config 生成临时 MAPPO 配置，并把算法关键项切换为 `share_param: true`、`fixed_order: true`。

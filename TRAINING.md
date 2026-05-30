@@ -81,3 +81,9 @@ python3 scripts/validate_submission.py
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> python3 scripts/apply_student_info.py
 bash scripts/build_report_pdf.sh
 ```
+
+最终交付可用一键流程：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
+```
