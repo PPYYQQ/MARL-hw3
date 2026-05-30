@@ -48,7 +48,7 @@ conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 ```
 
 ```bash
-conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full
+bash scripts/launch_training_tmux.sh full
 ```
 
 训练完成后生成曲线：

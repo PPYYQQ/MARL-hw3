@@ -35,17 +35,23 @@ PRINT_ONLY=true conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 ```
 
-正式训练建议放在 tmux 中：
+正式训练建议用脚本放在 tmux 中：
 
 ```bash
-tmux new -s hw3_train
-SEEDS="1 2 3" EXP_PREFIX=hw3_full conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full
+SEEDS="1 2 3" EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full
+tmux attach -t <session-name>
+```
+
+启动前可以先预览命令，不创建 tmux session：
+
+```bash
+LAUNCH_DRY_RUN=true SEEDS="1 2 3" bash scripts/launch_training_tmux.sh full
 ```
 
 只跑单个组合时可限制地图和算法：
 
 ```bash
-MAPS=3s5z ALGOS=happo SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full
+MAPS=3s5z ALGOS=happo SEEDS=1 bash scripts/launch_training_tmux.sh full
 ```
 
 ## 结果整理

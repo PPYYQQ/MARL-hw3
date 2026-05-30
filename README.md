@@ -23,7 +23,7 @@
 5. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke` 做最小验证。
 6. 运行 `PRINT_ONLY=true conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 预览短跑参数。
 7. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 做短跑检查。
-8. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full` 做正式训练。
+8. 运行 `bash scripts/launch_training_tmux.sh full` 在 tmux 中启动正式训练。
 9. 运行 `bash scripts/snapshot_configs.sh` 保存本次使用的配置快照。
 10. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
 11. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
