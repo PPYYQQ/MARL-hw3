@@ -11,7 +11,7 @@ Usage:
   STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh
 
 Optional:
-  ASSIGNMENT_NAME=<name> DIST_DIR=<path>
+  ASSIGNMENT_NAME=<name> DIST_DIR=<path> SKIP_VALIDATION=true
 USAGE
 }
 
@@ -57,6 +57,14 @@ copy_item() {
 require_env STUDENT_ID
 require_env STUDENT_NAME
 require_command zip
+require_command python3
+
+if [ "${SKIP_VALIDATION:-false}" != "true" ]; then
+  (
+    cd "${ROOT_DIR}"
+    python3 scripts/validate_submission.py
+  )
+fi
 
 REQUIRED_PATHS=(
   AGENTS.md

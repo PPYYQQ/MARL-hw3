@@ -72,3 +72,5 @@ python3 scripts/validate_submission.py
 - `logs/submission_validation.md`
 
 最后更新报告中的正式训练结果讨论，并为关键修改建立 Git commit。
+
+生成交付压缩包时，`scripts/package_submission.sh` 会默认先运行提交校验；若只是调试打包脚本，可临时设置 `SKIP_VALIDATION=true`。
