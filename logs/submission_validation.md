@@ -2,19 +2,19 @@
 
 | Check | Status | Detail |
 | --- | --- | --- |
-| `AGENTS.md` | OK | 9299 bytes |
-| `README.md` | OK | 3322 bytes |
-| `PROGRESS.md` | OK | 6866 bytes |
-| `SUBMISSION.md` | OK | 3719 bytes |
-| `TRAINING.md` | OK | 2411 bytes |
-| `report/main.pdf` | OK | 772732 bytes |
-| `report/main.tex` | OK | 10144 bytes |
-| `report/report.html` | OK | 12113 bytes |
-| `report/references.bib` | OK | 1058 bytes |
-| `figures/win_rate_3s5z.png` | OK | 74842 bytes |
-| `figures/win_rate_8m_vs_9m.png` | OK | 75862 bytes |
-| `results/processed/progress_summary.csv` | OK | 14382 bytes |
-| `results/processed/progress_summary.md` | OK | 1161 bytes |
+| `AGENTS.md` | OK | file present |
+| `README.md` | OK | file present |
+| `PROGRESS.md` | OK | file present |
+| `SUBMISSION.md` | OK | file present |
+| `TRAINING.md` | OK | file present |
+| `report/main.pdf` | OK | file present |
+| `report/main.tex` | OK | file present |
+| `report/report.html` | OK | file present |
+| `report/references.bib` | OK | file present |
+| `figures/win_rate_3s5z.png` | OK | file present |
+| `figures/win_rate_8m_vs_9m.png` | OK | file present |
+| `results/processed/progress_summary.csv` | OK | file present |
+| `results/processed/progress_summary.md` | OK | file present |
 | `scripts` | OK | directory present |
 | `configs/smac` | OK | directory present |
 | `logs` | OK | directory present |

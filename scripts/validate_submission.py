@@ -59,7 +59,7 @@ def file_check(path: Path) -> Check:
         return fail(str(path), "missing file")
     if path.stat().st_size == 0:
         return fail(str(path), "empty file")
-    return ok(str(path), f"{path.stat().st_size} bytes")
+    return ok(str(path), "file present")
 
 
 def dir_check(path: Path) -> Check:
