@@ -57,6 +57,8 @@
 | 2026-05-30 | `2d0b67b` | 增加 GitHub token 推送辅助脚本，使用临时 askpass 且不改写 remote URL | `push_to_github.sh`、`PUSH_DRY_RUN=true` |
 | 2026-05-30 | `49c0407` | 记录 GitHub token 推送辅助脚本进度 | `git log --oneline` |
 | 2026-05-30 | `7dcbc73` | 生成提交产物 SHA256/大小 manifest，并接入最终准备、校验和打包流程 | `generate_artifact_manifest.py`、`validate_submission.py`、`package_submission.sh` |
+| 2026-05-30 | `111cd09` | 记录提交产物 manifest 进度 | `git log --oneline` |
+| 2026-05-31 | `5d343c6` | 增加正式训练 `progress.txt` 同步脚本，并将 `results/raw/full` 纳入 manifest、校验和打包流程 | `sync_harl_results.py`、`validate_submission.py`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -76,6 +78,7 @@
 - [x] 建立 tmux 正式训练启动脚本。
 - [x] 建立 GitHub token 推送辅助脚本。
 - [x] 建立提交产物哈希清单生成脚本。
+- [x] 建立正式训练结果同步脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
@@ -111,6 +114,7 @@
 ### 5. 数据与报告
 
 - [x] 编写 `progress.txt` 收集脚本。
+- [x] 编写 HARL 正式训练 `progress.txt` 同步脚本。
 - [x] 编写 Markdown 结果摘要脚本。
 - [x] 编写 win rate 绘图脚本。
 - [x] 生成 smoke win rate 曲线。
