@@ -8,7 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。
 - GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，且 `main` 尚无 upstream，尚未同步到远端。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 到 1360000-step checkpoint。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 到 1600000-step checkpoint。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -76,6 +76,8 @@
 | 2026-05-31 | `62b9fcd` | 同步 `MAPPO` + `3s5z` 阶段性 full checkpoint 到 1200000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`collect_progress.py`、`plot_win_rate.py`、`validate_submission.py` |
 | 2026-05-31 | `f6fdb13` | 记录 1200000-step 阶段性 full checkpoint 进度 | `git log --oneline` |
 | 2026-05-31 | `e7ee05d` | 同步 `MAPPO` + `3s5z` 阶段性 full checkpoint 到 1360000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`collect_progress.py`、`plot_win_rate.py`、`validate_submission.py` |
+| 2026-05-31 | `a62199f` | 记录 1360000-step 阶段性 full checkpoint 进度 | `git log --oneline` |
+| 2026-05-31 | `5622399` | 同步 `MAPPO` + `3s5z` 阶段性 full checkpoint 到 1600000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`collect_progress.py`、`plot_win_rate.py`、`validate_submission.py` |
 
 ## 任务清单
 
