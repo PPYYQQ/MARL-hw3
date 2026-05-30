@@ -7,7 +7,7 @@
 - 工作区：已初始化为 Git 仓库，默认分支为 `main`。
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。
-- GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，尚未同步到远端。
+- GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，且 `main` 尚无 upstream，尚未同步到远端。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -49,6 +49,8 @@
 | 2026-05-30 | `72db082` | 增加学生身份信息写入脚本，支持用环境变量同步更新 LaTeX 与 HTML 报告 | `apply_student_info.py`、`package_submission.sh` |
 | 2026-05-30 | `ef5d92b` | 记录学生身份信息脚本进度 | `git log --oneline` |
 | 2026-05-30 | `da93301` | 增加一键最终提交准备脚本，串联身份写入、配置快照、汇总、绘图、PDF、校验和打包 | `prepare_submission.sh`、`validate_submission.py` |
+| 2026-05-30 | `3b20cc1` | 记录一键最终提交准备脚本进度 | `git log --oneline` |
+| 2026-05-30 | `ca3f875` | 提交前校验加入 Git remote/upstream 检查，明确记录当前 GitHub push 未完成 | `validate_submission.py`、`package_submission.sh` |
 
 ## 任务清单
 
