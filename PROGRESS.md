@@ -35,6 +35,8 @@
 | 2026-05-30 | `61a155b` | 记录第一组 pilot 进度和 GitHub 凭据阻塞状态 | `git log --oneline` |
 | 2026-05-30 | `2ff9c73` | 修正 README 中 GitHub push 凭据说明 | `git log --oneline` |
 | 2026-05-30 | `785c08c` | 完成剩余 3 组 10000-step pilot，形成 MAPPO/HAPPO × 2 maps 的完整 pilot 矩阵 | `run_smac_experiments.sh pilot`、`collect_progress.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
+| 2026-05-30 | `29837b8` | 记录完整 pilot 矩阵进度 | `git log --oneline` |
+| 2026-05-30 | `30a96ce` | 保存 4 个 SMAC 实验配置快照，确保提交包不依赖被忽略的 `external/HARL` | `snapshot_configs.sh`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -48,6 +50,7 @@
 - [x] 导出当前 3 页 PDF 报告草稿。
 - [x] 建立正式训练交接文档。
 - [x] 建立 smoke 版交付压缩包脚本。
+- [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
 
