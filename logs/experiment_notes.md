@@ -5,9 +5,9 @@
 | 算法 | 地图 | 配置来源 | 状态 |
 | --- | --- | --- | --- |
 | HAPPO | `3s5z` | HARL tuned config | smoke test 与 10000-step pilot 通过 |
-| HAPPO | `8m_vs_9m` | HARL tuned config | smoke test 通过 |
-| MAPPO | `3s5z` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 通过 |
-| MAPPO | `8m_vs_9m` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 通过 |
+| HAPPO | `8m_vs_9m` | HARL tuned config | smoke test 与 10000-step pilot 通过 |
+| MAPPO | `3s5z` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过 |
+| MAPPO | `8m_vs_9m` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过 |
 
 ## dry-run 结果
 
@@ -47,16 +47,26 @@ conda run -n harl_hw3 python scripts/plot_win_rate.py
 
 ```bash
 MAPS=3s5z ALGOS=happo EXP_PREFIX=hw3_pilot SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
+MAPS=3s5z ALGOS=mappo EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
+MAPS=8m_vs_9m ALGOS="mappo happo" EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 python3 scripts/collect_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
 
 结果：
 
-- 原始 `progress.txt` 已保存到 `results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt`。
-- 汇总结果更新为 36 行，其中 pilot 贡献 12 行 evaluation 记录。
-- 最后一次 evaluation 位于 9600 environment steps，eval average episode reward 为 4.0629，eval win rate 为 0。
-- 该短跑进一步验证了 HAPPO 在 `3s5z` 上能稳定运行到 10000-step 量级，但仍不能代表正式复现性能。
+- 原始 `progress.txt` 已保存到 `results/raw/pilot/`，共 4 个 run、48 条 evaluation 记录。
+- 汇总结果更新为 72 行，其中 pilot 贡献 48 行 evaluation 记录。
+- 四组 pilot 的最后一次 evaluation 都位于 9600 environment steps，eval win rate 都为 0。
+
+| 地图 | 算法 | 最后 step | Eval reward | Eval win rate |
+| --- | --- | --- | --- | --- |
+| `3s5z` | HAPPO | 9600 | 4.0629 | 0.0 |
+| `3s5z` | MAPPO | 9600 | 7.6954 | 0.0 |
+| `8m_vs_9m` | HAPPO | 9600 | 5.0072 | 0.0 |
+| `8m_vs_9m` | MAPPO | 9600 | 7.5108 | 0.0 |
+
+该短跑进一步验证了四组目标实验都能稳定运行到 10000-step 量级，但仍不能代表正式复现性能。
 
 ## 运行记录模板
 
@@ -64,6 +74,8 @@ conda run -n harl_hw3 python scripts/plot_win_rate.py
 | --- | --- | --- | --- | --- |
 | 2026-05-30 | `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke` | 1 | `external/HARL/examples/results/smac/...` | 4 组 smoke test 通过 |
 | 2026-05-30 | `MAPS=3s5z ALGOS=happo EXP_PREFIX=hw3_pilot SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25` | 10000-step pilot 通过 |
+| 2026-05-30 | `MAPS=3s5z ALGOS=mappo EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/3s5z/mappo/hw3_pilot_mappo_3s5z/seed-00001-2026-05-30-23-20-22` | 10000-step pilot 通过 |
+| 2026-05-30 | `MAPS=8m_vs_9m ALGOS="mappo happo" EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/8m_vs_9m/...` | 2 组 10000-step pilot 通过 |
 
 ## 观察模板
 

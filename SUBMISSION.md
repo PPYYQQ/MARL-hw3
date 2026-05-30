@@ -8,7 +8,7 @@
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
-- `results/raw/pilot/`：HAPPO + `3s5z` 10000-step pilot 的原始 `progress.txt`。
+- `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
 - `results/processed/progress_summary.csv`：smoke test 与 pilot 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
@@ -19,7 +19,7 @@
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
 - GitHub push：`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`，但非交互式 HTTPS push 缺少 GitHub 凭据；当前系统也未安装 `gh`。
 - LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
-- 正式训练：当前完成 1000-step smoke test 和一个 10000-step pilot，未完成 HARL tuned config 的完整训练。
+- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot，未完成 HARL tuned config 的完整训练。
 
 ## GitHub 同步
 

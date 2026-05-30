@@ -45,7 +45,7 @@ conda run -n harl_hw3 python -m smac.bin.map_list
 
 ## 仍需补齐
 
-- 正式训练尚未运行，当前已有 1000-step smoke test 和 HAPPO `3s5z` 10000-step pilot。
+- 正式训练尚未运行，当前已有 1000-step smoke test 和 4 组 10000-step pilot。
 - 本机没有 LaTeX 编译器，但已通过 Chrome HTML 流程导出 PDF。
 - GitHub push 需要配置 token/credential helper；非交互式 push 当前报错 `fatal: could not read Username for 'https://github.com': terminal prompts disabled`。
 

@@ -100,7 +100,22 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 
 \section{结果与分析}
 
-目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了 HAPPO 在 \texttt{3s5z} 上的 10000-step pilot run，最后一次 evaluation 记录在 9600 environment steps，eval average episode reward 为 4.0629，eval win rate 仍为 0。由于步数仍远低于 tuned config 的正式训练规模，这些曲线只能作为流程和短跑验证，不能作为最终算法性能结论。
+目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。由于步数仍远低于 tuned config 的正式训练规模，这些曲线只能作为流程和短跑验证，不能作为最终算法性能结论。
+
+\begin{table}[h]
+\centering
+\caption{Pilot run 最后一次 evaluation 结果}
+\begin{tabular}{llrr}
+\toprule
+地图 & 算法 & Step & Eval reward / win rate \\
+\midrule
+\texttt{3s5z} & HAPPO & 9600 & 4.0629 / 0.0 \\
+\texttt{3s5z} & MAPPO & 9600 & 7.6954 / 0.0 \\
+\texttt{8m\_vs\_9m} & HAPPO & 9600 & 5.0072 / 0.0 \\
+\texttt{8m\_vs\_9m} & MAPPO & 9600 & 7.5108 / 0.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[h]
 \centering
@@ -111,18 +126,18 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{../figures/win_rate_8m_vs_9m.png}
-\caption{\texttt{8m\_vs\_9m} smoke test eval win rate。}
+\caption{\texttt{8m\_vs\_9m} smoke/pilot eval win rate。}
 \end{figure}
 
-正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前 smoke 和 pilot 结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；但 1000 到 10000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前 smoke 和 pilot 结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；但 1000 到 10000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。
 
 \section{局限性}
 
-当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 \texttt{8m\_vs\_9m} 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证和一次短跑检查。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。
+当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 \texttt{8m\_vs\_9m} 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证和四组短跑检查。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。
 
 \section{结论}
 
-当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、一次 HAPPO \texttt{3s5z} pilot run 和自动绘图。后续正式训练完成后，应把 smoke/pilot 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。
+当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、四组 10000-step pilot run 和自动绘图。后续正式训练完成后，应把 smoke/pilot 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。
 
 \bibliography{references}
 \bibliographystyle{icml2022}
