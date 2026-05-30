@@ -55,6 +55,7 @@ MAPS=3s5z ALGOS=happo SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experi
 ```bash
 python3 scripts/collect_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
+bash scripts/snapshot_configs.sh
 bash scripts/build_report_pdf.sh
 ```
 
@@ -63,6 +64,7 @@ bash scripts/build_report_pdf.sh
 - `results/processed/progress_summary.csv`
 - `figures/win_rate_3s5z.png`
 - `figures/win_rate_8m_vs_9m.png`
+- `configs/smac/`
 - `report/main.pdf`
 
 最后更新报告中的正式训练结果讨论，并为关键修改建立 Git commit。

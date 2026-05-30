@@ -7,6 +7,7 @@
 - `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke test 结果和后续正式训练说明。
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
+- `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
 - `results/processed/progress_summary.csv`：smoke test 与 pilot 的汇总结果。
