@@ -26,7 +26,7 @@
 ]
 
 \begin{abstract}
-本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已启动，并同步到 \texttt{3s5z} MAPPO 的 1200000-step checkpoint。由于完整长训练尚未结束，本文现阶段报告重点是复现流程、代码对应关系和阶段性验证结果。
+本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已启动，并同步到 \texttt{3s5z} MAPPO 的 1360000-step checkpoint。由于完整长训练尚未结束，本文现阶段报告重点是复现流程、代码对应关系和阶段性验证结果。
 \end{abstract}
 
 \section{引言}
@@ -100,7 +100,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 
 \section{结果与分析}
 
-目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config，并同步到 \texttt{3s5z} MAPPO 的 15 个 evaluation，当前最新 step 为 1200000。由于正式训练仍在运行，这些结果只能作为流程、短跑和早期 full checkpoint 证据，不能作为最终算法性能结论。
+目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config，并同步到 \texttt{3s5z} MAPPO 的 17 个 evaluation，当前最新 step 为 1360000。由于正式训练仍在运行，这些结果只能作为流程、短跑和早期 full checkpoint 证据，不能作为最终算法性能结论。
 
 \begin{table}[h]
 \centering
@@ -124,7 +124,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \toprule
 地图 & 算法 & Step & Eval reward / win rate \\
 \midrule
-\texttt{3s5z} & MAPPO & 1200000 & 18.7562 / 0.75 \\
+\texttt{3s5z} & MAPPO & 1360000 & 18.6188 / 0.675 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -141,7 +141,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \caption{\texttt{8m\_vs\_9m} smoke/pilot eval win rate；该地图 full run 尚未到达第一轮评估。}
 \end{figure}
 
-正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/\texttt{3s5z} 训练并写出 evaluation，早期 win rate 已从 0 增至最新 0.75，当前最佳为 0.8。但 1200000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的最终性能。
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/\texttt{3s5z} 训练并写出 evaluation，早期 win rate 已从 0 增至最新 0.675，当前最佳为 0.85。但 1360000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的最终性能。
 
 \section{局限性}
 
