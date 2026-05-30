@@ -15,10 +15,10 @@
 
 1. 配置 GitHub remote 后 push 当前本地提交。
 2. 运行 `bash scripts/setup_env.sh` 创建 HARL/SMAC 环境。
-3. 安装 StarCraft II Linux 4.10，设置 `SC2PATH`，并安装 SMAC maps。
+3. 安装 StarCraft II Linux 4.10，设置 `SC2PATH`，并安装 SMAC maps。当前本机已安装到 `/home/yongqian/StarCraftII`。
 4. 运行 `bash scripts/run_smac_experiments.sh dry-run` 检查 4 个实验命令。
-5. 运行 `bash scripts/run_smac_experiments.sh smoke` 做最小验证。
-6. 运行 `bash scripts/run_smac_experiments.sh full` 做正式训练。
+5. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke` 做最小验证。
+6. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full` 做正式训练。
 7. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
 8. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
 9. 补全 `report/main.tex` 并导出 PDF。

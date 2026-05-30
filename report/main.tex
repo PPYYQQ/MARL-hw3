@@ -73,7 +73,21 @@ SMAC win rate & \texttt{smac\_logger.py} & progress.txt \\
 
 \section{结果与分析}
 
-待正式训练后插入 \texttt{figures/win\_rate\_3s5z.png} 和 \texttt{figures/win\_rate\_8m\_vs\_9m.png}。
+目前已完成 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。由于步数很少，所有实验的 eval win rate 仍为 0，因此这些曲线不能作为最终算法性能结论。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{../figures/win_rate_3s5z.png}
+\caption{\texttt{3s5z} smoke test eval win rate。}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{../figures/win_rate_8m_vs_9m.png}
+\caption{\texttt{8m\_vs\_9m} smoke test eval win rate。}
+\end{figure}
+
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。
 
 \section{结论}
 

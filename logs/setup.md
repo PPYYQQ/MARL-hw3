@@ -7,7 +7,7 @@
 - 当前 Python：3.13.12
 - 当前 `torch`：`2.12.0+cu130`，CUDA 可用
 - Conda：可用，当前激活 `base`
-- `SC2PATH`：未设置
+- `SC2PATH`：未设置，但 PySC2 默认路径 `/home/yongqian/StarCraftII` 已可用
 - GitHub remote：未配置
 
 ## HARL
@@ -34,12 +34,18 @@ conda run -n harl_hw3 python -m smac.bin.map_list
 
 结果：SMAC map registry 可列出 `3s5z`、`8m_vs_9m` 等地图。
 
+## StarCraft II 与 SMAC maps
+
+- SC2 下载包：`/home/yongqian/SC2.4.10.zip`
+- SC2 安装路径：`/home/yongqian/StarCraftII`
+- SC2 版本：B75689 / SC2 4.10
+- SMAC maps：已复制到 `/home/yongqian/StarCraftII/Maps/SMAC_Maps`，共 23 张。
+- random agent：已通过 `conda run -n harl_hw3 python -m smac.examples.random_agents`。
+
 ## 仍需补齐
 
-- StarCraft II Linux 4.10 未找到；`find /home/yongqian -maxdepth 5 -iname 'StarCraftII'` 无结果。
-- `conda run -n harl_hw3 python -m smac.examples.random_agents` 失败，因为缺少 `/home/yongqian/StarCraftII/Versions`。
-- 设置 `SC2PATH` 指向 StarCraft II 安装目录。
-- 安装 SMAC maps 并运行 random agent/smoke test。
+- 正式训练尚未运行，当前只有 1000-step smoke test。
+- 本机没有 LaTeX 编译器，无法在当前环境导出 PDF。
 
 ## 验证命令
 
@@ -51,12 +57,12 @@ python -m smac.bin.map_list
 python -m smac.examples.random_agents
 ```
 
-## random agent 失败记录
+## random agent 记录
 
-当前失败原因：
+第一次失败原因：
 
 ```text
 FileNotFoundError: [Errno 2] No such file or directory: '/home/yongqian/StarCraftII/Versions'
 ```
 
-这说明 Python 依赖已到位，下一步需要安装 StarCraft II 本体或设置正确的 `SC2PATH`。
+安装 SC2 和 maps 后，random agent 成功完成 10 个 episode。
