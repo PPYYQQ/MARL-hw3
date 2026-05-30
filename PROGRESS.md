@@ -39,6 +39,8 @@
 | 2026-05-30 | `30a96ce` | 保存 4 个 SMAC 实验配置快照，确保提交包不依赖被忽略的 `external/HARL` | `snapshot_configs.sh`、`package_submission.sh` |
 | 2026-05-30 | `28c9e0c` | 记录配置快照进度 | `git log --oneline` |
 | 2026-05-30 | `c49b7eb` | 增加 Markdown 结果摘要脚本与 `progress_summary.md`，自动汇总每个 run 的最终/最佳 evaluation | `summarize_progress.py`、`package_submission.sh` |
+| 2026-05-30 | `4107d48` | 记录 Markdown 结果摘要进度 | `git log --oneline` |
+| 2026-05-30 | `abc051e` | 增加提交前校验脚本与 `logs/submission_validation.md`，当前 25 项检查 0 failures、2 warnings | `validate_submission.py`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -52,6 +54,7 @@
 - [x] 导出当前 3 页 PDF 报告草稿。
 - [x] 建立正式训练交接文档。
 - [x] 建立 smoke 版交付压缩包脚本。
+- [x] 建立提交前产物校验脚本和校验报告。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
