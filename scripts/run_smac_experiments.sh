@@ -7,6 +7,7 @@ HARL_DIR="${HARL_DIR:-${ROOT_DIR}/external/HARL}"
 EXP_PREFIX="${EXP_PREFIX:-hw3}"
 SEEDS="${SEEDS:-1}"
 CUDA="${CUDA:-true}"
+DRY_RUN="false"
 
 if [ ! -d "${HARL_DIR}/examples" ]; then
   echo "HARL_DIR is invalid: ${HARL_DIR}" >&2
@@ -14,6 +15,10 @@ if [ ! -d "${HARL_DIR}/examples" ]; then
 fi
 
 case "${MODE}" in
+  dry-run)
+    DRY_RUN="true"
+    EXTRA_ARGS=(--num_env_steps 1000 --n_rollout_threads 1 --n_eval_rollout_threads 1 --eval_episodes 1 --log_interval 1 --eval_interval 1)
+    ;;
   smoke)
     EXTRA_ARGS=(--num_env_steps 1000 --n_rollout_threads 1 --n_eval_rollout_threads 1 --eval_episodes 1 --log_interval 1 --eval_interval 1)
     ;;
@@ -21,7 +26,7 @@ case "${MODE}" in
     EXTRA_ARGS=()
     ;;
   *)
-    echo "Usage: $0 [smoke|full]" >&2
+    echo "Usage: $0 [dry-run|smoke|full]" >&2
     exit 1
     ;;
 esac
@@ -79,13 +84,22 @@ for map_name in 3s5z 8m_vs_9m; do
     for seed in ${SEEDS}; do
       exp_name="${EXP_PREFIX}_${MODE}_${algo}_${map_name}"
       echo "Running ${algo} on ${map_name}, seed ${seed}, mode ${MODE}"
+      command=(
+        python train.py
+        --load_config "${config_path}"
+        --exp_name "${exp_name}"
+        --seed "${seed}"
+        "${EXTRA_ARGS[@]}"
+      )
+      printf 'cd %q &&' "${HARL_DIR}/examples"
+      printf ' %q' "${command[@]}"
+      printf '\n'
+      if [ "${DRY_RUN}" = "true" ]; then
+        continue
+      fi
       (
         cd "${HARL_DIR}/examples"
-        python train.py \
-          --load_config "${config_path}" \
-          --exp_name "${exp_name}" \
-          --seed "${seed}" \
-          "${EXTRA_ARGS[@]}"
+        "${command[@]}"
       )
     done
   done
