@@ -37,7 +37,7 @@ conda run -n harl_hw3 python scripts/plot_win_rate.py
 结果：
 
 - 原始 `progress.txt` 已保存到 `results/raw/smoke/`。
-- 汇总结果已保存到 `results/processed/progress_summary.csv`，共 24 行。
+- 汇总结果已保存到 `results/processed/progress_summary.csv`。
 - 曲线已保存到 `figures/win_rate_3s5z.png` 和 `figures/win_rate_8m_vs_9m.png`。
 - 由于 smoke test 只有 1000 environment steps，4 组实验的 eval win rate 都是 0，曲线只能证明流程可用，不能代表算法性能。
 
@@ -50,13 +50,14 @@ MAPS=3s5z ALGOS=happo EXP_PREFIX=hw3_pilot SEEDS=1 conda run -n harl_hw3 bash sc
 MAPS=3s5z ALGOS=mappo EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 MAPS=8m_vs_9m ALGOS="mappo happo" EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
 python3 scripts/collect_progress.py
+python3 scripts/summarize_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
 
 结果：
 
 - 原始 `progress.txt` 已保存到 `results/raw/pilot/`，共 4 个 run、48 条 evaluation 记录。
-- 汇总结果更新为 72 行，其中 pilot 贡献 48 行 evaluation 记录。
+- 汇总结果更新到 `results/processed/progress_summary.csv` 和 `results/processed/progress_summary.md`；CSV 共 72 行，其中 pilot 贡献 48 行 evaluation 记录。
 - 四组 pilot 的最后一次 evaluation 都位于 9600 environment steps，eval win rate 都为 0。
 
 | 地图 | 算法 | 最后 step | Eval reward | Eval win rate |

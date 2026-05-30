@@ -10,7 +10,7 @@
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
-- `results/processed/progress_summary.csv`：smoke test 与 pilot 的汇总结果。
+- `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test 与 pilot 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
@@ -97,6 +97,7 @@ xelatex main.tex
 - `configs/`
 - `logs/`
 - `results/processed/progress_summary.csv`
+- `results/processed/progress_summary.md`
 - `results/raw/smoke/`
 - `results/raw/pilot/`
 
