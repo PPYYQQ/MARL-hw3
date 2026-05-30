@@ -51,6 +51,8 @@
 | 2026-05-30 | `da93301` | 增加一键最终提交准备脚本，串联身份写入、配置快照、汇总、绘图、PDF、校验和打包 | `prepare_submission.sh`、`validate_submission.py` |
 | 2026-05-30 | `3b20cc1` | 记录一键最终提交准备脚本进度 | `git log --oneline` |
 | 2026-05-30 | `ca3f875` | 提交前校验加入 Git remote/upstream 检查，明确记录当前 GitHub push 未完成 | `validate_submission.py`、`package_submission.sh` |
+| 2026-05-30 | `6deebf4` | 记录 Git 同步校验进度 | `git log --oneline` |
+| 2026-05-30 | `5a3ffeb` | 增加 tmux 正式训练启动脚本，支持 dry-run 预览和日志记录 | `launch_training_tmux.sh`、`bash -n` |
 
 ## 任务清单
 
@@ -67,6 +69,7 @@
 - [x] 建立提交前产物校验脚本和校验报告。
 - [x] 建立学生身份信息写入脚本。
 - [x] 建立一键最终提交准备脚本。
+- [x] 建立 tmux 正式训练启动脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
@@ -117,7 +120,7 @@
 
 1. 配置 GitHub 凭据后执行 `git push -u origin main`。
 2. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python3 scripts/apply_student_info.py`，再重新导出 PDF。
-3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
+3. 运行正式训练：`bash scripts/launch_training_tmux.sh full`。
 4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
 5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
 6. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。
