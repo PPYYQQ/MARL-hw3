@@ -27,6 +27,7 @@
 | 2026-05-30 | `7e106a7` | 完成 4 组 SMAC smoke test，提交 raw progress、汇总 CSV 和 win rate 图 | `bash scripts/run_smac_experiments.sh smoke`、`plot_win_rate.py` |
 | 2026-05-30 | `2730a64` | 更新文档，记录 SC2/SMAC/smoke test 成功状态 | `git log --oneline` |
 | 2026-05-30 | `522ab67` | 扩写报告草稿、代码阅读笔记和提交检查清单 | `py_compile`、`bash -n`、`rg` |
+| 2026-05-30 | `57e1afd` | 增加 HTML 报告、Chrome PDF 构建脚本，并导出 3 页 PDF | `bash scripts/build_report_pdf.sh`、`pdfinfo` |
 
 ## 任务清单
 
@@ -37,6 +38,7 @@
 - [x] 建立进度追踪文档。
 - [x] 建立项目 README、目录结构和报告骨架。
 - [x] 建立提交检查清单。
+- [x] 导出当前 3 页 PDF 报告草稿。
 - [ ] 配置 GitHub remote 并 push 提交。本地当前没有 remote。
 
 ### 2. 环境与依赖
@@ -74,7 +76,8 @@
 - [x] 建立报告骨架。
 - [x] 写入算法简介、代码对应、环境配置、smoke 结果和讨论。
 - [ ] 写入正式训练结果和讨论。
-- [ ] 导出 PDF。
+- [x] 导出 smoke 版 PDF。
+- [ ] 导出正式训练版 PDF。
 
 ## 下一步
 
