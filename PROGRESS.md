@@ -55,6 +55,8 @@
 | 2026-05-30 | `5a3ffeb` | 增加 tmux 正式训练启动脚本，支持 dry-run 预览和日志记录 | `launch_training_tmux.sh`、`bash -n` |
 | 2026-05-30 | `828af1b` | 记录 tmux 正式训练启动脚本进度 | `git log --oneline` |
 | 2026-05-30 | `2d0b67b` | 增加 GitHub token 推送辅助脚本，使用临时 askpass 且不改写 remote URL | `push_to_github.sh`、`PUSH_DRY_RUN=true` |
+| 2026-05-30 | `49c0407` | 记录 GitHub token 推送辅助脚本进度 | `git log --oneline` |
+| 2026-05-30 | `7dcbc73` | 生成提交产物 SHA256/大小 manifest，并接入最终准备、校验和打包流程 | `generate_artifact_manifest.py`、`validate_submission.py`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -73,6 +75,7 @@
 - [x] 建立一键最终提交准备脚本。
 - [x] 建立 tmux 正式训练启动脚本。
 - [x] 建立 GitHub token 推送辅助脚本。
+- [x] 建立提交产物哈希清单生成脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
