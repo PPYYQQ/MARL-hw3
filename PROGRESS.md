@@ -16,6 +16,11 @@
 | 2026-05-30 | `347c0fa` | 建立作业工作区基线，加入 `AGENTS.md`、作业 PPT、ICML 模板 zip、`.gitignore` | `git log --oneline` |
 | 2026-05-30 | `0437b33` | 建立 `PROGRESS.md`，开始跟踪进度、commit 和剩余任务 | `git log --oneline` |
 | 2026-05-30 | `5d35696` | 建立 README、脚本、日志、报告骨架和 ICML LaTeX 样式文件 | `bash -n`、`py_compile`、`collect_progress.py` |
+| 2026-05-30 | `8f446f0` | 给 HARL 环境安装脚本加入 gym fallback | `bash -n scripts/setup_env.sh` |
+| 2026-05-30 | `ec95d34` | 修正 SMAC 安装来源为 oxwhirl/SMAC | `from smac.env import StarCraft2Env` |
+| 2026-05-30 | `dc0837a` | 稳定 HARL 环境安装：conda gym、NumPy 兼容、setuptools 约束 | `torch.cuda.is_available()`、`numpy==1.23.5` |
+| 2026-05-30 | `69903ad` | 给 SMAC 训练脚本加入 `dry-run` 模式 | `bash scripts/run_smac_experiments.sh dry-run` |
+| 2026-05-30 | `549810a` | 保存两个生成的 MAPPO SMAC 配置 | `rg share_param results/processed/generated_mappo_*.json` |
 
 ## 任务清单
 
@@ -25,14 +30,16 @@
 - [x] 初始化 Git 仓库。
 - [x] 建立进度追踪文档。
 - [x] 建立项目 README、目录结构和报告骨架。
-- [ ] 配置 GitHub remote 并 push 提交。
+- [ ] 配置 GitHub remote 并 push 提交。本地当前没有 remote。
 
 ### 2. 环境与依赖
 
 - [ ] 克隆或接入 HARL 仓库。
 - [x] 克隆或接入 HARL 仓库。
 - [x] 建立 Python/Conda 环境安装脚本。
-- [ ] 验证 PyTorch、CUDA、SMAC、StarCraft II。
+- [x] 验证 PyTorch、CUDA、HARL、SMAC Python package。
+- [x] 验证 SMAC map registry 包含 `3s5z` 和 `8m_vs_9m`。
+- [ ] 安装并验证 StarCraft II Linux 4.10。
 - [x] 记录初始环境检查结果。
 
 ### 3. 代码阅读
@@ -47,6 +54,7 @@
 - [x] 准备 `happo` + `3s5z` 训练命令。
 - [x] 准备 `mappo` + `8m_vs_9m` 训练命令。
 - [x] 准备 `happo` + `8m_vs_9m` 训练命令。
+- [x] 完成 dry-run，打印 4 个实验命令。
 - [ ] 完成 smoke test。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
@@ -62,7 +70,8 @@
 ## 下一步
 
 1. 配置 GitHub remote 后执行 `git push -u origin main`。
-2. 运行 `bash scripts/setup_env.sh` 创建专用环境。
-3. 设置 `SC2PATH` 并安装 StarCraft II/SMAC maps。
-4. 运行 `bash scripts/run_smac_experiments.sh smoke` 做最小训练验证。
-5. smoke test 成功后运行正式训练并生成 win rate 曲线。
+2. 安装 StarCraft II Linux 4.10，并确认 `/home/yongqian/StarCraftII/Versions` 存在。
+3. 设置 `SC2PATH`，必要时把 SMAC maps 放入 `StarCraftII/Maps/SMAC_Maps`。
+4. 运行 `conda run -n harl_hw3 python -m smac.examples.random_agents` 验证 SC2 可启动。
+5. 运行 `bash scripts/run_smac_experiments.sh smoke` 做最小训练验证。
+6. smoke test 成功后运行正式训练并生成 win rate 曲线。
