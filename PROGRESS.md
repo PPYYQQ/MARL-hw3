@@ -64,6 +64,8 @@
 | 2026-05-31 | `7ce16d7` | 启动单 seed 正式训练 tmux 会话，并记录资源、命令和结果整理入口 | `logs/full_training_status.md`、`tmux has-session` |
 | 2026-05-31 | `3bafb6e` | 记录正式训练 tmux 会话运行状态 | `git log --oneline` |
 | 2026-05-31 | `f3a7ac8` | 同步 `MAPPO` + `3s5z` 阶段性 full checkpoint 到 240000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`collect_progress.py`、`plot_win_rate.py`、`validate_submission.py` |
+| 2026-05-31 | `d53fc25` | 记录阶段性 full checkpoint 进度 | `git log --oneline` |
+| 2026-05-31 | `958d472` | 修正报告中阶段性 full checkpoint 的旧步数表述，并重新导出 PDF | `report/main.tex`、`report/report.html`、`report/main.pdf` |
 
 ## 任务清单
 
