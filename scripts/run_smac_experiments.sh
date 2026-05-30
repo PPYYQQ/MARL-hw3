@@ -6,8 +6,11 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HARL_DIR="${HARL_DIR:-${ROOT_DIR}/external/HARL}"
 EXP_PREFIX="${EXP_PREFIX:-hw3}"
 SEEDS="${SEEDS:-1}"
+MAPS="${MAPS:-3s5z 8m_vs_9m}"
+ALGOS="${ALGOS:-mappo happo}"
 CUDA="${CUDA:-true}"
 DRY_RUN="false"
+PRINT_ONLY="${PRINT_ONLY:-false}"
 
 if [ ! -d "${HARL_DIR}/examples" ]; then
   echo "HARL_DIR is invalid: ${HARL_DIR}" >&2
@@ -22,17 +25,31 @@ case "${MODE}" in
   smoke)
     EXTRA_ARGS=(--num_env_steps 1000 --n_rollout_threads 1 --n_eval_rollout_threads 1 --eval_episodes 1 --log_interval 1 --eval_interval 1)
     ;;
+  pilot)
+    EXTRA_ARGS=(
+      --num_env_steps "${PILOT_NUM_ENV_STEPS:-10000}"
+      --n_rollout_threads "${PILOT_N_ROLLOUT_THREADS:-1}"
+      --n_eval_rollout_threads "${PILOT_N_EVAL_ROLLOUT_THREADS:-1}"
+      --eval_episodes "${PILOT_EVAL_EPISODES:-1}"
+      --log_interval "${PILOT_LOG_INTERVAL:-5}"
+      --eval_interval "${PILOT_EVAL_INTERVAL:-5}"
+    )
+    ;;
   full)
     EXTRA_ARGS=()
     ;;
   *)
-    echo "Usage: $0 [dry-run|smoke|full]" >&2
+    echo "Usage: $0 [dry-run|smoke|pilot|full]" >&2
     exit 1
     ;;
 esac
 
 if [ "${CUDA}" = "false" ]; then
   EXTRA_ARGS+=(--cuda False)
+fi
+
+if [ "${PRINT_ONLY}" = "true" ]; then
+  DRY_RUN="true"
 fi
 
 generate_mappo_config() {
@@ -78,8 +95,8 @@ config_for() {
   fi
 }
 
-for map_name in 3s5z 8m_vs_9m; do
-  for algo in mappo happo; do
+for map_name in ${MAPS}; do
+  for algo in ${ALGOS}; do
     config_path="$(config_for "${algo}" "${map_name}")"
     for seed in ${SEEDS}; do
       exp_name="${EXP_PREFIX}_${MODE}_${algo}_${map_name}"

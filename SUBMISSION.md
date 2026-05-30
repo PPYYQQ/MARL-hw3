@@ -11,6 +11,7 @@
 - `results/processed/progress_summary.csv`：smoke test 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke test 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
+- `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
 
@@ -39,6 +40,10 @@ git log --oneline --decorate -15
 ## 正式训练
 
 正式训练会使用 tuned config 中的训练步数，当前 HAPPO tuned config 为 2000 万 environment steps。建议在 tmux 或服务器长期会话中运行：
+
+```bash
+conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
+```
 
 ```bash
 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full
@@ -99,3 +104,11 @@ xelatex main.tex
 - `/home/yongqian/StarCraftII`
 - `/home/yongqian/SC2.4.10.zip`
 - 大型模型 checkpoint
+
+可用脚本生成当前 smoke 版交付包：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh
+```
+
+输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。

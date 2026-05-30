@@ -26,6 +26,7 @@ tensorboard/
 *.ckpt
 
 # Build artifacts
+dist/
 report/*.aux
 report/*.bbl
 report/*.blg

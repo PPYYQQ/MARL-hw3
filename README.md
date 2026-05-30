@@ -11,6 +11,7 @@
 - `logs/`：作业摘要、环境检查、代码阅读和实验笔记。
 - `report/`：研究性报告骨架。
 - `SUBMISSION.md`：提交、GitHub 同步、正式训练和 PDF 导出的检查清单。
+- `TRAINING.md`：正式训练资源、命令和结果整理说明。
 
 ## 推荐流程
 
@@ -19,10 +20,13 @@
 3. 安装 StarCraft II Linux 4.10，设置 `SC2PATH`，并安装 SMAC maps。当前本机已安装到 `/home/yongqian/StarCraftII`。
 4. 运行 `bash scripts/run_smac_experiments.sh dry-run` 检查 4 个实验命令。
 5. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke` 做最小验证。
-6. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full` 做正式训练。
-7. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
-8. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
-9. 补全 `report/main.tex` 或 `report/report.html`，再运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
+6. 运行 `PRINT_ONLY=true conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 预览短跑参数。
+7. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 做短跑检查。
+8. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full` 做正式训练。
+9. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
+10. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
+11. 补全 `report/main.tex` 或 `report/report.html`，再运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
+12. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包。
 
 ## 关键说明
 
