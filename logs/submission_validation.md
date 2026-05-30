@@ -21,7 +21,7 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 791133 bytes; 3 pages |
+| `report/main.pdf` | OK | 791086 bytes; 3 pages |
 | `results/processed/progress_summary.csv` | OK | 75 data rows |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |

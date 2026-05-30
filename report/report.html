@@ -184,7 +184,7 @@
       <img src="../figures/win_rate_8m_vs_9m.png" alt="8m_vs_9m win rate">
       <figcaption><code>8m_vs_9m</code> smoke/pilot eval win rate；该地图 full run 尚未到达第一轮评估。</figcaption>
     </figure>
-    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/<code>3s5z</code> 训练并写出 evaluation。但 80000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。</p>
+    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/<code>3s5z</code> 训练并写出 evaluation。但 240000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。</p>
 
     <h2>8. 局限性</h2>
     <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此当前 eval win rate 为 0 并不说明算法无效，只说明当前运行覆盖了流程验证、四组短跑检查和一个早期 full checkpoint。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>

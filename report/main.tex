@@ -141,7 +141,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \caption{\texttt{8m\_vs\_9m} smoke/pilot eval win rate；该地图 full run 尚未到达第一轮评估。}
 \end{figure}
 
-正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/\texttt{3s5z} 训练并写出 evaluation。但 80000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；full 模式已成功进入第一组 MAPPO/\texttt{3s5z} 训练并写出 evaluation。但 240000 步仍远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。
 
 \section{局限性}
 
