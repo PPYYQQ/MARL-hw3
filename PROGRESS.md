@@ -37,6 +37,8 @@
 | 2026-05-30 | `785c08c` | 完成剩余 3 组 10000-step pilot，形成 MAPPO/HAPPO × 2 maps 的完整 pilot 矩阵 | `run_smac_experiments.sh pilot`、`collect_progress.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
 | 2026-05-30 | `29837b8` | 记录完整 pilot 矩阵进度 | `git log --oneline` |
 | 2026-05-30 | `30a96ce` | 保存 4 个 SMAC 实验配置快照，确保提交包不依赖被忽略的 `external/HARL` | `snapshot_configs.sh`、`package_submission.sh` |
+| 2026-05-30 | `28c9e0c` | 记录配置快照进度 | `git log --oneline` |
+| 2026-05-30 | `c49b7eb` | 增加 Markdown 结果摘要脚本与 `progress_summary.md`，自动汇总每个 run 的最终/最佳 evaluation | `summarize_progress.py`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -85,6 +87,7 @@
 ### 5. 数据与报告
 
 - [x] 编写 `progress.txt` 收集脚本。
+- [x] 编写 Markdown 结果摘要脚本。
 - [x] 编写 win rate 绘图脚本。
 - [x] 生成 smoke win rate 曲线。
 - [x] 生成包含四组 pilot 的 win rate 曲线。
