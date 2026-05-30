@@ -14,6 +14,8 @@
 | 时间 | Commit | 内容 | 证据 |
 | --- | --- | --- | --- |
 | 2026-05-30 | `347c0fa` | 建立作业工作区基线，加入 `AGENTS.md`、作业 PPT、ICML 模板 zip、`.gitignore` | `git log --oneline` |
+| 2026-05-30 | `0437b33` | 建立 `PROGRESS.md`，开始跟踪进度、commit 和剩余任务 | `git log --oneline` |
+| 2026-05-30 | `5d35696` | 建立 README、脚本、日志、报告骨架和 ICML LaTeX 样式文件 | `bash -n`、`py_compile`、`collect_progress.py` |
 
 ## 任务清单
 
@@ -22,42 +24,45 @@
 - [x] 建立 `AGENTS.md`，明确 coding agent 工作规范。
 - [x] 初始化 Git 仓库。
 - [x] 建立进度追踪文档。
+- [x] 建立项目 README、目录结构和报告骨架。
 - [ ] 配置 GitHub remote 并 push 提交。
 
 ### 2. 环境与依赖
 
 - [ ] 克隆或接入 HARL 仓库。
-- [ ] 建立 Python/Conda 环境安装脚本。
+- [x] 克隆或接入 HARL 仓库。
+- [x] 建立 Python/Conda 环境安装脚本。
 - [ ] 验证 PyTorch、CUDA、SMAC、StarCraft II。
-- [ ] 记录安装过程和异常处理。
+- [x] 记录初始环境检查结果。
 
 ### 3. 代码阅读
 
-- [ ] 定位 MAPPO/HAPPO 的核心代码文件。
-- [ ] 记录论文概念与 HARL 实现的对应关系。
-- [ ] 整理 GAE、clip、factor、顺序更新等关键实现说明。
+- [x] 定位 MAPPO/HAPPO 的核心代码文件。
+- [x] 记录论文概念与 HARL 实现的初步对应关系。
+- [x] 整理 GAE、clip、factor、顺序更新等关键实现位置。
 
 ### 4. 实验复现
 
-- [ ] 准备 `mappo` + `3s5z` 训练命令。
-- [ ] 准备 `happo` + `3s5z` 训练命令。
-- [ ] 准备 `mappo` + `8m_vs_9m` 训练命令。
-- [ ] 准备 `happo` + `8m_vs_9m` 训练命令。
+- [x] 准备 `mappo` + `3s5z` 训练命令。
+- [x] 准备 `happo` + `3s5z` 训练命令。
+- [x] 准备 `mappo` + `8m_vs_9m` 训练命令。
+- [x] 准备 `happo` + `8m_vs_9m` 训练命令。
 - [ ] 完成 smoke test。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
 
-- [ ] 编写 `progress.txt` 收集脚本。
-- [ ] 编写 win rate 绘图脚本。
+- [x] 编写 `progress.txt` 收集脚本。
+- [x] 编写 win rate 绘图脚本。
 - [ ] 生成实验曲线。
-- [ ] 建立报告骨架。
+- [x] 建立报告骨架。
 - [ ] 写入算法简介、代码对应、环境配置、实验结果和讨论。
 - [ ] 导出 PDF。
 
 ## 下一步
 
-1. 建立推荐目录结构和脚本骨架。
-2. 克隆 HARL 或准备克隆脚本。
-3. 检查本机 CUDA/PyTorch/Conda 状态。
-4. 如需真正同步到 GitHub，需要提供 remote URL 或本机 GitHub CLI/SSH 凭据。
+1. 配置 GitHub remote 后执行 `git push -u origin main`。
+2. 运行 `bash scripts/setup_env.sh` 创建专用环境。
+3. 设置 `SC2PATH` 并安装 StarCraft II/SMAC maps。
+4. 运行 `bash scripts/run_smac_experiments.sh smoke` 做最小训练验证。
+5. smoke test 成功后运行正式训练并生成 win rate 曲线。
