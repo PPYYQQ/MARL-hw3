@@ -45,6 +45,8 @@
 | 2026-05-30 | `bbee68b` | 稳定提交前校验报告输出，避免进度文件大小变化导致重复变脏 | `validate_submission.py`、`git status --short` |
 | 2026-05-30 | `6749ac6` | 记录提交前校验稳定化进度 | `git log --oneline` |
 | 2026-05-30 | `a4d350a` | 打包脚本默认先运行提交校验，失败时停止生成压缩包 | `package_submission.sh`、`validate_submission.py` |
+| 2026-05-30 | `9d005c1` | 记录打包校验门禁进度 | `git log --oneline` |
+| 2026-05-30 | `72db082` | 增加学生身份信息写入脚本，支持用环境变量同步更新 LaTeX 与 HTML 报告 | `apply_student_info.py`、`package_submission.sh` |
 
 ## 任务清单
 
@@ -59,6 +61,7 @@
 - [x] 建立正式训练交接文档。
 - [x] 建立 smoke 版交付压缩包脚本。
 - [x] 建立提交前产物校验脚本和校验报告。
+- [x] 建立学生身份信息写入脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
@@ -108,7 +111,7 @@
 ## 下一步
 
 1. 配置 GitHub 凭据后执行 `git push -u origin main`。
-2. 补全 `report/main.tex` 和 `report/report.html` 中的姓名、学号和邮箱。
+2. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python3 scripts/apply_student_info.py`，再重新导出 PDF。
 3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
 4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
 5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
