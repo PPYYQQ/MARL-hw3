@@ -23,7 +23,7 @@ if ! conda env list | awk '{print $1}' | grep -qx "${ENV_NAME}"; then
 fi
 
 conda activate "${ENV_NAME}"
-python -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip "setuptools<82" wheel
 
 if [ -n "${TORCH_INDEX_URL}" ]; then
   python -m pip install torch --index-url "${TORCH_INDEX_URL}"
@@ -33,11 +33,9 @@ python -m pip install -e "${HARL_DIR}"
 python -m pip install "numpy<1.24" matplotlib pandas
 python -m pip uninstall -y smac >/dev/null 2>&1 || true
 python -m pip install "git+https://github.com/oxwhirl/smac.git"
-if ! python -m pip install gym==0.21.0 pyglet==1.5.0 importlib-metadata==4.13.0; then
-  conda install -y -c conda-forge gym=0.21.0
-  python -m pip install pyglet==1.5.0 importlib-metadata==4.13.0
-fi
-python -m pip install "numpy<1.24"
+conda install -y -c conda-forge gym=0.21.0
+python -m pip install pyglet==1.5.0 importlib-metadata==4.13.0
+python -m pip install --force-reinstall --no-cache-dir "numpy<1.24"
 
 python - <<'PY'
 import importlib.util
