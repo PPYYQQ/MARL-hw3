@@ -43,6 +43,8 @@
 | 2026-05-30 | `abc051e` | 增加提交前校验脚本与 `logs/submission_validation.md`，当前 25 项检查 0 failures、2 warnings | `validate_submission.py`、`package_submission.sh` |
 | 2026-05-30 | `8588496` | 记录提交前校验进度 | `git log --oneline` |
 | 2026-05-30 | `bbee68b` | 稳定提交前校验报告输出，避免进度文件大小变化导致重复变脏 | `validate_submission.py`、`git status --short` |
+| 2026-05-30 | `6749ac6` | 记录提交前校验稳定化进度 | `git log --oneline` |
+| 2026-05-30 | `a4d350a` | 打包脚本默认先运行提交校验，失败时停止生成压缩包 | `package_submission.sh`、`validate_submission.py` |
 
 ## 任务清单
 
