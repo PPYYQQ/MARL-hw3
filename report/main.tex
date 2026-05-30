@@ -26,22 +26,22 @@
 ]
 
 \begin{abstract}
-本文基于 HARL 代码库和 SMAC 环境，复现并比较 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练表现。报告将补充算法原理、核心代码对应、环境配置过程、win rate 曲线和实验分析。
+本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、\texttt{progress.txt} 汇总和 win rate 绘图。由于正式长训练尚未完成，本文现阶段报告重点是复现流程、代码对应关系和初步验证结果。
 \end{abstract}
 
 \section{引言}
 
-星际争霸多智能体挑战（SMAC）提供了完全合作的多智能体微操任务，适合评估多智能体强化学习算法的协同决策能力。本作业关注 MAPPO 与 HAPPO 在 SMAC 上的训练、测试和分析流程。
+星际争霸多智能体挑战（SMAC）提供了完全合作的多智能体微操任务，适合评估多智能体强化学习算法的协同决策能力 \cite{samvelyan2019starcraft}。每个智能体只能观察局部信息并选择离散动作，但训练和评估关注的是团队是否能击败敌方单位。本作业关注 MAPPO 与 HAPPO 在 SMAC 上的训练、测试和分析流程。
 
 \section{算法概述}
 
 \subsection{MAPPO}
 
-MAPPO 可以理解为将单智能体 PPO 扩展到多智能体合作场景：每个智能体执行去中心化策略，训练阶段使用集中式信息估计价值函数，并通过 PPO clipped surrogate objective 限制策略更新幅度。
+MAPPO 可以理解为将单智能体 PPO 扩展到多智能体合作场景 \cite{yu2022surprising}。每个智能体执行去中心化策略，训练阶段使用集中式信息估计价值函数，并通过 PPO clipped surrogate objective 限制策略更新幅度。相比从零设计复杂的 credit assignment 机制，MAPPO 的重点是把 PPO 中优势估计、策略比值裁剪、熵正则和集中式 critic 组合成稳定的 on-policy 多智能体训练流程。
 
 \subsection{HAPPO}
 
-HAPPO 在异质智能体场景下引入顺序策略更新。其核心思想是使用多智能体优势分解，并在更新当前智能体时通过 factor 修正前序智能体策略更新对联合策略概率比的影响，从而获得更稳定的单调改进性质。
+HAPPO 在异质智能体场景下引入顺序策略更新 \cite{zhong2024heterogeneous}。其核心思想是使用多智能体优势分解，并在更新当前智能体时通过 factor 修正前序智能体策略更新对联合策略概率比的影响，从而获得更稳定的单调改进性质。与 MAPPO 直接独立或共享更新 actor 不同，HAPPO 在一个 update 内按智能体顺序逐个更新策略，并把已经更新过的智能体对联合策略概率的影响累积到后续智能体的 surrogate objective 中。
 
 \section{HARL 代码对应}
 
@@ -61,15 +61,34 @@ SMAC win rate & \texttt{smac\_logger.py} & progress.txt \\
 \end{tabular}
 \end{table}
 
-更详细的文件和行号记录见 \texttt{logs/code\_reading.md}。
+HARL 中 HAPPO 与 MAPPO 的核心差别主要体现在 runner 和 actor update 两层。HAPPO runner 初始化 factor 为 1，按固定或随机顺序遍历智能体；每个智能体更新前把当前 factor 写入 actor buffer，更新后用新旧策略动作概率比更新 factor。HAPPO actor loss 中的 clipped surrogate 会额外乘以 \texttt{factor\_batch}。MAPPO actor 同样计算 PPO clipped surrogate，但没有 HAPPO 的顺序 factor；在参数共享模式下，它把多个智能体的数据合并后更新共享 actor。GAE 则位于 critic buffer 的 \texttt{compute\_returns} 中，由 TD residual 递推得到 return。更详细的文件和行号记录见 \texttt{logs/code\_reading.md}。
 
 \section{环境配置}
 
-本节待根据 \texttt{logs/setup.md} 和实际安装日志补充。当前已确认本机具备 NVIDIA GeForce RTX 5090，但尚未安装专用 PyTorch/HARL/SMAC 环境，且 \texttt{SC2PATH} 尚未设置。
+实验在本机 Linux 环境中进行。硬件为 NVIDIA GeForce RTX 5090，显存约 32GB。软件环境使用 Conda 创建 \texttt{harl\_hw3}，Python 版本为 3.10，PyTorch 为 \texttt{2.12.0+cu130}，CUDA 可用。HARL 克隆到 \texttt{external/HARL}，commit 为 \texttt{b1af98b0dbab72a2eee9d160751cd09aedbb8ce2}。
+
+SMAC 依赖使用 oxwhirl 的 StarCraft Multi-Agent Challenge 包，而不是 PyPI 上同名的算法配置优化库。StarCraft II Linux 4.10 下载自 Blizzard 的 Linux package，安装到 \texttt{/home/yongqian/StarCraftII}。SMAC maps 已复制到 \texttt{/home/yongqian/StarCraftII/Maps/SMAC\_Maps}，共 23 张。环境验证包括：\texttt{python -m smac.bin.map\_list} 能列出 \texttt{3s5z} 与 \texttt{8m\_vs\_9m}；\texttt{python -m smac.examples.random\_agents} 能成功启动 SC2 并完成 10 个 episode。
+
+实际安装中遇到两个问题。第一，PyPI 包名 \texttt{smac} 默认安装的是 SMAC3，而不是星际争霸环境，因此安装脚本改为从 \texttt{https://github.com/oxwhirl/smac.git} 安装。第二，当前 PyTorch 2.12 与 NumPy 1.23 的 \texttt{torch.from\_numpy} 组合会失败，因此环境使用 NumPy 2，并通过 \texttt{scripts/patch\_harl\_numpy2.py} 把 HARL 中旧的 \texttt{np.int}/\texttt{np.bool} 写法替换为 Python 内置类型。
 
 \section{实验设置}
 
-实验矩阵包括 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。
+实验矩阵包括 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。四组实验命令由 \texttt{scripts/run\_smac\_experiments.sh} 统一管理，\texttt{dry-run} 模式打印命令，\texttt{smoke} 模式将 \texttt{num\_env\_steps} 降到 1000 用于验证流程，\texttt{full} 模式保留 tuned config 中的正式训练步数。
+
+\begin{table}[h]
+\centering
+\caption{实验矩阵}
+\begin{tabular}{lll}
+\toprule
+算法 & 地图 & 配置来源 \\
+\midrule
+MAPPO & \texttt{3s5z} & generated config \\
+HAPPO & \texttt{3s5z} & HARL tuned config \\
+MAPPO & \texttt{8m\_vs\_9m} & generated config \\
+HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{结果与分析}
 
@@ -87,11 +106,11 @@ SMAC win rate & \texttt{smac\_logger.py} & progress.txt \\
 \caption{\texttt{8m\_vs\_9m} smoke test eval win rate。}
 \end{figure}
 
-正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于 smoke test，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；但 1000 步远低于 HARL tuned config 中的 2000 万步，不能用于判断 MAPPO 与 HAPPO 的真实性能。
 
 \section{结论}
 
-待实验完成后总结 MAPPO/HAPPO 的收敛速度、最终胜率、稳定性差异和资源限制。
+当前阶段已经完成环境配置、代码阅读定位、四组 smoke test 和自动绘图。后续正式训练完成后，应把 smoke 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。
 
 \bibliography{references}
 \bibliographystyle{icml2022}

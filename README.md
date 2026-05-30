@@ -10,6 +10,7 @@
 - `scripts/`：环境安装、训练、日志收集和绘图脚本。
 - `logs/`：作业摘要、环境检查、代码阅读和实验笔记。
 - `report/`：研究性报告骨架。
+- `SUBMISSION.md`：提交、GitHub 同步、正式训练和 PDF 导出的检查清单。
 
 ## 推荐流程
 
@@ -29,7 +30,7 @@
 
 ## GitHub
 
-本地 Git 仓库已初始化，但当前未配置 remote。配置后可执行：
+本地 Git 仓库已初始化，但当前未配置 remote，且当前系统没有 `gh`。配置后可执行：
 
 ```bash
 git remote add origin <your-github-repo-url>
@@ -37,3 +38,7 @@ git push -u origin main
 ```
 
 之后每个关键修改继续使用独立 commit，并同步更新 `PROGRESS.md`。
+
+## 提交
+
+交付前按 `SUBMISSION.md` 检查 PDF、补充材料、压缩包命名和 GitHub 同步状态。

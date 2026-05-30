@@ -7,6 +7,7 @@
 - 工作区：已初始化为 Git 仓库，默认分支为 `main`。
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；当前未配置 GitHub remote，不能直接 push 到 GitHub。
+- GitHub CLI：当前未安装 `gh`，需要 remote URL 才能同步。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -18,12 +19,13 @@
 | 2026-05-30 | `5d35696` | 建立 README、脚本、日志、报告骨架和 ICML LaTeX 样式文件 | `bash -n`、`py_compile`、`collect_progress.py` |
 | 2026-05-30 | `8f446f0` | 给 HARL 环境安装脚本加入 gym fallback | `bash -n scripts/setup_env.sh` |
 | 2026-05-30 | `ec95d34` | 修正 SMAC 安装来源为 oxwhirl/SMAC | `from smac.env import StarCraft2Env` |
-| 2026-05-30 | `dc0837a` | 稳定 HARL 环境安装：conda gym、NumPy 兼容、setuptools 约束 | `torch.cuda.is_available()`、`numpy==1.23.5` |
+| 2026-05-30 | `dc0837a` | 稳定 HARL 环境安装：conda gym、NumPy 兼容、setuptools 约束 | `torch.cuda.is_available()` |
 | 2026-05-30 | `69903ad` | 给 SMAC 训练脚本加入 `dry-run` 模式 | `bash scripts/run_smac_experiments.sh dry-run` |
 | 2026-05-30 | `549810a` | 保存两个生成的 MAPPO SMAC 配置 | `rg share_param results/processed/generated_mappo_*.json` |
 | 2026-05-30 | `8b0267a` | 修正收集/绘图脚本默认扫描 HARL `examples/results` | `py_compile` |
 | 2026-05-30 | `ec9259a` | 加入 HARL NumPy 2 兼容补丁脚本 | `torch.from_numpy(np.zeros(...))` |
 | 2026-05-30 | `7e106a7` | 完成 4 组 SMAC smoke test，提交 raw progress、汇总 CSV 和 win rate 图 | `bash scripts/run_smac_experiments.sh smoke`、`plot_win_rate.py` |
+| 2026-05-30 | `2730a64` | 更新文档，记录 SC2/SMAC/smoke test 成功状态 | `git log --oneline` |
 
 ## 任务清单
 
@@ -33,11 +35,11 @@
 - [x] 初始化 Git 仓库。
 - [x] 建立进度追踪文档。
 - [x] 建立项目 README、目录结构和报告骨架。
+- [x] 建立提交检查清单。
 - [ ] 配置 GitHub remote 并 push 提交。本地当前没有 remote。
 
 ### 2. 环境与依赖
 
-- [ ] 克隆或接入 HARL 仓库。
 - [x] 克隆或接入 HARL 仓库。
 - [x] 建立 Python/Conda 环境安装脚本。
 - [x] 验证 PyTorch、CUDA、HARL、SMAC Python package。
@@ -69,13 +71,13 @@
 - [x] 生成 smoke win rate 曲线。
 - [ ] 生成正式训练曲线。
 - [x] 建立报告骨架。
-- [ ] 写入算法简介、代码对应、环境配置、实验结果和讨论。
+- [x] 写入算法简介、代码对应、环境配置、smoke 结果和讨论。
+- [ ] 写入正式训练结果和讨论。
 - [ ] 导出 PDF。
 
 ## 下一步
 
 1. 配置 GitHub remote 后执行 `git push -u origin main`。
-2. 如需同步到 GitHub，配置 remote 并 push。
-3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
-4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
-5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
+2. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
+3. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
+4. 用正式训练曲线替换或补充报告中的 smoke 曲线。
