@@ -25,6 +25,10 @@ map,algo,exp,run,step,eval_average_episode_reward,eval_win_rate,path
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,1920000,18.83778872556937,0.8292682926829268,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2000000,19.371647350993374,0.875,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2080000,19.39242549668874,0.9,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
+3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2160000,19.532062671620093,0.8780487804878049,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
+3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2240000,19.334188741721853,0.875,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
+3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2320000,19.59109998384752,0.926829268292683,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
+3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,2400000,19.681167218543045,0.95,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,800,4.635761589403976,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,1600,5.306291390728482,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,2400,3.9056291390728552,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
