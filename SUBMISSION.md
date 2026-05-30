@@ -13,6 +13,7 @@
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test 与 pilot 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
+- `logs/submission_validation.md`：提交前产物完整性检查。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
