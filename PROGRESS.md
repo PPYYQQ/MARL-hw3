@@ -6,8 +6,8 @@
 
 - 工作区：已初始化为 Git 仓库，默认分支为 `main`。
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
-- GitHub 状态：本地 Git 可用；当前未配置 GitHub remote，不能直接 push 到 GitHub。
-- GitHub CLI：当前未安装 `gh`，需要 remote URL 才能同步。
+- GitHub 状态：本地 Git 可用；`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。
+- GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，尚未同步到远端。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -30,6 +30,8 @@
 | 2026-05-30 | `57e1afd` | 增加 HTML 报告、Chrome PDF 构建脚本，并导出 3 页 PDF | `bash scripts/build_report_pdf.sh`、`pdfinfo` |
 | 2026-05-30 | `6d201b9` | 记录已生成 PDF 的进度状态 | `git log --oneline` |
 | 2026-05-30 | `55fd9a8` | 增加 pilot/PRINT_ONLY 模式、正式训练交接文档和交付压缩包脚本 | `bash -n`、`py_compile`、`package_submission.sh` |
+| 2026-05-30 | `49e9ee5` | 记录打包工作流进度 | `git log --oneline` |
+| 2026-05-30 | `c487a88` | 完成 HAPPO + `3s5z` 10000-step pilot，更新 raw progress、CSV、曲线、报告和打包内容 | `run_smac_experiments.sh pilot`、`collect_progress.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
 
 ## 任务清单
 
@@ -43,7 +45,8 @@
 - [x] 导出当前 3 页 PDF 报告草稿。
 - [x] 建立正式训练交接文档。
 - [x] 建立 smoke 版交付压缩包脚本。
-- [ ] 配置 GitHub remote 并 push 提交。本地当前没有 remote。
+- [x] 配置 GitHub remote。
+- [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
 
 ### 2. 环境与依赖
 
@@ -70,6 +73,7 @@
 - [x] 完成 dry-run，打印 4 个实验命令。
 - [x] 完成 smoke test。
 - [x] 增加 `pilot` 短跑模式和 `PRINT_ONLY=true` 预览开关。
+- [x] 完成 HAPPO + `3s5z` 10000-step pilot。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -77,6 +81,7 @@
 - [x] 编写 `progress.txt` 收集脚本。
 - [x] 编写 win rate 绘图脚本。
 - [x] 生成 smoke win rate 曲线。
+- [x] 生成包含 HAPPO `3s5z` pilot 的 win rate 曲线。
 - [ ] 生成正式训练曲线。
 - [x] 建立报告骨架。
 - [x] 写入算法简介、代码对应、环境配置、smoke 结果和讨论。
@@ -86,7 +91,7 @@
 
 ## 下一步
 
-1. 配置 GitHub remote 后执行 `git push -u origin main`。
+1. 配置 GitHub 凭据后执行 `git push -u origin main`。
 2. 补全 `report/main.tex` 和 `report/report.html` 中的姓名、学号和邮箱。
 3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
 4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
