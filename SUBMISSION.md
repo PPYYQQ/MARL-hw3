@@ -115,4 +115,11 @@ xelatex main.tex
 STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh
 ```
 
-脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。
+打包前建议先运行：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> python3 scripts/apply_student_info.py
+bash scripts/build_report_pdf.sh
+```
+
+打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。

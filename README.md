@@ -29,8 +29,9 @@
 11. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
 12. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
 13. 运行 `python scripts/validate_submission.py` 生成提交前校验报告。
-14. 补全 `report/main.tex` 或 `report/report.html`，再运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
-15. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
+14. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python scripts/apply_student_info.py` 补全报告身份信息。
+15. 运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
+16. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
 
 ## 关键说明
 

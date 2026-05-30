@@ -74,3 +74,10 @@ python3 scripts/validate_submission.py
 最后更新报告中的正式训练结果讨论，并为关键修改建立 Git commit。
 
 生成交付压缩包时，`scripts/package_submission.sh` 会默认先运行提交校验；若只是调试打包脚本，可临时设置 `SKIP_VALIDATION=true`。
+
+提交前用 `scripts/apply_student_info.py` 写入姓名、学号和邮箱，再重新导出 PDF：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> python3 scripts/apply_student_info.py
+bash scripts/build_report_pdf.sh
+```
