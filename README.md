@@ -22,7 +22,7 @@
 6. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full` 做正式训练。
 7. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
 8. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
-9. 补全 `report/main.tex` 并导出 PDF。
+9. 补全 `report/main.tex` 或 `report/report.html`，再运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
 
 ## 关键说明
 

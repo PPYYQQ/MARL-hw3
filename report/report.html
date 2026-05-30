@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>MAPPO 与 HAPPO 在 SMAC 上的复现实验</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm 14mm;
+    }
+    body {
+      color: #111;
+      font-family: "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", "Times New Roman", serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      margin: 0;
+    }
+    h1, h2, h3 {
+      font-family: "Noto Sans CJK SC", "Source Han Sans SC", "SimHei", Arial, sans-serif;
+      line-height: 1.2;
+      margin: 0 0 0.45em;
+    }
+    h1 {
+      font-size: 20pt;
+      text-align: center;
+    }
+    h2 {
+      border-bottom: 1px solid #bbb;
+      font-size: 13pt;
+      margin-top: 1.1em;
+      padding-bottom: 0.15em;
+    }
+    h3 {
+      font-size: 11pt;
+      margin-top: 0.9em;
+    }
+    p {
+      margin: 0 0 0.65em;
+      text-align: justify;
+    }
+    .meta {
+      margin-bottom: 1.2em;
+      text-align: center;
+    }
+    .abstract {
+      border: 1px solid #bbb;
+      margin: 0 auto 1em;
+      max-width: 95%;
+      padding: 0.7em 0.9em;
+    }
+    .columns {
+      column-count: 2;
+      column-gap: 8mm;
+    }
+    table {
+      border-collapse: collapse;
+      font-size: 9.2pt;
+      margin: 0.7em 0;
+      width: 100%;
+    }
+    th, td {
+      border-bottom: 1px solid #d0d0d0;
+      padding: 0.28em 0.3em;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      border-top: 1px solid #555;
+      font-weight: 700;
+    }
+    code {
+      font-family: "DejaVu Sans Mono", "Consolas", monospace;
+      font-size: 0.9em;
+    }
+    figure {
+      break-inside: avoid;
+      margin: 0.8em 0;
+    }
+    img {
+      border: 1px solid #ccc;
+      display: block;
+      max-width: 100%;
+    }
+    figcaption {
+      color: #333;
+      font-size: 9pt;
+      margin-top: 0.3em;
+      text-align: center;
+    }
+    .refs {
+      font-size: 9pt;
+    }
+  </style>
+</head>
+<body>
+  <h1>MAPPO 与 HAPPO 在 SMAC 上的复现实验</h1>
+  <div class="meta">学号：待填写　姓名：待填写　邮箱：待填写</div>
+
+  <div class="abstract">
+    <strong>摘要：</strong>
+    本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、<code>progress.txt</code> 汇总和 win rate 绘图。由于正式长训练尚未完成，本文现阶段报告重点是复现流程、代码对应关系和初步验证结果。
+  </div>
+
+  <div class="columns">
+    <h2>1. 引言</h2>
+    <p>星际争霸多智能体挑战（SMAC）提供了完全合作的多智能体微操任务，适合评估多智能体强化学习算法的协同决策能力。每个智能体只能观察局部信息并选择离散动作，但训练和评估关注的是团队是否能击败敌方单位。本作业关注 MAPPO 与 HAPPO 在 SMAC 上的训练、测试和分析流程。</p>
+
+    <h2>2. 算法概述</h2>
+    <h3>MAPPO</h3>
+    <p>MAPPO 可以理解为将单智能体 PPO 扩展到多智能体合作场景。每个智能体执行去中心化策略，训练阶段使用集中式信息估计价值函数，并通过 PPO clipped surrogate objective 限制策略更新幅度。相比从零设计复杂的 credit assignment 机制，MAPPO 的重点是把 PPO 中优势估计、策略比值裁剪、熵正则和集中式 critic 组合成稳定的 on-policy 多智能体训练流程。</p>
+
+    <h3>HAPPO</h3>
+    <p>HAPPO 在异质智能体场景下引入顺序策略更新。其核心思想是使用多智能体优势分解，并在更新当前智能体时通过 factor 修正前序智能体策略更新对联合策略概率比的影响。与 MAPPO 直接独立或共享更新 actor 不同，HAPPO 在一个 update 内按智能体顺序逐个更新策略，并把已经更新过的智能体对联合策略概率的影响累积到后续智能体的 surrogate objective 中。</p>
+
+    <h2>3. HARL 代码对应</h2>
+    <table>
+      <thead>
+        <tr><th>概念</th><th>HARL 位置</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>HAPPO actor</td><td><code>happo.py:10</code></td><td>定义 HAPPO actor 更新逻辑。</td></tr>
+        <tr><td>MAPPO actor</td><td><code>mappo.py:10</code></td><td>定义 MAPPO actor 更新逻辑。</td></tr>
+        <tr><td>PPO clip</td><td><code>happo.py:73</code></td><td>在 importance ratio 上做 clip。</td></tr>
+        <tr><td>HAPPO factor</td><td><code>happo.py:79</code></td><td>actor loss 乘以前序策略更新 factor。</td></tr>
+        <tr><td>factor 更新</td><td><code>on_policy_ha_runner.py:115</code></td><td>用新旧动作概率比更新 factor。</td></tr>
+        <tr><td>GAE</td><td><code>on_policy_critic_buffer_ep.py:97</code></td><td>从后往前递推 return。</td></tr>
+        <tr><td>win rate</td><td><code>smac_logger.py:166</code></td><td>写入 <code>progress.txt</code> 第三列。</td></tr>
+      </tbody>
+    </table>
+    <p>HARL 中 HAPPO 与 MAPPO 的核心差别主要体现在 runner 和 actor update 两层。HAPPO runner 初始化 factor 为 1，按固定或随机顺序遍历智能体；每个智能体更新前把当前 factor 写入 actor buffer，更新后用新旧策略动作概率比更新 factor。MAPPO actor 同样计算 PPO clipped surrogate，但没有 HAPPO 的顺序 factor。</p>
+
+    <h2>4. 环境配置</h2>
+    <p>实验在本机 Linux 环境中进行。硬件为 NVIDIA GeForce RTX 5090，显存约 32GB。软件环境使用 Conda 创建 <code>harl_hw3</code>，Python 版本为 3.10，PyTorch 为 <code>2.12.0+cu130</code>，CUDA 可用。HARL 克隆到 <code>external/HARL</code>，commit 为 <code>b1af98b0dbab72a2eee9d160751cd09aedbb8ce2</code>。</p>
+    <p>SMAC 依赖使用 oxwhirl 的 StarCraft Multi-Agent Challenge 包，而不是 PyPI 上同名的算法配置优化库。StarCraft II Linux 4.10 安装到 <code>/home/yongqian/StarCraftII</code>，SMAC maps 已复制到 <code>Maps/SMAC_Maps</code>，共 23 张。验证命令 <code>python -m smac.bin.map_list</code> 能列出目标地图，<code>python -m smac.examples.random_agents</code> 能成功启动 SC2。</p>
+    <p>实际安装中还处理了 PyTorch 2.12 与 NumPy 1.23 的兼容问题：环境改用 NumPy 2，并通过 <code>scripts/patch_harl_numpy2.py</code> 把 HARL 中旧的 <code>np.int</code>/<code>np.bool</code> 写法替换为 Python 内置类型。</p>
+
+    <h2>5. 复现流程</h2>
+    <p>复现过程被拆分为环境安装、命令生成、短训练验证、日志汇总和绘图五个阶段。环境安装由 <code>scripts/setup_env.sh</code> 管理，目标是避免在 base Python 3.13 环境中混装 PyTorch、SMAC 和 HARL。脚本会创建 <code>harl_hw3</code> 环境、安装 HARL editable package、安装 oxwhirl SMAC、安装 gym 0.21，并执行导入检查。</p>
+    <p>训练命令由 <code>scripts/run_smac_experiments.sh</code> 管理。该脚本提供三种模式：<code>dry-run</code> 打印四组实验命令；<code>smoke</code> 把训练步数、并行环境数和评估 episode 降到很小，用于确认 SC2 可以启动且 HARL 可以写出日志；<code>full</code> 保留 tuned config 的正式训练设置。这样可以先快速验证链路，再把同一套命令用于长时间正式训练。</p>
+    <p>日志处理由 <code>scripts/collect_progress.py</code> 和 <code>scripts/plot_win_rate.py</code> 完成。HARL 的 SMAC logger 在 evaluation 阶段将 <code>total_num_steps</code>、平均 episode reward 和 <code>eval_win_rate</code> 写入 <code>progress.txt</code>。收集脚本会扫描 HARL 输出目录和本作业保存的 raw 目录，按地图、算法、实验名、run 和 step 去重，再输出统一 CSV。绘图脚本读取同一批数据，按地图生成 MAPPO/HAPPO 曲线。</p>
+
+    <h2>6. 实验设置</h2>
+    <p>实验矩阵包括 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。</p>
+    <table>
+      <thead>
+        <tr><th>算法</th><th>地图</th><th>配置来源</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>MAPPO</td><td><code>3s5z</code></td><td>generated config</td></tr>
+        <tr><td>HAPPO</td><td><code>3s5z</code></td><td>HARL tuned config</td></tr>
+        <tr><td>MAPPO</td><td><code>8m_vs_9m</code></td><td>generated config</td></tr>
+        <tr><td>HAPPO</td><td><code>8m_vs_9m</code></td><td>HARL tuned config</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. 结果与分析</h2>
+    <p>目前已完成 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。由于步数很少，四组实验的 eval win rate 均为 0，因此这些曲线不能作为最终算法性能结论。</p>
+    <figure>
+      <img src="../figures/win_rate_3s5z.png" alt="3s5z win rate">
+      <figcaption><code>3s5z</code> smoke test eval win rate。</figcaption>
+    </figure>
+    <figure>
+      <img src="../figures/win_rate_8m_vs_9m.png" alt="8m_vs_9m win rate">
+      <figcaption><code>8m_vs_9m</code> smoke test eval win rate。</figcaption>
+    </figure>
+    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于 smoke test，主要结论是训练、评估、日志、汇总和绘图链路已经打通；但 1000 步远低于 HARL tuned config 中的 2000 万步。</p>
+
+    <h2>8. 局限性</h2>
+    <p>当前结果的主要局限是训练步数不足。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此 smoke test 的 win rate 为 0 并不说明算法无效，只说明当前运行仅覆盖了流程验证。正式报告中应补充完整训练曲线，或明确说明计算预算不足导致未完成正式复现。</p>
+
+    <h2>9. 结论</h2>
+    <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test 和自动绘图。后续正式训练完成后，应把 smoke 曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。若计算资源不足，报告需要明确说明只完成了流程验证，并把正式训练命令、配置和资源瓶颈作为复现实验记录的一部分。</p>
+
+    <h2>参考文献</h2>
+    <div class="refs">
+      <p>[1] Yu, C. et al. The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games. NeurIPS, 2022.</p>
+      <p>[2] Zhong, Y. et al. Heterogeneous-Agent Reinforcement Learning. JMLR, 2024.</p>
+      <p>[3] Samvelyan, M. et al. The StarCraft Multi-Agent Challenge. arXiv:1902.04043, 2019.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -61,7 +61,13 @@ git push
 
 ## PDF 导出
 
-安装 LaTeX 后，在仓库根目录执行：
+当前本机没有 LaTeX，但有 Chrome，已经可以用 HTML 版报告导出 PDF：
+
+```bash
+bash scripts/build_report_pdf.sh
+```
+
+安装 LaTeX 后，也可以在仓库根目录执行：
 
 ```bash
 cd report
