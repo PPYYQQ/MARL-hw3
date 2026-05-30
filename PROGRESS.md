@@ -32,6 +32,9 @@
 | 2026-05-30 | `55fd9a8` | 增加 pilot/PRINT_ONLY 模式、正式训练交接文档和交付压缩包脚本 | `bash -n`、`py_compile`、`package_submission.sh` |
 | 2026-05-30 | `49e9ee5` | 记录打包工作流进度 | `git log --oneline` |
 | 2026-05-30 | `c487a88` | 完成 HAPPO + `3s5z` 10000-step pilot，更新 raw progress、CSV、曲线、报告和打包内容 | `run_smac_experiments.sh pilot`、`collect_progress.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
+| 2026-05-30 | `61a155b` | 记录第一组 pilot 进度和 GitHub 凭据阻塞状态 | `git log --oneline` |
+| 2026-05-30 | `2ff9c73` | 修正 README 中 GitHub push 凭据说明 | `git log --oneline` |
+| 2026-05-30 | `785c08c` | 完成剩余 3 组 10000-step pilot，形成 MAPPO/HAPPO × 2 maps 的完整 pilot 矩阵 | `run_smac_experiments.sh pilot`、`collect_progress.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
 
 ## 任务清单
 
@@ -73,7 +76,7 @@
 - [x] 完成 dry-run，打印 4 个实验命令。
 - [x] 完成 smoke test。
 - [x] 增加 `pilot` 短跑模式和 `PRINT_ONLY=true` 预览开关。
-- [x] 完成 HAPPO + `3s5z` 10000-step pilot。
+- [x] 完成 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 四组 10000-step pilot。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -81,12 +84,12 @@
 - [x] 编写 `progress.txt` 收集脚本。
 - [x] 编写 win rate 绘图脚本。
 - [x] 生成 smoke win rate 曲线。
-- [x] 生成包含 HAPPO `3s5z` pilot 的 win rate 曲线。
+- [x] 生成包含四组 pilot 的 win rate 曲线。
 - [ ] 生成正式训练曲线。
 - [x] 建立报告骨架。
-- [x] 写入算法简介、代码对应、环境配置、smoke 结果和讨论。
+- [x] 写入算法简介、代码对应、环境配置、smoke/pilot 结果和讨论。
 - [ ] 写入正式训练结果和讨论。
-- [x] 导出 smoke 版 PDF。
+- [x] 导出 smoke/pilot 版 PDF。
 - [ ] 导出正式训练版 PDF。
 
 ## 下一步
