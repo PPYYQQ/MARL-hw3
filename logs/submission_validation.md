@@ -27,10 +27,12 @@
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
 | `report/main.tex` | WARN | student identity placeholders still present |
 | `report/report.html` | WARN | student identity placeholders still present |
+| `git remote origin` | OK | https://github.com/PPYYQQ/MARL-hw3.git |
+| `git upstream` | WARN | branch `main` has no upstream; push with `git push -u origin main` |
 
 ## Summary
 
 - Failures: 0
-- Warnings: 2
+- Warnings: 3
 - GitHub push is not validated here; `PROGRESS.md` records the current credential blocker.
 - Student identity fields are warnings because they require user-provided name, ID and email.

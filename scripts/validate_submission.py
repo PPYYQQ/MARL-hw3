@@ -129,6 +129,41 @@ def placeholder_check(path: Path) -> Check:
     return ok(str(path), "student identity placeholders not found")
 
 
+def run_git(args: list[str]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["git", *args],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+
+def git_remote_check() -> Check:
+    result = run_git(["remote", "get-url", "origin"])
+    if result.returncode != 0:
+        return fail("git remote origin", "origin remote is not configured")
+    url = result.stdout.strip()
+    if not url:
+        return fail("git remote origin", "origin remote URL is empty")
+    return ok("git remote origin", url)
+
+
+def git_upstream_check() -> Check:
+    branch = run_git(["branch", "--show-current"])
+    branch_name = branch.stdout.strip() or "unknown"
+    upstream = run_git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"])
+    if upstream.returncode != 0:
+        return warn("git upstream", f"branch `{branch_name}` has no upstream; push with `git push -u origin {branch_name}`")
+
+    left_right = run_git(["rev-list", "--left-right", "--count", "HEAD...@{u}"])
+    if left_right.returncode != 0:
+        return warn("git upstream", "upstream exists but ahead/behind count is unavailable")
+    ahead, behind = left_right.stdout.split()
+    if ahead != "0" or behind != "0":
+        return warn("git upstream", f"ahead {ahead}, behind {behind}")
+    return ok("git upstream", "branch is synchronized with upstream")
+
+
 def render_markdown(checks: list[Check]) -> str:
     lines = [
         "# Submission Validation",
@@ -176,6 +211,8 @@ def main() -> None:
     checks.append(count_configs(Path("configs/smac"), expected=4))
     checks.append(placeholder_check(Path("report/main.tex")))
     checks.append(placeholder_check(Path("report/report.html")))
+    checks.append(git_remote_check())
+    checks.append(git_upstream_check())
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(render_markdown(checks), encoding="utf-8")
