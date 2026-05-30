@@ -75,6 +75,13 @@ def count_progress(root: Path, expected: int) -> Check:
     return status(str(root), f"{len(files)} progress.txt files; expected at least {expected}")
 
 
+def optional_progress_check(root: Path, expected: int) -> Check:
+    files = sorted(root.rglob("progress.txt")) if root.exists() else []
+    if len(files) >= expected:
+        return ok(str(root), f"{len(files)} progress.txt files; expected at least {expected}")
+    return warn(str(root), f"{len(files)} progress.txt files; full training not complete")
+
+
 def count_configs(root: Path, expected: int) -> Check:
     files = sorted(root.rglob("config.json")) if root.exists() else []
     status = ok if len(files) >= expected else fail
@@ -186,6 +193,7 @@ def render_markdown(checks: list[Check]) -> str:
             f"- Warnings: {warnings}",
             "- GitHub push is not validated here; `PROGRESS.md` records the current credential blocker.",
             "- Student identity fields are warnings because they require user-provided name, ID and email.",
+            "- `results/raw/full` remains a warning until full training progress files are synced.",
             "",
         ]
     )
@@ -209,6 +217,7 @@ def main() -> None:
     checks.append(progress_csv_check(Path("results/processed/progress_summary.csv")))
     checks.append(count_progress(Path("results/raw/smoke"), expected=4))
     checks.append(count_progress(Path("results/raw/pilot"), expected=4))
+    checks.append(optional_progress_check(Path("results/raw/full"), expected=4))
     checks.append(count_configs(Path("configs/smac"), expected=4))
     checks.append(placeholder_check(Path("report/main.tex")))
     checks.append(placeholder_check(Path("report/report.html")))

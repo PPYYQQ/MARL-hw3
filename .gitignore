@@ -19,6 +19,8 @@ results/raw/*
 !results/raw/smoke/**
 !results/raw/pilot/
 !results/raw/pilot/**
+!results/raw/full/
+!results/raw/full/**
 results/checkpoints/
 wandb/
 runs/

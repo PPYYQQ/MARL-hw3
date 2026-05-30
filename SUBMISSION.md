@@ -10,6 +10,7 @@
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
+- `results/raw/full/`：正式训练完成后同步进来的原始 `progress.txt`；当前仅预留目录。
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test 与 pilot 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
@@ -61,6 +62,7 @@ bash scripts/launch_training_tmux.sh full
 训练完成后生成曲线：
 
 ```bash
+python3 scripts/sync_harl_results.py --mode full
 python3 scripts/collect_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
@@ -108,6 +110,7 @@ xelatex main.tex
 - `results/processed/progress_summary.md`
 - `results/raw/smoke/`
 - `results/raw/pilot/`
+- `results/raw/full/`，如果正式训练已经完成
 
 不要包含：
 

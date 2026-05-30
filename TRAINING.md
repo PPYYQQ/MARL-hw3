@@ -59,6 +59,7 @@ MAPS=3s5z ALGOS=happo SEEDS=1 bash scripts/launch_training_tmux.sh full
 训练完成后运行：
 
 ```bash
+python3 scripts/sync_harl_results.py --mode full
 python3 scripts/collect_progress.py
 python3 scripts/summarize_progress.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
@@ -72,6 +73,7 @@ python3 scripts/validate_submission.py
 
 - `results/processed/progress_summary.csv`
 - `results/processed/progress_summary.md`
+- `results/raw/full/`
 - `figures/win_rate_3s5z.png`
 - `figures/win_rate_8m_vs_9m.png`
 - `configs/smac/`

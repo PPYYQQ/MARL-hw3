@@ -85,6 +85,10 @@ REQUIRED_PATHS=(
   results/raw/pilot
 )
 
+OPTIONAL_PATHS=(
+  results/raw/full
+)
+
 for path in "${REQUIRED_PATHS[@]}"; do
   require_path "${path}"
 done
@@ -94,6 +98,12 @@ trap 'rm -rf "${STAGE_DIR}"' EXIT
 
 for path in "${REQUIRED_PATHS[@]}"; do
   copy_item "${path}"
+done
+
+for path in "${OPTIONAL_PATHS[@]}"; do
+  if [ -e "${ROOT_DIR}/${path}" ]; then
+    copy_item "${path}"
+  fi
 done
 
 mkdir -p "${DIST_DIR}"

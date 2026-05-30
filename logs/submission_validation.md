@@ -25,6 +25,7 @@
 | `results/processed/progress_summary.csv` | OK | 72 data rows |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
+| `results/raw/full` | WARN | 0 progress.txt files; full training not complete |
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
 | `report/main.tex` | WARN | student identity placeholders still present |
 | `report/report.html` | WARN | student identity placeholders still present |
@@ -34,6 +35,7 @@
 ## Summary
 
 - Failures: 0
-- Warnings: 3
+- Warnings: 4
 - GitHub push is not validated here; `PROGRESS.md` records the current credential blocker.
 - Student identity fields are warnings because they require user-provided name, ID and email.
+- `results/raw/full` remains a warning until full training progress files are synced.

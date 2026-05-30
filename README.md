@@ -25,14 +25,15 @@
 7. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 做短跑检查。
 8. 运行 `bash scripts/launch_training_tmux.sh full` 在 tmux 中启动正式训练。
 9. 运行 `bash scripts/snapshot_configs.sh` 保存本次使用的配置快照。
-10. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
-11. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
-12. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
-13. 运行 `python scripts/generate_artifact_manifest.py` 生成产物哈希清单。
-14. 运行 `python scripts/validate_submission.py` 生成提交前校验报告。
-15. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python scripts/apply_student_info.py` 补全报告身份信息。
-16. 运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
-17. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
+10. 运行 `python scripts/sync_harl_results.py --mode full` 将正式训练 `progress.txt` 复制到 `results/raw/full/`。
+11. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
+12. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
+13. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
+14. 运行 `python scripts/generate_artifact_manifest.py` 生成产物哈希清单。
+15. 运行 `python scripts/validate_submission.py` 生成提交前校验报告。
+16. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python scripts/apply_student_info.py` 补全报告身份信息。
+17. 运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
+18. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
 
 也可以在学生信息确定后运行一键准备脚本：
 

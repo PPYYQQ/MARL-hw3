@@ -47,6 +47,7 @@ cd "${ROOT_DIR}"
 
 run_step python3 scripts/apply_student_info.py
 run_step bash scripts/snapshot_configs.sh
+run_step python3 scripts/sync_harl_results.py --mode full
 run_step python3 scripts/collect_progress.py
 run_step python3 scripts/summarize_progress.py
 run_step conda run -n "${CONDA_ENV}" python scripts/plot_win_rate.py

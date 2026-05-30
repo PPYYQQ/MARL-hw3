@@ -20,6 +20,7 @@ INCLUDE_PATHS = [
     Path("results/processed"),
     Path("results/raw/smoke"),
     Path("results/raw/pilot"),
+    Path("results/raw/full"),
     Path("logs"),
 ]
 
