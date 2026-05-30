@@ -8,7 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`。
 - GitHub CLI：当前未安装 `gh`；非交互式 HTTPS push 缺少 GitHub 凭据，且 `main` 尚无 upstream，尚未同步到远端。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 到 240000-step checkpoint。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -62,6 +62,8 @@
 | 2026-05-31 | `5d343c6` | 增加正式训练 `progress.txt` 同步脚本，并将 `results/raw/full` 纳入 manifest、校验和打包流程 | `sync_harl_results.py`、`validate_submission.py`、`package_submission.sh` |
 | 2026-05-31 | `78f6aaa` | 记录正式训练结果同步脚本进度 | `git log --oneline` |
 | 2026-05-31 | `7ce16d7` | 启动单 seed 正式训练 tmux 会话，并记录资源、命令和结果整理入口 | `logs/full_training_status.md`、`tmux has-session` |
+| 2026-05-31 | `3bafb6e` | 记录正式训练 tmux 会话运行状态 | `git log --oneline` |
+| 2026-05-31 | `f3a7ac8` | 同步 `MAPPO` + `3s5z` 阶段性 full checkpoint 到 240000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`collect_progress.py`、`plot_win_rate.py`、`validate_submission.py` |
 
 ## 任务清单
 
@@ -113,6 +115,7 @@
 - [x] 增加 `pilot` 短跑模式和 `PRINT_ONLY=true` 预览开关。
 - [x] 完成 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 四组 10000-step pilot。
 - [x] 启动单 seed 正式训练 tmux 会话。
+- [x] 同步首个阶段性 full checkpoint。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -123,6 +126,7 @@
 - [x] 编写 win rate 绘图脚本。
 - [x] 生成 smoke win rate 曲线。
 - [x] 生成包含四组 pilot 的 win rate 曲线。
+- [x] 生成包含阶段性 full checkpoint 的 win rate 曲线。
 - [ ] 生成正式训练曲线。
 - [x] 建立报告骨架。
 - [x] 写入算法简介、代码对应、环境配置、smoke/pilot 结果和讨论。
