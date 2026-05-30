@@ -15,7 +15,7 @@
 
 ## 推荐流程
 
-1. 配置 GitHub remote 后 push 当前本地提交。
+1. 配置 GitHub 凭据后 push 当前本地提交。
 2. 运行 `bash scripts/setup_env.sh` 创建 HARL/SMAC 环境。
 3. 安装 StarCraft II Linux 4.10，设置 `SC2PATH`，并安装 SMAC maps。当前本机已安装到 `/home/yongqian/StarCraftII`。
 4. 运行 `bash scripts/run_smac_experiments.sh dry-run` 检查 4 个实验命令。
