@@ -47,6 +47,8 @@
 | 2026-05-30 | `a4d350a` | 打包脚本默认先运行提交校验，失败时停止生成压缩包 | `package_submission.sh`、`validate_submission.py` |
 | 2026-05-30 | `9d005c1` | 记录打包校验门禁进度 | `git log --oneline` |
 | 2026-05-30 | `72db082` | 增加学生身份信息写入脚本，支持用环境变量同步更新 LaTeX 与 HTML 报告 | `apply_student_info.py`、`package_submission.sh` |
+| 2026-05-30 | `ef5d92b` | 记录学生身份信息脚本进度 | `git log --oneline` |
+| 2026-05-30 | `da93301` | 增加一键最终提交准备脚本，串联身份写入、配置快照、汇总、绘图、PDF、校验和打包 | `prepare_submission.sh`、`validate_submission.py` |
 
 ## 任务清单
 
@@ -62,6 +64,7 @@
 - [x] 建立 smoke 版交付压缩包脚本。
 - [x] 建立提交前产物校验脚本和校验报告。
 - [x] 建立学生身份信息写入脚本。
+- [x] 建立一键最终提交准备脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [ ] push 提交到 GitHub。当前缺少 GitHub HTTPS 凭据。
@@ -115,4 +118,4 @@
 3. 运行正式训练：`conda run -n harl_hw3 bash scripts/run_smac_experiments.sh full`。
 4. 正式训练完成后重新运行 `python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
 5. 用正式训练曲线替换或补充报告中的 smoke 曲线。
-6. 设置 `STUDENT_ID`、`STUDENT_NAME` 后运行 `bash scripts/package_submission.sh` 生成压缩包。
+6. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。
