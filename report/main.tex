@@ -26,7 +26,7 @@
 ]
 
 \begin{abstract}
-本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已完成 \texttt{3s5z} 上 MAPPO 与 HAPPO 的 20000000-step 运行，\texttt{8m\_vs\_9m} MAPPO full run latest synced checkpoint 为 960000 steps。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、\texttt{3s5z} full 结果和阶段性验证结果。
+本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已完成 \texttt{3s5z} 上 MAPPO 与 HAPPO 的 20000000-step 运行，\texttt{8m\_vs\_9m} MAPPO full run latest synced checkpoint 为 1360000 steps。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、\texttt{3s5z} full 结果和阶段性验证结果。
 \end{abstract}
 
 \section{引言}
@@ -100,7 +100,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 
 \section{结果与分析}
 
-目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 \texttt{3s5z} MAPPO 与 HAPPO 的完整 20000000-step 结果，\texttt{8m\_vs\_9m} MAPPO full run latest synced checkpoint 为 960000 steps。由于 \texttt{8m\_vs\_9m} full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。
+目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 \texttt{3s5z} MAPPO 与 HAPPO 的完整 20000000-step 结果，\texttt{8m\_vs\_9m} MAPPO full run latest synced checkpoint 为 1360000 steps。由于 \texttt{8m\_vs\_9m} full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。
 
 \begin{table}[h]
 \centering
@@ -126,7 +126,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \midrule
 \texttt{3s5z} & MAPPO & 20000000 & 19.8764 / 0.975 & 1.0 \\
 \texttt{3s5z} & HAPPO & 20000000 & 19.3452 / 0.875 & 1.0 \\
-\texttt{8m\_vs\_9m} & MAPPO & 960000 & 11.7324 / 0.125 & 0.2 \\
+\texttt{8m\_vs\_9m} & MAPPO & 1360000 & 10.8345 / 0.05 & 0.2 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -147,7 +147,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 
 \section{局限性}
 
-当前结果的主要局限是完整矩阵尚未训练结束。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 \texttt{8m\_vs\_9m} 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此 \texttt{8m\_vs\_9m} 当前只有 smoke/pilot 与 960000-step early full checkpoint，并不说明算法无效；它只说明该地图的 full run 还未产出可比较的正式结果。正式报告中应继续补充 \texttt{8m\_vs\_9m} 的完整 full 曲线。
+当前结果的主要局限是完整矩阵尚未训练结束。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 \texttt{8m\_vs\_9m} 这种非对称地图，随机策略和短训练几乎不可能得到胜利。因此 \texttt{8m\_vs\_9m} 当前只有 smoke/pilot 与 1360000-step early full checkpoint，并不说明算法无效；它只说明该地图的 full run 还未产出可比较的正式结果。正式报告中应继续补充 \texttt{8m\_vs\_9m} 的完整 full 曲线。
 
 \section{结论}
 
