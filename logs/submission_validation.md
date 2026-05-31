@@ -22,8 +22,8 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 1014837 bytes; 3 pages |
-| `results/processed/progress_summary.csv` | OK | 919 data rows |
+| `report/main.pdf` | OK | 1014438 bytes; 3 pages |
+| `results/processed/progress_summary.csv` | OK | 923 data rows |
 | `full training matrix` | WARN | incomplete full runs: happo+8m_vs_9m 5120000/20000000 |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
