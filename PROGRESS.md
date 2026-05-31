@@ -126,6 +126,7 @@
 | 2026-05-31 | `39f2759` | 给 full training 快照加入 stale 检测，标出 `HAPPO` + `8m_vs_9m` 暂无新 progress 行 | `check_full_training_status.py`、`validate_submission.py`、`package_submission.sh` |
 | 2026-05-31 | `0d3b899` | 提交前校验加入 full training matrix 完整性 warning，明确剩余 `HAPPO` + `8m_vs_9m` 未达到 20000000 steps | `validate_submission.py`、`package_submission.sh` |
 | 2026-05-31 | `d4205b0` | 记录 stale full run 的非破坏性恢复流程，保留旧结果并用新 session/prefix 单独重跑缺失组合 | `TRAINING.md`、`SUBMISSION.md`、`full_training_status.md` |
+| 2026-05-31 | `c871450` | 启动 `HAPPO` + `8m_vs_9m` recovery full run，并让状态快照列出 `hw3*` tmux sessions | `launch_training_tmux.sh`、`check_full_training_status.py`、`validate_submission.py` |
 
 ## 任务清单
 
