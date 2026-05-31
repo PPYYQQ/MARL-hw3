@@ -134,6 +134,7 @@
 | 2026-05-31 | `e9422e8` | 同步 `HAPPO` + `8m_vs_9m` recovery run 到 1600000 steps，更新汇总、曲线、报告、PDF 和校验清单 | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh`、`validate_submission.py` |
 | 2026-05-31 | `562aef9` | 同步 `HAPPO` + `8m_vs_9m` recovery run 到 1920000 steps，更新汇总、曲线、报告、PDF 和校验清单 | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh`、`validate_submission.py` |
 | 2026-05-31 | `bff53da` | 同步 `HAPPO` + `8m_vs_9m` recovery run 到 2160000 steps，更新汇总、曲线、报告、PDF 和校验清单 | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh`、`validate_submission.py` |
+| 2026-05-31 | `d16c961` | 同步 `HAPPO` + `8m_vs_9m` recovery run 到 2480000 steps，更新汇总、曲线、报告、PDF 和校验清单 | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh`、`validate_submission.py` |
 
 ## 任务清单
 
