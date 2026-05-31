@@ -191,7 +191,7 @@ def render_markdown(checks: list[Check]) -> str:
             "",
             f"- Failures: {failures}",
             f"- Warnings: {warnings}",
-            "- GitHub push is not validated here; `PROGRESS.md` records the current credential blocker.",
+            "- GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.",
             "- Student identity fields are warnings because they require user-provided name, ID and email.",
             "- `results/raw/full` remains a warning until full training progress files are synced.",
             "",

@@ -21,19 +21,19 @@
 ## 仍需人工确认
 
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
-- GitHub push：`origin` 地址正确，已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`；失败原因是非交互式 HTTPS push 缺少 GitHub 凭据，当前系统也未安装 `gh`。
+- GitHub push：`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`；SSH 认证已通过，`main` 已同步到 `origin/main`。
 - LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
 - 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，`MAPPO` + `3s5z` 已同步完整 20000000-step 结果，`HAPPO` + `3s5z` 已同步到 18080000-step checkpoint。
 
 ## GitHub 同步
 
-配置 GitHub 凭据后执行：
+当前使用 SSH remote，正常同步命令为：
 
 ```bash
-git push -u origin main
+git push
 ```
 
-或使用不会修改 remote URL 的 token 辅助脚本：
+若改回 HTTPS remote，也可以使用不会修改 remote URL 的 token 辅助脚本：
 
 ```bash
 GITHUB_TOKEN=<token> bash scripts/push_to_github.sh

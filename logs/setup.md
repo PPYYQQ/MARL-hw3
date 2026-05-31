@@ -9,7 +9,7 @@
 - 当前 `numpy`：`2.2.6`
 - Conda：可用，当前激活 `base`
 - `SC2PATH`：未设置，但 PySC2 默认路径 `/home/yongqian/StarCraftII` 已可用
-- GitHub remote：`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`；push 仍需 GitHub 凭据
+- GitHub remote：`origin` 初始配置为 HTTPS，后续已切换为 `git@github.com:PPYYQQ/MARL-hw3.git` 并通过 SSH 推送
 
 ## HARL
 
@@ -47,7 +47,7 @@ conda run -n harl_hw3 python -m smac.bin.map_list
 
 - 正式训练尚未运行，当前已有 1000-step smoke test 和 4 组 10000-step pilot。
 - 本机没有 LaTeX 编译器，但已通过 Chrome HTML 流程导出 PDF。
-- GitHub push 需要配置 token/credential helper；非交互式 push 当前报错 `fatal: could not read Username for 'https://github.com': terminal prompts disabled`。
+- GitHub HTTPS push 曾因非交互式环境缺少用户名/token 凭据失败；已改用 SSH remote 推送。
 
 ## 验证命令
 

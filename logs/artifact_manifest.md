@@ -5,8 +5,8 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | Path | Size | SHA256 |
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
-| `README.md` | 3967 | `05938bde93f5560b921a597d1b3f68ac9572d34fc48629d8e3bfd8bb226fce8e` |
-| `SUBMISSION.md` | 4868 | `26ac932c10613e5d426d1620531c9fff09afcf5d4d0b3dd3fe2441a8602286c7` |
+| `README.md` | 3892 | `46c4287ca0b5b70184892dab222fb7aefbb9ec0e0537e52d753197f2c11a5fd0` |
+| `SUBMISSION.md` | 4847 | `23fab4209c4ec5f783b3a14d56bff42142aa1a7eeca3acbbeb6600ceb6f87b08` |
 | `TRAINING.md` | 3342 | `dd6b17ed2484a596ef9fb84a4ff7e1c88569b78f7286b31db5dfc59d928457b5` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
 | `configs/smac/3s5z/happo/config.json` | 2434 | `48bc0048366059c1c160d9010a67f8f106cab8640d288417c1215013c7024340` |
@@ -20,7 +20,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
 | `logs/experiment_notes.md` | 5664 | `a4dc93af55737329bb5ae71a2faaf27bddaf20e2c901b395104fdc45270aca52` |
 | `logs/full_training_status.md` | 2484 | `fc49c30b4a02ad6dc3a8a17090d84a9670c49908ed85eaf6c921528f5cddce9c` |
-| `logs/setup.md` | 2191 | `c04663b40de6e898df593188c25d1c29c6aab83aab2bd412a936d7631f2af25e` |
+| `logs/setup.md` | 2150 | `d353782d757de113ce3e4f878e413cb9a5051f4918cab9495a964ec0f27b0c43` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
 | `report/fancyhdr.sty` | 21006 | `b2fe599152ac8018b4fb9fd15d23a2a4333edc43b6289200afa3199b13048f54` |
@@ -62,10 +62,10 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `scripts/snapshot_configs.sh` | 1006 | `8f26d36324b7c25ab04566944973f76d28d24061fd57c7aba23475bc82ae721b` |
 | `scripts/summarize_progress.py` | 4178 | `0846741b74ca6d111464aa96bcd99a8d5e798996650788fcc6689c0e97b0612b` |
 | `scripts/sync_harl_results.py` | 2585 | `65f63298f7dd2ce099ba0df1767d7e82d403101d7889c9b8db2b05e53dd7a0cc` |
-| `scripts/validate_submission.py` | 8272 | `da57603ab1a0954b1f593541b60a6c8309253aa11569629c55a53050e541a324` |
+| `scripts/validate_submission.py` | 8285 | `a8a1de9f4d11b0d9648dbc7accc37f682f388a44c915171a8138d22b3c8ff28d` |
 
 ## Summary
 
 - Files: 59
-- Total bytes: 1472407
+- Total bytes: 1472283
 - Excludes generated validation and manifest files to avoid self-referential churn.
