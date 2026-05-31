@@ -8,7 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`，SSH 认证通过，`main` 已同步到 `origin/main`。
 - GitHub CLI：当前未安装 `gh`；已通过 SSH remote 完成推送，不再依赖 HTTPS 交互式凭据。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 完整 20000000-step 结果；`HAPPO` + `8m_vs_9m` 原始 full run latest synced checkpoint 为 5120000 steps。由于原始 run 长时间无新 progress 行，已另启 `hw3_recover_happo_8m` 只恢复 `HAPPO` + `8m_vs_9m`，recovery run 当前已同步到 2480000 steps。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 完整 20000000-step 结果；`HAPPO` + `8m_vs_9m` 原始 full run latest synced checkpoint 为 5120000 steps。由于原始 run 长时间无新 progress 行，已另启 `hw3_recover_happo_8m` 只恢复 `HAPPO` + `8m_vs_9m`，recovery run 当前已同步到 2640000 steps。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -205,7 +205,7 @@
 - [x] 诊断 `HAPPO` + `8m_vs_9m` 后续 full 训练状态；截至 2026-05-31 20:23 CST，外部与仓库 progress 均停在 64 行、5120000 steps，快照脚本标记为 `no recent progress`，tmux 会话仍 active。
 - [x] 记录 `HAPPO` + `8m_vs_9m` stale run 的非破坏性恢复命令。
 - [x] 启动 `hw3_recover_happo_8m`，只恢复 `HAPPO` + `8m_vs_9m` full run。
-- [x] 同步 `HAPPO` + `8m_vs_9m` recovery run 到 2480000 steps。
+- [x] 同步 `HAPPO` + `8m_vs_9m` recovery run 到 2640000 steps。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
