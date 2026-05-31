@@ -4,15 +4,15 @@
 
 ## 当前可提交内容
 
-- `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke test 结果和后续正式训练说明。
+- `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke/pilot 结果和 `3s5z` full 结果。
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
-- `results/raw/full/`：正式训练同步进来的阶段性 `progress.txt`；当前包含 `MAPPO` + `3s5z` 到 2560000-step 的 32 个 evaluation。
-- `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与阶段性 full checkpoint 的汇总结果。
-- `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与阶段性 full 曲线。
+- `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 `MAPPO` + `3s5z` 完整 20000000-step 结果，以及 `HAPPO` + `3s5z` 到 18080000-step 的阶段性结果。
+- `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与 full checkpoint 的汇总结果。
+- `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
 - `logs/submission_validation.md`：提交前产物完整性检查。
@@ -21,9 +21,9 @@
 ## 仍需人工确认
 
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
-- GitHub push：`origin` 已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`，但非交互式 HTTPS push 缺少 GitHub 凭据；当前系统也未安装 `gh`。
+- GitHub push：`origin` 地址正确，已配置为 `https://github.com/PPYYQQ/MARL-hw3.git`；失败原因是非交互式 HTTPS push 缺少 GitHub 凭据，当前系统也未安装 `gh`。
 - LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
-- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，并同步到 `MAPPO` + `3s5z` 的 2560000-step checkpoint。
+- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，`MAPPO` + `3s5z` 已同步完整 20000000-step 结果，`HAPPO` + `3s5z` 已同步到 18080000-step checkpoint。
 
 ## GitHub 同步
 

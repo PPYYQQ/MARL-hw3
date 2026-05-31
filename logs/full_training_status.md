@@ -26,7 +26,8 @@ env MAPS="3s5z 8m_vs_9m" ALGOS="mappo happo" SEEDS=1 EXP_PREFIX=hw3_full CUDA=tr
 - SC2 check: 20 `SC2_x64` rollout processes were active shortly after launch, matching the tuned config `n_rollout_threads=20`.
 - Progress check: `progress.txt` existed but was still 0 bytes at the first short observation window; full configs evaluate less frequently than smoke/pilot runs.
 - First evaluation: `MAPPO` + `3s5z` reached 80000 environment steps with eval reward 10.1708 and eval win rate 0.0; this row was synced into `results/raw/full/`.
-- Latest synced checkpoint: `MAPPO` + `3s5z` reached 2560000 environment steps with eval reward 19.1910 and eval win rate 0.875; best synced win rate is 1.0 at 2480000 steps.
+- Latest synced checkpoint: `MAPPO` + `3s5z` completed 20000000 environment steps with final eval reward 19.8764 and final eval win rate 0.975; best synced win rate is 1.0.
+- Latest synced checkpoint: `HAPPO` + `3s5z` reached 18080000 environment steps with eval reward 19.8293 and eval win rate 0.95; best synced win rate is 1.0.
 
 ## Monitoring
 

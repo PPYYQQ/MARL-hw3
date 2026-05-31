@@ -4,9 +4,10 @@ Source: `results/processed/progress_summary.csv`
 
 | Mode | Map | Algo | Rows | Final step | Final reward | Final win rate | Best reward | Best win rate |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| full | `3s5z` | happo | 226 | 18080000 | 19.8293 | 0.9500 | 20.0066 | 1.0000 |
 | pilot | `3s5z` | happo | 12 | 9600 | 4.0629 | 0.0000 | 9.5795 | 0.0000 |
 | smoke | `3s5z` | happo | 6 | 960 | 5.5166 | 0.0000 | 5.5166 | 0.0000 |
-| full | `3s5z` | mappo | 32 | 2560000 | 19.1910 | 0.8750 | 20.0020 | 1.0000 |
+| full | `3s5z` | mappo | 250 | 20000000 | 19.8764 | 0.9750 | 20.0115 | 1.0000 |
 | pilot | `3s5z` | mappo | 12 | 9600 | 7.6954 | 0.0000 | 10.4901 | 0.0000 |
 | smoke | `3s5z` | mappo | 6 | 960 | 6.4834 | 0.0000 | 6.9669 | 0.0000 |
 | pilot | `8m_vs_9m` | happo | 12 | 9600 | 5.0072 | 0.0000 | 7.5108 | 0.0000 |
