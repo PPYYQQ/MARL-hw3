@@ -21,8 +21,8 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 924602 bytes; 3 pages |
-| `results/processed/progress_summary.csv` | OK | 625 data rows |
+| `report/main.pdf` | OK | 925542 bytes; 3 pages |
+| `results/processed/progress_summary.csv` | OK | 628 data rows |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/full` | WARN | 3 progress.txt files; full training not complete |
