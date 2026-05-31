@@ -13,7 +13,7 @@
 - `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 `MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 的完整 20000000-step 结果，以及 `HAPPO` + `8m_vs_9m` 的 latest synced 5120000-step 早期 checkpoint。
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与 full checkpoint 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
-- `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
+- `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记和 full training 快照。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
 - `logs/submission_validation.md`：提交前产物完整性检查。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
@@ -64,6 +64,7 @@ bash scripts/launch_training_tmux.sh full
 ```bash
 python3 scripts/sync_harl_results.py --mode full
 python3 scripts/collect_progress.py
+python3 scripts/check_full_training_status.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
 

@@ -32,6 +32,7 @@ REQUIRED_FILES = [
     Path("results/processed/progress_summary.csv"),
     Path("results/processed/progress_summary.md"),
     Path("logs/artifact_manifest.md"),
+    Path("logs/full_training_snapshot.md"),
 ]
 
 REQUIRED_DIRS = [

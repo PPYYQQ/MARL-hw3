@@ -39,6 +39,7 @@ Use these commands while the run is active:
 ```bash
 tmux attach -t hw3_full_20260531_seed1
 tail -f logs/training_sessions/hw3_full_20260531_seed1.log
+python3 scripts/check_full_training_status.py
 find external/HARL/examples/results -path '*hw3_full*' -type f -name progress.txt -printf '%p %s bytes\n'
 nvidia-smi
 ```
@@ -51,6 +52,7 @@ After one or more full runs produce non-empty `progress.txt` files:
 python3 scripts/sync_harl_results.py --mode full
 python3 scripts/collect_progress.py
 python3 scripts/summarize_progress.py
+python3 scripts/check_full_training_status.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 bash scripts/build_report_pdf.sh
 python3 scripts/generate_artifact_manifest.py

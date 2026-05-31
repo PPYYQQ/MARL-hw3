@@ -142,6 +142,7 @@
 - [x] 建立 GitHub token 推送辅助脚本。
 - [x] 建立提交产物哈希清单生成脚本。
 - [x] 建立正式训练结果同步脚本。
+- [x] 建立正式训练状态快照脚本。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [x] push 提交到 GitHub。已使用 SSH remote 同步 `main`。
