@@ -193,6 +193,7 @@
 - [x] 同步 `MAPPO` + `8m_vs_9m` 完整 20000000-step 结果。
 - [x] 同步 `HAPPO` + `8m_vs_9m` 5120000-step 早期 full checkpoint。
 - [x] 诊断 `HAPPO` + `8m_vs_9m` 后续 full 训练状态；截至 2026-05-31 20:23 CST，外部与仓库 progress 均停在 64 行、5120000 steps，快照脚本标记为 `no recent progress`，tmux 会话仍 active。
+- [x] 记录 `HAPPO` + `8m_vs_9m` stale run 的非破坏性恢复命令。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
@@ -219,6 +220,7 @@
 
 1. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python3 scripts/apply_student_info.py`，再重新导出 PDF。
 2. 监控正式训练：`tmux attach -t hw3_full_20260531_seed1`，或查看 `logs/full_training_status.md`。
-3. `HAPPO` + `8m_vs_9m` 继续产出后运行 `python scripts/sync_harl_results.py --mode full`、`python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
-4. 用完整矩阵正式训练曲线替换或补充报告中的阶段性曲线。
-5. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。
+3. 如果当前 `HAPPO` + `8m_vs_9m` run 继续保持 `no recent progress`，保留旧结果并用 `SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full` 单独恢复缺失组合。
+4. `HAPPO` + `8m_vs_9m` 继续产出后运行 `python scripts/sync_harl_results.py --mode full`、`python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
+5. 用完整矩阵正式训练曲线替换或补充报告中的阶段性曲线。
+6. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。

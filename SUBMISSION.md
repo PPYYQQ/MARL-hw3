@@ -68,6 +68,12 @@ python3 scripts/check_full_training_status.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
 
+如果快照显示 `HAPPO` + `8m_vs_9m` 长时间没有新 `progress.txt` 行，保留原始 run，并用新的 session/prefix 单独恢复缺失组合：
+
+```bash
+SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
+```
+
 然后更新 `report/main.tex` 的结果讨论，并提交：
 
 ```bash

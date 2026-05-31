@@ -6,8 +6,8 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
 | `README.md` | 4030 | `2c98f9b3862a426fff33b6d59a7aec779bb691d528202c06e94e22a40750803c` |
-| `SUBMISSION.md` | 5206 | `0587099b618a2c4e4f37f5ed0f5bf61f4bf4e426b589d1c564b2c0917e165313` |
-| `TRAINING.md` | 3512 | `8e1c965262d26b64f789be4ba316c3efab4e799df20c7bded0ab69bd6cae58ed` |
+| `SUBMISSION.md` | 5503 | `fb48efcf562b1f6f4958d036f7ad771225a381ad297de91782b994e4b790285a` |
+| `TRAINING.md` | 4256 | `3c56b61a8a04646d8b140985ce46ba8095153c960fbdde8fbb183e3f80b10701` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
 | `configs/smac/3s5z/happo/config.json` | 2434 | `48bc0048366059c1c160d9010a67f8f106cab8640d288417c1215013c7024340` |
 | `configs/smac/3s5z/mappo/config.json` | 2432 | `1c2c4611a42c67f6efd17ab3802056f14c846a1c239ac7eecdf42ab1d71c3318` |
@@ -19,8 +19,8 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `logs/assignment_summary.md` | 1339 | `c7202a238d582b3ccf44116add27e4354d689326faa6debd780fa7f19efc80c6` |
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
 | `logs/experiment_notes.md` | 6852 | `b98c639524541eee9b7371f62a766df1702c13cb9daa0f3d2233641591e35650` |
-| `logs/full_training_snapshot.md` | 1143 | `e5742e1b972e036b63970e570fe2cc670646c1fff1ea1c1d6e9f9ea575681d0d` |
-| `logs/full_training_status.md` | 3450 | `bef04dcc8776991cf962baa54dfa8320b7e0cf7fbb71cc8889796ea97b9ecdb7` |
+| `logs/full_training_snapshot.md` | 1143 | `3efa186ee6931ccb86e0e4968264ab6e290f79ed05de414d1d7c51369c2aa83c` |
+| `logs/full_training_status.md` | 4110 | `e931ba631ca3e358c6310b923f3a72b4f4747e47114b099c149f4f6e4ea2c6ca` |
 | `logs/setup.md` | 2150 | `d353782d757de113ce3e4f878e413cb9a5051f4918cab9495a964ec0f27b0c43` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
@@ -66,10 +66,10 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `scripts/snapshot_configs.sh` | 1006 | `8f26d36324b7c25ab04566944973f76d28d24061fd57c7aba23475bc82ae721b` |
 | `scripts/summarize_progress.py` | 4178 | `0846741b74ca6d111464aa96bcd99a8d5e798996650788fcc6689c0e97b0612b` |
 | `scripts/sync_harl_results.py` | 2585 | `65f63298f7dd2ce099ba0df1767d7e82d403101d7889c9b8db2b05e53dd7a0cc` |
-| `scripts/validate_submission.py` | 9896 | `7361923c1b30207bcc6e619fd4646569307048982681fd12c579897d5ab86ac4` |
+| `scripts/validate_submission.py` | 9926 | `0ee8be8c829776508fa5522e295e98d77c8167b72c097e64601e22885bfa719d` |
 
 ## Summary
 
 - Files: 63
-- Total bytes: 1803890
+- Total bytes: 1805621
 - Excludes generated validation and manifest files to avoid self-referential churn.

@@ -44,6 +44,16 @@ find external/HARL/examples/results -path '*hw3_full*' -type f -name progress.tx
 nvidia-smi
 ```
 
+## Stale Run Handling
+
+If `logs/full_training_snapshot.md` marks an incomplete run as `no recent progress`, keep the existing output directory intact and launch a recovery run with a different tmux session and `EXP_PREFIX`. For the current missing matrix entry, the non-destructive recovery command is:
+
+```bash
+SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
+```
+
+After the recovery run writes `progress.txt`, rerun the normal result collection commands below. The old `hw3_full` run remains available for audit, while the recovery run is collected as a separate full run path.
+
 ## Result Collection
 
 After one or more full runs produce non-empty `progress.txt` files:

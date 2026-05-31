@@ -54,6 +54,22 @@ LAUNCH_DRY_RUN=true SEEDS="1 2 3" bash scripts/launch_training_tmux.sh full
 MAPS=3s5z ALGOS=happo SEEDS=1 bash scripts/launch_training_tmux.sh full
 ```
 
+如果 `logs/full_training_snapshot.md` 将某个未完成 run 标为 `no recent progress`，先确认当前会话、进程和 GPU 状态：
+
+```bash
+python3 scripts/check_full_training_status.py
+tmux attach -t hw3_full_20260531_seed1
+nvidia-smi
+```
+
+若确认需要重跑缺失组合，不要删除旧结果；使用新的 tmux session 和 `EXP_PREFIX` 保留原始 run，单独启动缺失组合：
+
+```bash
+SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
+```
+
+恢复 run 产出后，仍使用同一套同步、汇总、绘图和校验命令。`collect_progress.py` 会按 run path 保留记录，`summarize_progress.py` 会在摘要中显示新的 full run。
+
 ## 结果整理
 
 训练完成后运行：
