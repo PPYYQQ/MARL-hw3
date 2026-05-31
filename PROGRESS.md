@@ -8,7 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`，SSH 认证通过，`main` 已同步到 `origin/main`。
 - GitHub CLI：当前未安装 `gh`；已通过 SSH remote 完成推送，不再依赖 HTTPS 交互式凭据。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 完整 20000000-step 结果，并同步 `HAPPO` + `3s5z` 到 19280000-step checkpoint。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 完整 20000000-step 结果，并同步 `HAPPO` + `3s5z` 到 19520000-step checkpoint。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -95,6 +95,7 @@
 | 2026-05-31 | `5f782a1` | 记录 18800000-step HAPPO checkpoint 进度 | `git log --oneline` |
 | 2026-05-31 | `1da832c` | 同步 `HAPPO` + `3s5z` 阶段性 full checkpoint 到 19040000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
 | 2026-05-31 | `a695365` | 记录 19040000-step HAPPO checkpoint 进度 | `git log --oneline` |
+| 2026-05-31 | `3455272` | 同步 `HAPPO` + `3s5z` 阶段性 full checkpoint 到 19280000 steps，更新汇总、曲线、报告和 PDF | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh` |
 
 ## 任务清单
 
@@ -153,6 +154,7 @@
 - [x] 同步 `HAPPO` + `3s5z` 阶段性 18800000-step checkpoint。
 - [x] 同步 `HAPPO` + `3s5z` 阶段性 19040000-step checkpoint。
 - [x] 同步 `HAPPO` + `3s5z` 阶段性 19280000-step checkpoint。
+- [x] 同步 `HAPPO` + `3s5z` 阶段性 19520000-step checkpoint。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
