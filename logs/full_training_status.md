@@ -54,6 +54,18 @@ SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_re
 
 After the recovery run writes `progress.txt`, rerun the normal result collection commands below. The old `hw3_full` run remains available for audit, while the recovery run is collected as a separate full run path.
 
+## Recovery Launch
+
+- Date: 2026-05-31 20:32 Asia/Shanghai
+- tmux session: `hw3_recover_happo_8m`
+- Log file: `logs/training_sessions/hw3_recover_happo_8m.log`
+- Purpose: rerun only `HAPPO` + `8m_vs_9m` with `EXP_PREFIX=hw3_recover` because the original `hw3_full` run had no new `progress.txt` row for more than 3 hours.
+- Command:
+
+```bash
+SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
+```
+
 ## Result Collection
 
 After one or more full runs produce non-empty `progress.txt` files:

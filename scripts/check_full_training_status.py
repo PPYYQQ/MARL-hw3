@@ -31,6 +31,13 @@ def tmux_status(session: str) -> str:
     return "active" if result.returncode == 0 else "inactive"
 
 
+def matching_tmux_sessions(prefix: str) -> list[str]:
+    result = run_command(["tmux", "list-sessions", "-F", "#{session_name}"])
+    if result.returncode != 0:
+        return []
+    return sorted(line for line in result.stdout.splitlines() if line.startswith(prefix))
+
+
 def parse_progress(path: Path, now: datetime) -> ProgressSummary | None:
     if not path.is_file() or path.stat().st_size == 0:
         return None
@@ -81,14 +88,16 @@ def run_state(summary: ProgressSummary, target_steps: int, stale_minutes: int) -
     return "in progress"
 
 
-def render_snapshot(source_root: Path, raw_root: Path, session: str, exp_prefix: str, target_steps: int, stale_minutes: int) -> str:
+def render_snapshot(source_root: Path, raw_root: Path, session: str, session_prefix: str, exp_prefix: str, target_steps: int, stale_minutes: int) -> str:
     now = datetime.now().astimezone()
     generated = now.strftime("%Y-%m-%d %H:%M:%S %Z")
+    sessions = matching_tmux_sessions(session_prefix)
     lines = [
         "# Full Training Snapshot",
         "",
         f"- Generated: {generated}",
         f"- tmux session `{session}`: {tmux_status(session)}",
+        f"- Matching tmux sessions `{session_prefix}*`: {', '.join(sessions) if sessions else 'none'}",
         f"- Source: `{source_root}`",
         f"- Synced raw root: `{raw_root}`",
         f"- Target full steps: {target_steps}",
@@ -138,13 +147,22 @@ def main() -> None:
     parser.add_argument("--source", type=Path, default=Path("external/HARL/examples/results"))
     parser.add_argument("--raw-root", type=Path, default=Path("results/raw/full"))
     parser.add_argument("--session", default="hw3_full_20260531_seed1")
-    parser.add_argument("--exp-prefix", default="hw3_full")
+    parser.add_argument("--session-prefix", default="hw3")
+    parser.add_argument("--exp-prefix", default="hw3")
     parser.add_argument("--target-steps", type=int, default=20_000_000)
     parser.add_argument("--stale-minutes", type=int, default=120)
     parser.add_argument("--output", type=Path, default=Path("logs/full_training_snapshot.md"))
     args = parser.parse_args()
 
-    snapshot = render_snapshot(args.source, args.raw_root, args.session, args.exp_prefix, args.target_steps, args.stale_minutes)
+    snapshot = render_snapshot(
+        args.source,
+        args.raw_root,
+        args.session,
+        args.session_prefix,
+        args.exp_prefix,
+        args.target_steps,
+        args.stale_minutes,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(snapshot, encoding="utf-8")
     print(f"output={args.output}")

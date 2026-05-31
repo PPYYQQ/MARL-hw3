@@ -68,7 +68,7 @@ nvidia-smi
 SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
 ```
 
-恢复 run 产出后，仍使用同一套同步、汇总、绘图和校验命令。`collect_progress.py` 会按 run path 保留记录，`summarize_progress.py` 会在摘要中显示新的 full run。
+恢复 run 产出后，仍使用同一套同步、汇总、绘图和校验命令。`check_full_training_status.py` 默认扫描 `hw3*` full run 并列出 `hw3*` tmux sessions，因此会同时显示原始 `hw3_full` 和恢复用的 `hw3_recover`；`collect_progress.py` 会按 run path 保留记录，`summarize_progress.py` 会在摘要中显示新的 full run。
 
 ## 结果整理
 
