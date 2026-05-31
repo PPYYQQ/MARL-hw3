@@ -8,7 +8,7 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`，SSH 认证通过，`main` 已同步到 `origin/main`。
 - GitHub CLI：当前未安装 `gh`；已通过 SSH remote 完成推送，不再依赖 HTTPS 交互式凭据。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 和 `HAPPO` + `3s5z` 完整 20000000-step 结果；`MAPPO` + `8m_vs_9m` full run latest synced checkpoint 为 5360000 steps。
+- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z` 和 `HAPPO` + `3s5z` 完整 20000000-step 结果；`MAPPO` + `8m_vs_9m` full run latest synced checkpoint 为 5600000 steps。
 - 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
 
 ## 提交记录
@@ -115,6 +115,7 @@
 | 2026-05-31 | `87373a1` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 4720000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
 | 2026-05-31 | `ecc8a2a` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 4960000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
 | 2026-05-31 | `8bc429f` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 5120000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
+| 2026-05-31 | `4fe654e` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 5360000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
 
 ## 任务清单
 
@@ -176,7 +177,7 @@
 - [x] 同步 `HAPPO` + `3s5z` 阶段性 19520000-step checkpoint。
 - [x] 同步 `HAPPO` + `3s5z` 阶段性 19680000-step checkpoint。
 - [x] 同步 `HAPPO` + `3s5z` 完整 20000000-step 结果。
-- [x] 同步 `MAPPO` + `8m_vs_9m` 5360000-step 早期 full checkpoint。
+- [x] 同步 `MAPPO` + `8m_vs_9m` 5600000-step 早期 full checkpoint。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
