@@ -26,7 +26,7 @@
 ]
 
 \begin{abstract}
-本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已完成 \texttt{3s5z} MAPPO 的 20000000-step 运行，并同步到 \texttt{3s5z} HAPPO 的 18480000-step checkpoint。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、\texttt{3s5z} full 结果和阶段性验证结果。
+本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已完成 \texttt{3s5z} MAPPO 的 20000000-step 运行，并同步到 \texttt{3s5z} HAPPO 的 18800000-step checkpoint。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、\texttt{3s5z} full 结果和阶段性验证结果。
 \end{abstract}
 
 \section{引言}
@@ -100,7 +100,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 
 \section{结果与分析}
 
-目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 \texttt{3s5z} MAPPO 的完整 20000000-step 结果，以及 \texttt{3s5z} HAPPO 到 18480000-step 的阶段性结果。由于 \texttt{8m\_vs\_9m} full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。
+目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 \texttt{3s5z} MAPPO 的完整 20000000-step 结果，以及 \texttt{3s5z} HAPPO 到 18800000-step 的阶段性结果。由于 \texttt{8m\_vs\_9m} full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。
 
 \begin{table}[h]
 \centering
@@ -125,7 +125,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 地图 & 算法 & Step & Final reward / win rate & Best win rate \\
 \midrule
 \texttt{3s5z} & MAPPO & 20000000 & 19.8764 / 0.975 & 1.0 \\
-\texttt{3s5z} & HAPPO & 18480000 & 19.4248 / 0.875 & 1.0 \\
+\texttt{3s5z} & HAPPO & 18800000 & 19.6272 / 0.9024 & 1.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -142,7 +142,7 @@ HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
 \caption{\texttt{8m\_vs\_9m} smoke/pilot eval win rate；该地图 full run 尚未到达第一轮评估。}
 \end{figure}
 
-正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前同步结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；MAPPO/\texttt{3s5z} 已完成 20000000 steps，final eval win rate 为 0.975，best win rate 为 1.0；HAPPO/\texttt{3s5z} 已同步到 18480000 steps，当前 eval win rate 为 0.875，best win rate 为 1.0。由于 HAPPO/\texttt{3s5z} 和 \texttt{8m\_vs\_9m} full run 尚未全部完成，当前结果只支持对 \texttt{3s5z} 的阶段性比较。
+正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前同步结果，主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；MAPPO/\texttt{3s5z} 已完成 20000000 steps，final eval win rate 为 0.975，best win rate 为 1.0；HAPPO/\texttt{3s5z} 已同步到 18800000 steps，当前 eval win rate 为 0.9024，best win rate 为 1.0。由于 HAPPO/\texttt{3s5z} 和 \texttt{8m\_vs\_9m} full run 尚未全部完成，当前结果只支持对 \texttt{3s5z} 的阶段性比较。
 
 \section{局限性}
 
