@@ -4,7 +4,7 @@ Source: `results/processed/progress_summary.csv`
 
 | Mode | Map | Algo | Rows | Final step | Final reward | Final win rate | Best reward | Best win rate |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| full | `3s5z` | happo | 235 | 18800000 | 19.6272 | 0.9024 | 20.0066 | 1.0000 |
+| full | `3s5z` | happo | 238 | 19040000 | 19.3715 | 0.8750 | 20.0066 | 1.0000 |
 | pilot | `3s5z` | happo | 12 | 9600 | 4.0629 | 0.0000 | 9.5795 | 0.0000 |
 | smoke | `3s5z` | happo | 6 | 960 | 5.5166 | 0.0000 | 5.5166 | 0.0000 |
 | full | `3s5z` | mappo | 250 | 20000000 | 19.8764 | 0.9750 | 20.0115 | 1.0000 |

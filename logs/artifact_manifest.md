@@ -6,7 +6,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
 | `README.md` | 3892 | `46c4287ca0b5b70184892dab222fb7aefbb9ec0e0537e52d753197f2c11a5fd0` |
-| `SUBMISSION.md` | 4847 | `101350cd5890ae72b8c501d88739389ee4dc5163182892f7eb792170bb0f56f7` |
+| `SUBMISSION.md` | 4847 | `776265c6d7898d99f731dfae96d157d152e5e050a6e1ae468a52df03a5efe3c6` |
 | `TRAINING.md` | 3342 | `dd6b17ed2484a596ef9fb84a4ff7e1c88569b78f7286b31db5dfc59d928457b5` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
 | `configs/smac/3s5z/happo/config.json` | 2434 | `48bc0048366059c1c160d9010a67f8f106cab8640d288417c1215013c7024340` |
@@ -14,12 +14,12 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `configs/smac/8m_vs_9m/happo/config.json` | 2439 | `bd57c642bced3ec766a51f6ef91b8bef1a9fa324836c6181ac40cf9baae4186f` |
 | `configs/smac/8m_vs_9m/mappo/config.json` | 2437 | `dcc9e05f4e9fd732e9070d7c646aed16b4b68d5dd5497348882363ada81bdb34` |
 | `figures/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
-| `figures/win_rate_3s5z.png` | 175344 | `1d3baa2b835ff14bd4a475bc4b019dcf7868eb8f441202056eac63a66dd1a7a8` |
+| `figures/win_rate_3s5z.png` | 175713 | `bc670123ae4d1d15db6f104ff71aa55cd716d5871ef59169c0a991959bc44ad0` |
 | `figures/win_rate_8m_vs_9m.png` | 75862 | `5332a6dd34e254895fc87bbbde0957d04914411a8ace122285cc5be3f3f55273` |
 | `logs/assignment_summary.md` | 1339 | `c7202a238d582b3ccf44116add27e4354d689326faa6debd780fa7f19efc80c6` |
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
-| `logs/experiment_notes.md` | 5666 | `62f5ab09e5a6e35ea0a2fadac51948c86c5ff74af7d6ad6851af1046ce05bc30` |
-| `logs/full_training_status.md` | 2486 | `55fb16856ca792f04d35f0236ae3c0920c494d5ee98cb1710bfbf16c3a5eb916` |
+| `logs/experiment_notes.md` | 5665 | `b45ec6ceedc30e36c526396f3b42f1a68c0436d4ad1a2241235fdcf9036b1ef7` |
+| `logs/full_training_status.md` | 2485 | `0f1bfa63ec26b4717cbcaaf0148daf5d621af90eca246378fe46beabe4f05dbe` |
 | `logs/setup.md` | 2150 | `d353782d757de113ce3e4f878e413cb9a5051f4918cab9495a964ec0f27b0c43` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
@@ -27,17 +27,17 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `report/figures/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `report/icml2022.bst` | 27147 | `fcc631f383cd339d2f0cbb94490b790cd7b465c745db210a9357c27029d4dee8` |
 | `report/icml2022.sty` | 27802 | `f5e3d42a426f63097d303081319fafd9bbec745a9051098934ddc9c396c39bd0` |
-| `report/main.pdf` | 886293 | `2576d066814c3e9c417228630e71a79b217c8e702eb338d25c81ae48f351b8b8` |
-| `report/main.tex` | 11114 | `911e0464b85b4fd3d5451da1dc62cb23d4d22acb873b3269ac1a005b857b7eda` |
+| `report/main.pdf` | 886649 | `7746ec9618b78561ba27968b2234de2711864ce1f12255d783ed95bf402c0f8a` |
+| `report/main.tex` | 11112 | `554d9925d5e3bd2d0ccdeb3cef4e8e4f8b5e4549ccc0113a47ea787cee01be28` |
 | `report/references.bib` | 1058 | `c23a6b2a26d787f8922f7e5411aa61c3286e6af153b9e059fbaf8760e4c06f54` |
-| `report/report.html` | 13333 | `852d62c8e6ed436e6a828a499f1013e99c38d6d3db83c615b10e05e43d90b6eb` |
+| `report/report.html` | 13331 | `0aad30530b6d87458e56dae946e82788aa1d81ffa5bc910a351cbe5e711e6bae` |
 | `results/processed/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `results/processed/generated_mappo_3s5z.json` | 2432 | `1c2c4611a42c67f6efd17ab3802056f14c846a1c239ac7eecdf42ab1d71c3318` |
 | `results/processed/generated_mappo_8m_vs_9m.json` | 2437 | `dcc9e05f4e9fd732e9070d7c646aed16b4b68d5dd5497348882363ada81bdb34` |
-| `results/processed/progress_summary.csv` | 112148 | `598bff01959ac46ade0e5988a7b370c7ee5b25059051172e307d0127b696b781` |
-| `results/processed/progress_summary.md` | 1472 | `35bb2743e56e710621a0f35f38dafe0863355158643ea0aececc47dbfb63487b` |
+| `results/processed/progress_summary.csv` | 112754 | `b8fddc67ed8dcce835b17e92f10d6bb8dbfe05c929dbfdb332d8756bb49d216c` |
+| `results/processed/progress_summary.md` | 1472 | `c5d6eac941904fc78773616c3bd45344f97daa4274a36f0e06436213d42973a2` |
 | `results/raw/full/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
-| `results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt` | 7793 | `5ad37b458414e5b8a7666ba926c3224d95e50f6a601ab63e37ce335372092ec0` |
+| `results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt` | 7892 | `04bfdc47e75c023973fea33eb4ba858894865c4873a9d0c0a74e91c476571211` |
 | `results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt` | 8008 | `3334360ee530c130403d5824c8c48b7404d3f33e708af37badf198cbd336da14` |
 | `results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt` | 324 | `f6ba095bf3dec3518d1aa2a3e2aca2e43e649558daf78fb61472042dae101ce9` |
 | `results/raw/pilot/smac/3s5z/mappo/hw3_pilot_mappo_3s5z/seed-00001-2026-05-30-23-20-22/progress.txt` | 323 | `25bc9203644c4ff3981bf12e21614558d4c070849481df2924b923dde1c1005a` |
@@ -67,5 +67,5 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 ## Summary
 
 - Files: 59
-- Total bytes: 1476858
+- Total bytes: 1478282
 - Excludes generated validation and manifest files to avoid self-referential churn.
