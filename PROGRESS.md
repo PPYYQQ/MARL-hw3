@@ -124,6 +124,7 @@
 | 2026-05-31 | `6130033` | 记录 `HAPPO` + `8m_vs_9m` full 训练诊断：进程仍 active，但暂无新 checkpoint 可同步 | `tmux`、`pgrep`、`nvidia-smi`、`validate_submission.py` |
 | 2026-05-31 | `e30b3d4` | 增加 full training 状态快照脚本，接入一键准备流程、提交校验和训练交接文档 | `check_full_training_status.py`、`validate_submission.py`、`package_submission.sh` |
 | 2026-05-31 | `39f2759` | 给 full training 快照加入 stale 检测，标出 `HAPPO` + `8m_vs_9m` 暂无新 progress 行 | `check_full_training_status.py`、`validate_submission.py`、`package_submission.sh` |
+| 2026-05-31 | `0d3b899` | 提交前校验加入 full training matrix 完整性 warning，明确剩余 `HAPPO` + `8m_vs_9m` 未达到 20000000 steps | `validate_submission.py`、`package_submission.sh` |
 
 ## 任务清单
 
