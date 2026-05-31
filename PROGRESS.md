@@ -185,6 +185,7 @@
 - [x] 同步 `MAPPO` + `8m_vs_9m` 6400000-step 早期 full checkpoint。
 - [x] 同步 `MAPPO` + `8m_vs_9m` 完整 20000000-step 结果。
 - [x] 同步 `HAPPO` + `8m_vs_9m` 5120000-step 早期 full checkpoint。
+- [x] 诊断 `HAPPO` + `8m_vs_9m` 后续 full 训练状态；截至 2026-05-31 20:15 CST，外部与仓库 progress 均停在 64 行、5120000 steps，训练进程和 SC2 rollout 进程仍 active。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告
