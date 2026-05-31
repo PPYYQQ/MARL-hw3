@@ -15,7 +15,7 @@
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记和 full training 快照。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
-- `logs/submission_validation.md`：提交前产物完整性检查。
+- `logs/submission_validation.md`：提交前产物完整性检查；当前会把未完成的 full training matrix 标为 warning。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
@@ -139,4 +139,4 @@ bash scripts/build_report_pdf.sh
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
 ```
 
-打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。
+打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符和未完成的 full training matrix 只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。

@@ -24,6 +24,7 @@
 | `results/raw/pilot` | OK | directory present |
 | `report/main.pdf` | OK | 1008978 bytes; 3 pages |
 | `results/processed/progress_summary.csv` | OK | 886 data rows |
+| `full training matrix` | WARN | incomplete full runs: happo+8m_vs_9m 5120000/20000000 |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/full` | OK | 4 progress.txt files; expected at least 4 |
@@ -36,7 +37,7 @@
 ## Summary
 
 - Failures: 0
-- Warnings: 2
+- Warnings: 3
 - GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.
 - Student identity fields are warnings because they require user-provided name, ID and email.
-- `results/raw/full` remains a warning until full training progress files are synced.
+- The full training matrix remains a warning until all four MAPPO/HAPPO x SMAC runs reach the target full step count.

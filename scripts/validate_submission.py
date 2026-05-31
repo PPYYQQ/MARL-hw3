@@ -103,6 +103,43 @@ def progress_csv_check(path: Path) -> Check:
     return ok(str(path), f"{len(rows)} data rows")
 
 
+def full_matrix_check(path: Path, target_steps: int = 20_000_000) -> Check:
+    if not path.is_file():
+        return fail("full training matrix", "progress summary CSV is missing")
+    with path.open(encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    latest: dict[tuple[str, str], float] = {}
+    for row in rows:
+        if "full" not in row.get("exp", ""):
+            continue
+        key = (row.get("map", ""), row.get("algo", ""))
+        try:
+            step = float(row.get("step", "0"))
+        except ValueError:
+            continue
+        latest[key] = max(latest.get(key, 0.0), step)
+
+    expected = {
+        ("3s5z", "mappo"),
+        ("3s5z", "happo"),
+        ("8m_vs_9m", "mappo"),
+        ("8m_vs_9m", "happo"),
+    }
+    missing = sorted(expected.difference(latest))
+    incomplete = sorted(
+        (map_name, algo, int(latest[(map_name, algo)]))
+        for map_name, algo in expected.intersection(latest)
+        if latest[(map_name, algo)] < target_steps
+    )
+    if missing:
+        detail = ", ".join(f"{algo}+{map_name}" for map_name, algo in missing)
+        return warn("full training matrix", f"missing full rows for {detail}")
+    if incomplete:
+        detail = ", ".join(f"{algo}+{map_name} {step}/{target_steps}" for map_name, algo, step in incomplete)
+        return warn("full training matrix", f"incomplete full runs: {detail}")
+    return ok("full training matrix", f"all 4 full runs reached {target_steps} steps")
+
+
 def pdf_check(path: Path) -> Check:
     base = file_check(path)
     if base.status != "OK":
@@ -194,7 +231,7 @@ def render_markdown(checks: list[Check]) -> str:
             f"- Warnings: {warnings}",
             "- GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.",
             "- Student identity fields are warnings because they require user-provided name, ID and email.",
-            "- `results/raw/full` remains a warning until full training progress files are synced.",
+            "- The full training matrix remains a warning until all four MAPPO/HAPPO x SMAC runs reach the target full step count.",
             "",
         ]
     )
@@ -216,6 +253,7 @@ def main() -> None:
     checks.extend(dir_check(path) for path in REQUIRED_DIRS)
     checks.append(pdf_check(Path("report/main.pdf")))
     checks.append(progress_csv_check(Path("results/processed/progress_summary.csv")))
+    checks.append(full_matrix_check(Path("results/processed/progress_summary.csv")))
     checks.append(count_progress(Path("results/raw/smoke"), expected=4))
     checks.append(count_progress(Path("results/raw/pilot"), expected=4))
     checks.append(optional_progress_check(Path("results/raw/full"), expected=4))
