@@ -21,11 +21,11 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 942056 bytes; 3 pages |
-| `results/processed/progress_summary.csv` | OK | 652 data rows |
+| `report/main.pdf` | OK | 1008978 bytes; 3 pages |
+| `results/processed/progress_summary.csv` | OK | 886 data rows |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
-| `results/raw/full` | WARN | 3 progress.txt files; full training not complete |
+| `results/raw/full` | OK | 4 progress.txt files; expected at least 4 |
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
 | `report/main.tex` | WARN | student identity placeholders still present |
 | `report/report.html` | WARN | student identity placeholders still present |
@@ -35,7 +35,7 @@
 ## Summary
 
 - Failures: 0
-- Warnings: 3
+- Warnings: 2
 - GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.
 - Student identity fields are warnings because they require user-provided name, ID and email.
 - `results/raw/full` remains a warning until full training progress files are synced.

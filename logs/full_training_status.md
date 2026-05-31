@@ -28,7 +28,8 @@ env MAPS="3s5z 8m_vs_9m" ALGOS="mappo happo" SEEDS=1 EXP_PREFIX=hw3_full CUDA=tr
 - First evaluation: `MAPPO` + `3s5z` reached 80000 environment steps with eval reward 10.1708 and eval win rate 0.0; this row was synced into `results/raw/full/`.
 - Latest synced checkpoint: `MAPPO` + `3s5z` completed 20000000 environment steps with final eval reward 19.8764 and final eval win rate 0.975; best synced win rate is 1.0.
 - Latest synced checkpoint: `HAPPO` + `3s5z` completed 20000000 environment steps with final eval reward 19.3452 and final eval win rate 0.875; best synced win rate is 1.0.
-- Latest early checkpoint: `MAPPO` + `8m_vs_9m` reached 6400000 environment steps with final eval reward 16.3899 and final eval win rate 0.55; best synced reward is 17.4763 and best synced win rate is 0.7.
+- Latest synced checkpoint: `MAPPO` + `8m_vs_9m` completed 20000000 environment steps with final eval reward 18.9216 and final eval win rate 0.875; best synced reward is 19.2201 and best synced win rate is 0.9.
+- Latest early checkpoint: `HAPPO` + `8m_vs_9m` reached 5120000 environment steps with final eval reward 17.9525 and final eval win rate 0.725; best synced reward is 18.3971 and best synced win rate is 0.8.
 
 ## Monitoring
 
