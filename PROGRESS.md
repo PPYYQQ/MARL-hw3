@@ -121,6 +121,7 @@
 | 2026-05-31 | `9e35c27` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 6160000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
 | 2026-05-31 | `88d8c12` | 同步 `MAPPO` + `8m_vs_9m` early full checkpoint 到 6400000 steps，更新报告、曲线、PDF 和校验清单 | `git push`、`validate_submission.py` |
 | 2026-05-31 | `057fead` | 同步 `MAPPO` + `8m_vs_9m` 完整 20000000-step 结果，并加入 `HAPPO` + `8m_vs_9m` 5120000-step checkpoint | `sync_harl_results.py`、`validate_submission.py`、`git push` |
+| 2026-05-31 | `6130033` | 记录 `HAPPO` + `8m_vs_9m` full 训练诊断：进程仍 active，但暂无新 checkpoint 可同步 | `tmux`、`pgrep`、`nvidia-smi`、`validate_submission.py` |
 
 ## 任务清单
 
