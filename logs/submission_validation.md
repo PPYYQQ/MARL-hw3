@@ -21,11 +21,11 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 887209 bytes; 3 pages |
-| `results/processed/progress_summary.csv` | OK | 568 data rows |
+| `report/main.pdf` | OK | 901982 bytes; 3 pages |
+| `results/processed/progress_summary.csv` | OK | 578 data rows |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
-| `results/raw/full` | WARN | 2 progress.txt files; full training not complete |
+| `results/raw/full` | WARN | 3 progress.txt files; full training not complete |
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
 | `report/main.tex` | WARN | student identity placeholders still present |
 | `report/report.html` | WARN | student identity placeholders still present |

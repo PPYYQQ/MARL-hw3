@@ -245,6 +245,10 @@ map,algo,exp,run,step,eval_average_episode_reward,eval_win_rate,path
 3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19520000,19.767259933774834,0.95,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
 3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19600000,19.902317880794705,0.975,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
 3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19680000,19.91324503311258,0.975,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
+3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19760000,19.906995033112583,0.975,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
+3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19840000,19.811961920529804,0.95,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
+3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,19920000,19.416225165562913,0.875,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
+3s5z,happo,hw3_full_full_happo_3s5z,seed-00001-2026-05-31-05-20-04,20000000,19.345240066225166,0.875,results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,80000,10.17081953642384,0.0,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,160000,10.393543046357617,0.0,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,240000,10.599503311258276,0.0,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
@@ -495,6 +499,12 @@ map,algo,exp,run,step,eval_average_episode_reward,eval_win_rate,path
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,19840000,19.85467715231788,0.975,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,19920000,19.768832781456954,0.95,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
 3s5z,mappo,hw3_full_full_mappo_3s5z,seed-00001-2026-05-31-00-04-56,20000000,19.876365894039736,0.975,results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,80000,10.53021582733813,0.075,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,160000,10.187050359712233,0.0,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,240000,10.374100719424462,0.0,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,320000,10.324460431654677,0.0,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,400000,11.110071942446044,0.075,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
+8m_vs_9m,mappo,hw3_full_full_mappo_8m_vs_9m,seed-00001-2026-05-31-10-59-45,480000,11.321582733812951,0.075,results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,800,4.635761589403976,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,1600,5.306291390728482,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt
 3s5z,happo,hw3_pilot_pilot_happo_3s5z,seed-00001-2026-05-30-23-12-25,2400,3.9056291390728552,0.0,results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt

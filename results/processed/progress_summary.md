@@ -4,7 +4,7 @@ Source: `results/processed/progress_summary.csv`
 
 | Mode | Map | Algo | Rows | Final step | Final reward | Final win rate | Best reward | Best win rate |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| full | `3s5z` | happo | 246 | 19680000 | 19.9132 | 0.9750 | 20.0066 | 1.0000 |
+| full | `3s5z` | happo | 250 | 20000000 | 19.3452 | 0.8750 | 20.0066 | 1.0000 |
 | pilot | `3s5z` | happo | 12 | 9600 | 4.0629 | 0.0000 | 9.5795 | 0.0000 |
 | smoke | `3s5z` | happo | 6 | 960 | 5.5166 | 0.0000 | 5.5166 | 0.0000 |
 | full | `3s5z` | mappo | 250 | 20000000 | 19.8764 | 0.9750 | 20.0115 | 1.0000 |
@@ -12,6 +12,7 @@ Source: `results/processed/progress_summary.csv`
 | smoke | `3s5z` | mappo | 6 | 960 | 6.4834 | 0.0000 | 6.9669 | 0.0000 |
 | pilot | `8m_vs_9m` | happo | 12 | 9600 | 5.0072 | 0.0000 | 7.5108 | 0.0000 |
 | smoke | `8m_vs_9m` | happo | 6 | 960 | 2.2446 | 0.0000 | 2.2446 | 0.0000 |
+| full | `8m_vs_9m` | mappo | 6 | 480000 | 11.3216 | 0.0750 | 11.3216 | 0.0750 |
 | pilot | `8m_vs_9m` | mappo | 12 | 9600 | 7.5108 | 0.0000 | 9.9856 | 0.0000 |
 | smoke | `8m_vs_9m` | mappo | 6 | 960 | 3.7986 | 0.0000 | 6.3022 | 0.0000 |
 
