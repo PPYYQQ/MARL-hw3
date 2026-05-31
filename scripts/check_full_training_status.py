@@ -14,10 +14,12 @@ from pathlib import Path
 @dataclass
 class ProgressSummary:
     rows: int
+    final_step_value: float
     final_step: str
     final_reward: str
     final_win_rate: str
     modified: str
+    age_minutes: float
 
 
 def run_command(args: list[str]) -> subprocess.CompletedProcess[str]:
@@ -29,7 +31,7 @@ def tmux_status(session: str) -> str:
     return "active" if result.returncode == 0 else "inactive"
 
 
-def parse_progress(path: Path) -> ProgressSummary | None:
+def parse_progress(path: Path, now: datetime) -> ProgressSummary | None:
     if not path.is_file() or path.stat().st_size == 0:
         return None
     rows: list[list[str]] = []
@@ -47,13 +49,17 @@ def parse_progress(path: Path) -> ProgressSummary | None:
     if not rows:
         return None
     final = rows[-1]
-    modified = datetime.fromtimestamp(path.stat().st_mtime).astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
+    modified_at = datetime.fromtimestamp(path.stat().st_mtime).astimezone()
+    modified = modified_at.strftime("%Y-%m-%d %H:%M:%S %Z")
+    final_step_value = float(final[0])
     return ProgressSummary(
         rows=len(rows),
-        final_step=f"{float(final[0]):.0f}",
+        final_step_value=final_step_value,
+        final_step=f"{final_step_value:.0f}",
         final_reward=f"{float(final[1]):.4f}",
         final_win_rate=f"{float(final[2]):.4f}",
         modified=modified,
+        age_minutes=max(0.0, (now - modified_at).total_seconds() / 60.0),
     )
 
 
@@ -67,8 +73,17 @@ def raw_path_for(source_path: Path, source_root: Path, raw_root: Path) -> Path:
     return raw_root / source_path.relative_to(source_root)
 
 
-def render_snapshot(source_root: Path, raw_root: Path, session: str, exp_prefix: str) -> str:
-    generated = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
+def run_state(summary: ProgressSummary, target_steps: int, stale_minutes: int) -> str:
+    if summary.final_step_value >= target_steps:
+        return "complete"
+    if summary.age_minutes >= stale_minutes:
+        return "no recent progress"
+    return "in progress"
+
+
+def render_snapshot(source_root: Path, raw_root: Path, session: str, exp_prefix: str, target_steps: int, stale_minutes: int) -> str:
+    now = datetime.now().astimezone()
+    generated = now.strftime("%Y-%m-%d %H:%M:%S %Z")
     lines = [
         "# Full Training Snapshot",
         "",
@@ -76,11 +91,14 @@ def render_snapshot(source_root: Path, raw_root: Path, session: str, exp_prefix:
         f"- tmux session `{session}`: {tmux_status(session)}",
         f"- Source: `{source_root}`",
         f"- Synced raw root: `{raw_root}`",
+        f"- Target full steps: {target_steps}",
+        f"- Stale threshold: {stale_minutes} minutes without a new external `progress.txt` row",
         "",
-        "| Map | Algo | External rows | External final step | External final win | Synced rows | Synced final step | Status | External modified |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |",
+        "| Map | Algo | External rows | External final step | External final win | Synced rows | Synced final step | Sync status | Run state | External age min | External modified |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | ---: | --- |",
     ]
 
+    attention: list[str] = []
     for source_path in discover_full_progress(source_root, exp_prefix):
         relative = source_path.relative_to(source_root)
         parts = relative.parts
@@ -88,22 +106,29 @@ def render_snapshot(source_root: Path, raw_root: Path, session: str, exp_prefix:
             continue
         map_name = parts[1]
         algo = parts[2]
-        external = parse_progress(source_path)
-        synced = parse_progress(raw_path_for(source_path, source_root, raw_root))
+        external = parse_progress(source_path, now)
+        synced = parse_progress(raw_path_for(source_path, source_root, raw_root), now)
         if external is None:
             continue
         if synced is None:
-            status = "not synced"
+            sync_status = "not synced"
             synced_rows = "0"
             synced_step = "0"
         else:
-            status = "synced" if external.rows == synced.rows and external.final_step == synced.final_step else "external ahead"
+            sync_status = "synced" if external.rows == synced.rows and external.final_step == synced.final_step else "external ahead"
             synced_rows = str(synced.rows)
             synced_step = synced.final_step
+        state = run_state(external, target_steps, stale_minutes)
+        if state == "no recent progress":
+            attention.append(
+                f"- `{algo}` + `{map_name}` is incomplete at {external.final_step} steps and has no new external progress for {external.age_minutes:.1f} minutes."
+            )
         lines.append(
-            f"| `{map_name}` | {algo} | {external.rows} | {external.final_step} | {external.final_win_rate} | {synced_rows} | {synced_step} | {status} | {external.modified} |"
+            f"| `{map_name}` | {algo} | {external.rows} | {external.final_step} | {external.final_win_rate} | {synced_rows} | {synced_step} | {sync_status} | {state} | {external.age_minutes:.1f} | {external.modified} |"
         )
 
+    if attention:
+        lines.extend(["", "## Attention", "", *attention])
     lines.append("")
     return "\n".join(lines)
 
@@ -114,10 +139,12 @@ def main() -> None:
     parser.add_argument("--raw-root", type=Path, default=Path("results/raw/full"))
     parser.add_argument("--session", default="hw3_full_20260531_seed1")
     parser.add_argument("--exp-prefix", default="hw3_full")
+    parser.add_argument("--target-steps", type=int, default=20_000_000)
+    parser.add_argument("--stale-minutes", type=int, default=120)
     parser.add_argument("--output", type=Path, default=Path("logs/full_training_snapshot.md"))
     args = parser.parse_args()
 
-    snapshot = render_snapshot(args.source, args.raw_root, args.session, args.exp_prefix)
+    snapshot = render_snapshot(args.source, args.raw_root, args.session, args.exp_prefix, args.target_steps, args.stale_minutes)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(snapshot, encoding="utf-8")
     print(f"output={args.output}")

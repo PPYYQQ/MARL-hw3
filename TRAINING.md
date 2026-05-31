@@ -75,7 +75,7 @@ python3 scripts/validate_submission.py
 - `results/processed/progress_summary.csv`
 - `results/processed/progress_summary.md`
 - `results/raw/full/`
-- `logs/full_training_snapshot.md`
+- `logs/full_training_snapshot.md`，其中会标出同步状态和长时间没有新 `progress.txt` 行的未完成 run。
 - `figures/win_rate_3s5z.png`
 - `figures/win_rate_8m_vs_9m.png`
 - `configs/smac/`

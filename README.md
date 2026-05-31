@@ -27,7 +27,7 @@
 9. 运行 `python scripts/sync_harl_results.py --mode full` 将正式训练 `progress.txt` 复制到 `results/raw/full/`。
 10. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
 11. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
-12. 运行 `python scripts/check_full_training_status.py` 生成 full training 快照。
+12. 运行 `python scripts/check_full_training_status.py` 生成 full training 快照，检查同步状态和长时间未更新的 run。
 13. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
 14. 运行 `python scripts/generate_artifact_manifest.py` 生成产物哈希清单。
 15. 运行 `python scripts/validate_submission.py` 生成提交前校验报告。

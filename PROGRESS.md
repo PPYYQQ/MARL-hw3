@@ -144,6 +144,7 @@
 - [x] 建立提交产物哈希清单生成脚本。
 - [x] 建立正式训练结果同步脚本。
 - [x] 建立正式训练状态快照脚本。
+- [x] 给正式训练状态快照加入未完成 run 的 stale 检测。
 - [x] 保存 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 配置快照。
 - [x] 配置 GitHub remote。
 - [x] push 提交到 GitHub。已使用 SSH remote 同步 `main`。
@@ -188,7 +189,7 @@
 - [x] 同步 `MAPPO` + `8m_vs_9m` 6400000-step 早期 full checkpoint。
 - [x] 同步 `MAPPO` + `8m_vs_9m` 完整 20000000-step 结果。
 - [x] 同步 `HAPPO` + `8m_vs_9m` 5120000-step 早期 full checkpoint。
-- [x] 诊断 `HAPPO` + `8m_vs_9m` 后续 full 训练状态；截至 2026-05-31 20:15 CST，外部与仓库 progress 均停在 64 行、5120000 steps，训练进程和 SC2 rollout 进程仍 active。
+- [x] 诊断 `HAPPO` + `8m_vs_9m` 后续 full 训练状态；截至 2026-05-31 20:23 CST，外部与仓库 progress 均停在 64 行、5120000 steps，快照脚本标记为 `no recent progress`，tmux 会话仍 active。
 - [ ] 完成正式训练或记录无法完成的资源原因。
 
 ### 5. 数据与报告

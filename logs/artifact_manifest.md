@@ -5,9 +5,9 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | Path | Size | SHA256 |
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
-| `README.md` | 3981 | `2f071984836e5e8a67541e01cdc6acf3722a43345580cf8822e5a312d49d482c` |
+| `README.md` | 4030 | `2c98f9b3862a426fff33b6d59a7aec779bb691d528202c06e94e22a40750803c` |
 | `SUBMISSION.md` | 5106 | `b473df06a3a1edbd304426e3779f01ecf59adaf999fc02fb09636cfbb3a54de7` |
-| `TRAINING.md` | 3423 | `ea0ee8628daa4b1be1d914ac61c0e9a946dad707d46adf628ae7f607317b4d5e` |
+| `TRAINING.md` | 3512 | `8e1c965262d26b64f789be4ba316c3efab4e799df20c7bded0ab69bd6cae58ed` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
 | `configs/smac/3s5z/happo/config.json` | 2434 | `48bc0048366059c1c160d9010a67f8f106cab8640d288417c1215013c7024340` |
 | `configs/smac/3s5z/mappo/config.json` | 2432 | `1c2c4611a42c67f6efd17ab3802056f14c846a1c239ac7eecdf42ab1d71c3318` |
@@ -19,8 +19,8 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `logs/assignment_summary.md` | 1339 | `c7202a238d582b3ccf44116add27e4354d689326faa6debd780fa7f19efc80c6` |
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
 | `logs/experiment_notes.md` | 6852 | `b98c639524541eee9b7371f62a766df1702c13cb9daa0f3d2233641591e35650` |
-| `logs/full_training_snapshot.md` | 784 | `0396dca81b2db8584d2bf67d46a1671ccd59f2874fdff9b93b6d6f6fb039838a` |
-| `logs/full_training_status.md` | 3478 | `5c8740c43ce2faf4e6df5c1bdcbdd3d971534ecf3f6766ee0a7cf86b0c1b420e` |
+| `logs/full_training_snapshot.md` | 1143 | `40969e2103ff3dca93ad52dec51f05cfdc25facb4dcbd5d0767fcaf8dc1f259e` |
+| `logs/full_training_status.md` | 3450 | `bef04dcc8776991cf962baa54dfa8320b7e0cf7fbb71cc8889796ea97b9ecdb7` |
 | `logs/setup.md` | 2150 | `d353782d757de113ce3e4f878e413cb9a5051f4918cab9495a964ec0f27b0c43` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
@@ -52,7 +52,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `results/raw/smoke/smac/8m_vs_9m/mappo/hw3_smoke_mappo_8m_vs_9m/seed-00001-2026-05-30-22-49-39/progress.txt` | 158 | `85402f9702b66f3cc9f635b2aedd98af775924591a182df59a4055ec40731e4e` |
 | `scripts/apply_student_info.py` | 3218 | `51544b1d4e6900b5e7fa21a769be4505af64dbd725d4e70a324b83b2a89ebc86` |
 | `scripts/build_report_pdf.sh` | 1056 | `44e21fcb498693fda9025086fa95b9ae35de9cd5601128dd27e288bd33e9bc3b` |
-| `scripts/check_full_training_status.py` | 4486 | `536edb71f2d631d7220becbe4b639261d2eeea68ee8af537c341badb6cfbc198` |
+| `scripts/check_full_training_status.py` | 5918 | `363d8e976ff8507ce4a6b951bde8573db6e2d321688d9e0f01ded8b2de0e5ab9` |
 | `scripts/collect_progress.py` | 3887 | `180391d42e8cb3506affeb5773f865896d38ee3863feb92d77e91371ce5c36e0` |
 | `scripts/generate_artifact_manifest.py` | 3345 | `18ae68e9a6bc0cc107807e2f1c3dec1975f7f09450f5438d23bcb11f6398019b` |
 | `scripts/launch_training_tmux.sh` | 1822 | `b131b426b915f307a218a6c354e956113579110708ae927f5b79cd1fc255f4b0` |
@@ -71,5 +71,5 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 ## Summary
 
 - Files: 63
-- Total bytes: 1800322
+- Total bytes: 1802223
 - Excludes generated validation and manifest files to avoid self-referential churn.
