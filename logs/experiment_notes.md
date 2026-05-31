@@ -7,7 +7,7 @@
 | HAPPO | `3s5z` | HARL tuned config | smoke test 与 10000-step pilot 通过，full 已完成 20000000 steps |
 | HAPPO | `8m_vs_9m` | HARL tuned config | smoke test 与 10000-step pilot 通过 |
 | MAPPO | `3s5z` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过，full 已完成 20000000 steps |
-| MAPPO | `8m_vs_9m` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过，full latest synced checkpoint 为 2080000 steps |
+| MAPPO | `8m_vs_9m` | 基于同地图 HAPPO tuned config 生成 MAPPO 配置 | smoke test 与 10000-step pilot 通过，full latest synced checkpoint 为 2400000 steps |
 
 ## dry-run 结果
 
@@ -80,9 +80,9 @@ SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_
 阶段性结果：
 
 - tmux 会话 `hw3_full_20260531_seed1` 仍在运行。
-- 当前已同步 `MAPPO` + `3s5z` 的 250 个 full evaluation、`HAPPO` + `3s5z` 的 250 个 full evaluation，以及 `MAPPO` + `8m_vs_9m` 的 26 个 early full evaluation 到 `results/raw/full/`。
-- `MAPPO` + `8m_vs_9m` latest synced checkpoint 为 2080000 environment steps，final eval reward 为 12.2417，final eval win rate 为 0.175；当前最佳 reward 为 12.3849，当前最佳 win rate 为 0.2。
-- `results/processed/progress_summary.csv` 当前共有 598 行，其中 full 贡献 526 行。
+- 当前已同步 `MAPPO` + `3s5z` 的 250 个 full evaluation、`HAPPO` + `3s5z` 的 250 个 full evaluation，以及 `MAPPO` + `8m_vs_9m` 的 30 个 early full evaluation 到 `results/raw/full/`。
+- `MAPPO` + `8m_vs_9m` latest synced checkpoint 为 2400000 environment steps，final eval reward 为 13.1489，final eval win rate 为 0.25；当前最佳 reward 为 13.6317，当前最佳 win rate 为 0.275。
+- `results/processed/progress_summary.csv` 当前共有 602 行，其中 full 贡献 530 行。
 - `MAPPO` + `3s5z` 已到达 20000000 environment steps，final eval reward 为 19.8764，final eval win rate 为 0.975；当前最佳 win rate 为 1.0。
 - `HAPPO` + `3s5z` 已到达 20000000 environment steps，final eval reward 为 19.3452，final eval win rate 为 0.875；当前最佳 win rate 为 1.0。
 
@@ -96,10 +96,10 @@ SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_
 | 2026-05-30 | `MAPS=8m_vs_9m ALGOS="mappo happo" EXP_PREFIX=hw3 SEEDS=1 conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` | 1 | `external/HARL/examples/results/smac/8m_vs_9m/...` | 2 组 10000-step pilot 通过 |
 | 2026-05-31 | `SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full` | 1 | `external/HARL/examples/results/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56` | `MAPPO` + `3s5z` 已同步完整 20000000-step 结果 |
 | 2026-05-31 | `SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full` | 1 | `external/HARL/examples/results/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04` | `HAPPO` + `3s5z` 已同步完整 20000000-step 结果 |
-| 2026-05-31 | `SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full` | 1 | `external/HARL/examples/results/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45` | `MAPPO` + `8m_vs_9m` latest synced checkpoint 为 2080000 steps |
+| 2026-05-31 | `SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full` | 1 | `external/HARL/examples/results/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45` | `MAPPO` + `8m_vs_9m` latest synced checkpoint 为 2400000 steps |
 
 ## 观察模板
 
 - `3s5z`：smoke/pilot/full 曲线已生成，`MAPPO` 与 `HAPPO` 都已完成 20000000 steps。
-- `8m_vs_9m`：smoke/pilot/full early checkpoint 曲线已生成，`MAPPO` full latest synced checkpoint 为 2080000 steps。
+- `8m_vs_9m`：smoke/pilot/full early checkpoint 曲线已生成，`MAPPO` full latest synced checkpoint 为 2400000 steps。
 - MAPPO vs HAPPO：正式训练后比较 sample efficiency、稳定性和最终性能。
