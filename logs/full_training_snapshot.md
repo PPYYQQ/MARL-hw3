@@ -1,6 +1,6 @@
 # Full Training Snapshot
 
-- Generated: 2026-05-31 21:29:07 CST
+- Generated: 2026-05-31 21:35:46 CST
 - tmux session `hw3_full_20260531_seed1`: active
 - Matching tmux sessions `hw3*`: hw3, hw3_full_20260531_seed1, hw3_recover_happo_8m
 - Source: `external/HARL/examples/results`
@@ -10,12 +10,12 @@
 
 | Map | Algo | External rows | External final step | External final win | Synced rows | Synced final step | Sync status | Run state | External age min | External modified |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | ---: | --- |
-| `3s5z` | happo | 250 | 20000000 | 0.8750 | 250 | 20000000 | synced | complete | 629.4 | 2026-05-31 10:59:43 CST |
-| `3s5z` | mappo | 250 | 20000000 | 0.9750 | 250 | 20000000 | synced | complete | 969.1 | 2026-05-31 05:20:02 CST |
-| `8m_vs_9m` | happo | 64 | 5120000 | 0.7250 | 64 | 5120000 | synced | no recent progress | 240.4 | 2026-05-31 17:28:43 CST |
-| `8m_vs_9m` | happo | 41 | 3280000 | 0.7250 | 41 | 3280000 | synced | in progress | 0.1 | 2026-05-31 21:29:01 CST |
-| `8m_vs_9m` | mappo | 250 | 20000000 | 0.8750 | 250 | 20000000 | synced | complete | 324.3 | 2026-05-31 16:04:50 CST |
+| `3s5z` | happo | 250 | 20000000 | 0.8750 | 250 | 20000000 | synced | complete | 636.1 | 2026-05-31 10:59:43 CST |
+| `3s5z` | mappo | 250 | 20000000 | 0.9750 | 250 | 20000000 | synced | complete | 975.7 | 2026-05-31 05:20:02 CST |
+| `8m_vs_9m` | happo | 64 | 5120000 | 0.7250 | 64 | 5120000 | synced | no recent progress | 247.1 | 2026-05-31 17:28:43 CST |
+| `8m_vs_9m` | happo | 46 | 3680000 | 0.7500 | 46 | 3680000 | synced | in progress | 0.2 | 2026-05-31 21:35:37 CST |
+| `8m_vs_9m` | mappo | 250 | 20000000 | 0.8750 | 250 | 20000000 | synced | complete | 330.9 | 2026-05-31 16:04:50 CST |
 
 ## Attention
 
-- `happo` + `8m_vs_9m` is incomplete at 5120000 steps and has no new external progress for 240.4 minutes.
+- `happo` + `8m_vs_9m` is incomplete at 5120000 steps and has no new external progress for 247.1 minutes.
