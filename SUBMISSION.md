@@ -10,7 +10,7 @@
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
-- `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 `MAPPO` + `3s5z` 与 `HAPPO` + `3s5z` 的完整 20000000-step 结果，以及 `MAPPO` + `8m_vs_9m` 的 latest synced 4720000-step 早期 checkpoint。
+- `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 `MAPPO` + `3s5z` 与 `HAPPO` + `3s5z` 的完整 20000000-step 结果，以及 `MAPPO` + `8m_vs_9m` 的 latest synced 4960000-step 早期 checkpoint。
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与 full checkpoint 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记。
@@ -23,7 +23,7 @@
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
 - GitHub push：`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`；SSH 认证已通过，`main` 已同步到 `origin/main`。
 - LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
-- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，`MAPPO` + `3s5z` 与 `HAPPO` + `3s5z` 均已同步完整 20000000-step 结果，`MAPPO` + `8m_vs_9m` latest synced checkpoint 为 4720000 steps。
+- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，`MAPPO` + `3s5z` 与 `HAPPO` + `3s5z` 均已同步完整 20000000-step 结果，`MAPPO` + `8m_vs_9m` latest synced checkpoint 为 4960000 steps。
 
 ## GitHub 同步
 
