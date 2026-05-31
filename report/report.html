@@ -98,7 +98,7 @@
 
   <div class="abstract">
     <strong>摘要：</strong>
-    本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、<code>progress.txt</code> 汇总和 win rate 绘图；单 seed 正式训练已完成 <code>3s5z</code> 上 MAPPO/HAPPO 与 <code>8m_vs_9m</code> 上 MAPPO 的 20000000-step 运行，<code>8m_vs_9m</code> HAPPO 原始 full run latest synced checkpoint 为 5120000 steps，recovery run 已同步到 1360000 steps。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、已完成 full 结果和阶段性验证结果。
+    本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 <code>3s5z</code> 和 <code>8m_vs_9m</code> 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、<code>progress.txt</code> 汇总和 win rate 绘图；单 seed 正式训练已完成 <code>3s5z</code> 上 MAPPO/HAPPO 与 <code>8m_vs_9m</code> 上 MAPPO 的 20000000-step 运行，<code>8m_vs_9m</code> HAPPO 原始 full run latest synced checkpoint 为 5120000 steps，recovery run 已同步到 1600000 steps。由于完整实验矩阵仍在运行，本文现阶段报告重点是复现流程、代码对应关系、已完成 full 结果和阶段性验证结果。
   </div>
 
   <div class="columns">
@@ -154,7 +154,7 @@
     </table>
 
     <h2>7. 结果与分析</h2>
-    <p>目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 <code>3s5z</code>/<code>8m_vs_9m</code> 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 <code>3s5z</code> MAPPO/HAPPO 与 <code>8m_vs_9m</code> MAPPO 的完整 20000000-step 结果，<code>8m_vs_9m</code> HAPPO 原始 full run latest synced checkpoint 为 5120000 steps；因原始 run 长时间无新 progress 行，已另启 recovery run 并同步到 1360000 steps。由于最后一组 <code>8m_vs_9m</code> HAPPO full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。</p>
+    <p>目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 <code>3s5z</code>/<code>8m_vs_9m</code> 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步 <code>3s5z</code> MAPPO/HAPPO 与 <code>8m_vs_9m</code> MAPPO 的完整 20000000-step 结果，<code>8m_vs_9m</code> HAPPO 原始 full run latest synced checkpoint 为 5120000 steps；因原始 run 长时间无新 progress 行，已另启 recovery run 并同步到 1600000 steps。由于最后一组 <code>8m_vs_9m</code> HAPPO full run 尚未完成，这些结果仍不能代表完整实验矩阵的最终结论。</p>
     <table>
       <caption>Pilot run 最后一次 evaluation 结果</caption>
       <thead>
@@ -177,7 +177,7 @@
         <tr><td><code>3s5z</code></td><td>HAPPO</td><td>20000000</td><td>19.3452 / 0.875</td><td>1.0</td></tr>
         <tr><td><code>8m_vs_9m</code></td><td>MAPPO</td><td>20000000</td><td>18.9216 / 0.875</td><td>0.9</td></tr>
         <tr><td><code>8m_vs_9m</code></td><td>HAPPO</td><td>5120000</td><td>17.9525 / 0.725</td><td>0.8</td></tr>
-        <tr><td><code>8m_vs_9m</code></td><td>HAPPO recovery</td><td>1360000</td><td>14.0619 / 0.300</td><td>0.375</td></tr>
+        <tr><td><code>8m_vs_9m</code></td><td>HAPPO recovery</td><td>1600000</td><td>15.6194 / 0.450</td><td>0.450</td></tr>
       </tbody>
     </table>
     <figure>
@@ -188,10 +188,10 @@
       <img src="../figures/win_rate_8m_vs_9m.png" alt="8m_vs_9m win rate">
       <figcaption><code>8m_vs_9m</code> smoke/pilot/full eval win rate；HAPPO full run 仍是阶段性 checkpoint。</figcaption>
     </figure>
-    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前同步结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；<code>3s5z</code> 上 MAPPO final eval win rate 为 0.975，HAPPO final eval win rate 为 0.875，二者 best win rate 都达到 1.0；<code>8m_vs_9m</code> 上 MAPPO 已完成 20000000 steps，final eval win rate 为 0.875，best win rate 为 0.9。HAPPO/<code>8m_vs_9m</code> 原始 run 当前只同步到 5120000 steps，final eval win rate 为 0.725，best win rate 为 0.8；recovery run 仍处于早期 1360000 steps，因此还不能与 MAPPO 的完整结果做最终公平比较。</p>
+    <p>正式训练完成后，应使用相同脚本重新生成曲线，并重点比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。对于当前同步结果，主要结论是训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；<code>3s5z</code> 上 MAPPO final eval win rate 为 0.975，HAPPO final eval win rate 为 0.875，二者 best win rate 都达到 1.0；<code>8m_vs_9m</code> 上 MAPPO 已完成 20000000 steps，final eval win rate 为 0.875，best win rate 为 0.9。HAPPO/<code>8m_vs_9m</code> 原始 run 当前只同步到 5120000 steps，final eval win rate 为 0.725，best win rate 为 0.8；recovery run 仍处于早期 1600000 steps，因此还不能与 MAPPO 的完整结果做最终公平比较。</p>
 
     <h2>8. 局限性</h2>
-    <p>当前结果的主要局限是完整矩阵尚未训练结束。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图。当前 <code>8m_vs_9m</code> MAPPO 已完成 full run，但 HAPPO 原始 run 仍只有 5120000-step early full checkpoint，recovery run 也只同步到 1360000 steps；这说明最后一组训练还未产出可比较的最终结果，而不是说明 HAPPO 在该地图上无效。正式报告中应继续补充 <code>8m_vs_9m</code> HAPPO 的完整 full 曲线。</p>
+    <p>当前结果的主要局限是完整矩阵尚未训练结束。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 <code>8m_vs_9m</code> 这种非对称地图。当前 <code>8m_vs_9m</code> MAPPO 已完成 full run，但 HAPPO 原始 run 仍只有 5120000-step early full checkpoint，recovery run 也只同步到 1600000 steps；这说明最后一组训练还未产出可比较的最终结果，而不是说明 HAPPO 在该地图上无效。正式报告中应继续补充 <code>8m_vs_9m</code> HAPPO 的完整 full 曲线。</p>
 
     <h2>9. 结论</h2>
     <p>当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、四组 10000-step pilot run、单 seed 正式训练启动、三组完整 full run 结果同步和自动绘图。后续正式训练完成后，应把 <code>8m_vs_9m</code> HAPPO 的阶段性曲线替换为完整训练曲线，并基于 win rate 的收敛速度、最终胜率和波动情况讨论 MAPPO 与 HAPPO 的差异。</p>
