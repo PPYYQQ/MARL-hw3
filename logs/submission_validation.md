@@ -22,12 +22,12 @@
 | `logs` | OK | directory present |
 | `results/raw/smoke` | OK | directory present |
 | `results/raw/pilot` | OK | directory present |
-| `report/main.pdf` | OK | 1008978 bytes; 3 pages |
-| `results/processed/progress_summary.csv` | OK | 886 data rows |
+| `report/main.pdf` | OK | 1014276 bytes; 3 pages |
+| `results/processed/progress_summary.csv` | OK | 892 data rows |
 | `full training matrix` | WARN | incomplete full runs: happo+8m_vs_9m 5120000/20000000 |
 | `results/raw/smoke` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
-| `results/raw/full` | OK | 4 progress.txt files; expected at least 4 |
+| `results/raw/full` | OK | 5 progress.txt files; expected at least 4 |
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
 | `report/main.tex` | WARN | student identity placeholders still present |
 | `report/report.html` | WARN | student identity placeholders still present |
