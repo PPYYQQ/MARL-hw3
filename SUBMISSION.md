@@ -4,18 +4,18 @@
 
 ## 当前可提交内容
 
-- `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke/pilot 结果、`3s5z` full 结果、`MAPPO` + `8m_vs_9m` full 结果和 `HAPPO` + `8m_vs_9m` 阶段性结果。
+- `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke/pilot 结果和单 seed full 矩阵最终结果。
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
 - `results/raw/smoke/`：4 组 smoke test 的原始 `progress.txt`。
 - `results/raw/pilot/`：4 组 10000-step pilot 的原始 `progress.txt`。
-- `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 `MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 的完整 20000000-step 结果，`HAPPO` + `8m_vs_9m` 原始 run 的 latest synced 5120000-step 早期 checkpoint，以及 recovery run 的 5120000-step checkpoint。
+- `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的单 seed 20000000-step 结果，并保留 `HAPPO` + `8m_vs_9m` 原始 stale run 的 5120000-step checkpoint 作为审计记录。
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与 full checkpoint 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记和 full training 快照。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
-- `logs/submission_validation.md`：提交前产物完整性检查；当前会把未完成的 full training matrix 标为 warning。
+- `logs/submission_validation.md`：提交前产物完整性检查；full training matrix 已通过，当前 warning 只剩学生身份占位符。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
@@ -23,7 +23,7 @@
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
 - GitHub push：`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`；SSH 认证已通过，`main` 已同步到 `origin/main`。
 - LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
-- 正式训练：当前完成 1000-step smoke test 和 4 组 10000-step pilot；单 seed full 训练已在 `hw3_full_20260531_seed1` 中运行，`MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 均已同步完整 20000000-step 结果，`HAPPO` + `8m_vs_9m` 原始 run latest synced checkpoint 为 5120000 steps；recovery run `hw3_recover_happo_8m` 已同步到 5120000 steps。
+- 正式训练：当前完成 1000-step smoke test、4 组 10000-step pilot，以及 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 单 seed full 矩阵；`HAPPO` + `8m_vs_9m` 原始 run 停在 5120000 steps，recovery run `hw3_recover_happo_8m` 已完成并同步到 20000000 steps。
 
 ## GitHub 同步
 
@@ -68,13 +68,13 @@ python3 scripts/check_full_training_status.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
 ```
 
-如果快照显示 `HAPPO` + `8m_vs_9m` 长时间没有新 `progress.txt` 行，保留原始 run，并用新的 session/prefix 单独恢复缺失组合：
+如果快照显示某个 run 长时间没有新 `progress.txt` 行，保留原始 run，并用新的 session/prefix 单独恢复缺失组合。当前 `HAPPO` + `8m_vs_9m` 已按此流程完成 recovery run：
 
 ```bash
 SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
 ```
 
-然后更新 `report/main.tex` 的结果讨论，并提交：
+训练结果更新后，重新生成报告与提交产物并提交：
 
 ```bash
 git add report/main.tex results/processed/progress_summary.csv figures/
@@ -145,4 +145,4 @@ bash scripts/build_report_pdf.sh
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
 ```
 
-打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符和未完成的 full training matrix 只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式训练完成后，先更新报告、图和汇总 CSV，再重新运行打包脚本。
+打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式提交前提供学生身份信息后，再重新运行打包脚本。

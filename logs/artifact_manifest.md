@@ -6,7 +6,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
 | `README.md` | 4030 | `2c98f9b3862a426fff33b6d59a7aec779bb691d528202c06e94e22a40750803c` |
-| `SUBMISSION.md` | 5633 | `2ab0bf4b6de6177a4fd56c4ac11b3bf084de5485ee1973d8c55ab78b9ca8a174` |
+| `SUBMISSION.md` | 5419 | `6677287dd6fb62d9f0d06269209301d27f2d28bbf973a14e4534d6bea0dd883f` |
 | `TRAINING.md` | 4421 | `7a3e7477b20821afa2591fa7bef772e28573a2e2ddba59e124f67defb4f92898` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
 | `configs/smac/3s5z/happo/config.json` | 2434 | `48bc0048366059c1c160d9010a67f8f106cab8640d288417c1215013c7024340` |
@@ -15,12 +15,12 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `configs/smac/8m_vs_9m/mappo/config.json` | 2437 | `dcc9e05f4e9fd732e9070d7c646aed16b4b68d5dd5497348882363ada81bdb34` |
 | `figures/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `figures/win_rate_3s5z.png` | 176904 | `72a715cb883813e5912f435c4cc16a45c4bc918f01f7e33fa0ae8e6af8b6f7fd` |
-| `figures/win_rate_8m_vs_9m.png` | 193887 | `fefa63520b8a537a97c2823168454023683495f7aff52bb028483ebe94fd10e4` |
+| `figures/win_rate_8m_vs_9m.png` | 230159 | `5806cb89ef4cf84f5345dad2118a11b009f7bb8efeca52f321e2a9a4bd550930` |
 | `logs/assignment_summary.md` | 1339 | `c7202a238d582b3ccf44116add27e4354d689326faa6debd780fa7f19efc80c6` |
 | `logs/code_reading.md` | 3500 | `01f4da84757ea862a9ded27b47588a12148855d7c70cd074cf29920e3fd907bd` |
-| `logs/experiment_notes.md` | 7527 | `57be9ceebd4336f6e5a4cb626192c25c96e535a1850a6d96b7b5dbd9dd0fb110` |
-| `logs/full_training_snapshot.md` | 1345 | `36e08a0fd432a45afade20bb1334e18eb00f5c125f7ec4cc247f58bb88ffd3d1` |
-| `logs/full_training_status.md` | 4936 | `7af958bdc86243467d10decefdba984d7efb023ad12d31e28ab6f5cbdcc7c934` |
+| `logs/experiment_notes.md` | 7703 | `be23d61eb57437d32431162194a66faae4acb78de17a01fc0e34f5c664cf808f` |
+| `logs/full_training_snapshot.md` | 1216 | `ccb63e7661d417a2c71c6270b1627da86cffb7ea905e2a1cad06cdbc9cb6cd4e` |
+| `logs/full_training_status.md` | 4821 | `7460c1caf385d594bab5296ae17a34b8e3d6f2e78afbe9a474948c6ff0deadbc` |
 | `logs/setup.md` | 2150 | `d353782d757de113ce3e4f878e413cb9a5051f4918cab9495a964ec0f27b0c43` |
 | `report/algorithm.sty` | 2302 | `ab166def454ffae005796a1fbe46f52932a07476d64ea82f3c837a70a3ec71c2` |
 | `report/algorithmic.sty` | 7615 | `cefd7a1195973a8404b12f201ead97af3e6983dac32d5b54efb976f54cda31d5` |
@@ -28,20 +28,20 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `report/figures/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `report/icml2022.bst` | 27147 | `fcc631f383cd339d2f0cbb94490b790cd7b465c745db210a9357c27029d4dee8` |
 | `report/icml2022.sty` | 27802 | `f5e3d42a426f63097d303081319fafd9bbec745a9051098934ddc9c396c39bd0` |
-| `report/main.pdf` | 1013861 | `0a221738545b5007e11311646deb32880118693e80667d53fc43cbaac68403a7` |
-| `report/main.tex` | 11733 | `5258cb00ce5912b9c41c03ef1bb5db987908ad96001ce6342f926e2023a439f2` |
+| `report/main.pdf` | 1064280 | `b739b5fca067d09dbb57a2a6d2dd74cbe01fb5fa4a1371d5c96c1875386ba721` |
+| `report/main.tex` | 11696 | `e14afe45b00a23ccdb044a9c156795f6e00ed250d977219616ffe9249aef8e39` |
 | `report/references.bib` | 1058 | `c23a6b2a26d787f8922f7e5411aa61c3286e6af153b9e059fbaf8760e4c06f54` |
-| `report/report.html` | 14073 | `8202cac6f69537232174199243d5b3eb51e1a22fb8bc6e23c3e4357d253d9bd3` |
+| `report/report.html` | 14030 | `1939609142ed418d51d463b83af83101f1ad2c23235a8d21a46bbb8a0b391ea6` |
 | `results/processed/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `results/processed/generated_mappo_3s5z.json` | 2432 | `1c2c4611a42c67f6efd17ab3802056f14c846a1c239ac7eecdf42ab1d71c3318` |
 | `results/processed/generated_mappo_8m_vs_9m.json` | 2437 | `dcc9e05f4e9fd732e9070d7c646aed16b4b68d5dd5497348882363ada81bdb34` |
-| `results/processed/progress_summary.csv` | 197742 | `56cf2007b24b29d5d66cba4824f4b712c44ce616102348fc9d6f6f0a795cb2ce` |
-| `results/processed/progress_summary.md` | 1723 | `9d6e7add1932a3fdcd06cf6a9764895318e75a02c6deca8c34e34aef4a7bdcff` |
+| `results/processed/progress_summary.csv` | 239387 | `7680758d0de3ea40286e2ace58d98736214ae8b9885cb991b77bbae797692818` |
+| `results/processed/progress_summary.md` | 1725 | `91ccbcf66963d741f557cae674b33a31b77d830c33ac10e5054cc0462f3d2249` |
 | `results/raw/full/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `results/raw/full/smac/3s5z/happo/hw3_full_full_happo_3s5z/seed-00001-2026-05-31-05-20-04/progress.txt` | 8289 | `14f060966b32183e0edc9a3d47180c13387675b0bdf4e02641debdd4ed6770e7` |
 | `results/raw/full/smac/3s5z/mappo/hw3_full_full_mappo_3s5z/seed-00001-2026-05-31-00-04-56/progress.txt` | 8008 | `3334360ee530c130403d5824c8c48b7404d3f33e708af37badf198cbd336da14` |
 | `results/raw/full/smac/8m_vs_9m/happo/hw3_full_full_happo_8m_vs_9m/seed-00001-2026-05-31-16-04-52/progress.txt` | 2040 | `52e296f5fe9f23413a9f460f58d783bec6e50656458d1e8a4b795f13582ab075` |
-| `results/raw/full/smac/8m_vs_9m/happo/hw3_recover_full_happo_8m_vs_9m/seed-00001-2026-05-31-20-32-33/progress.txt` | 2040 | `52e296f5fe9f23413a9f460f58d783bec6e50656458d1e8a4b795f13582ab075` |
+| `results/raw/full/smac/8m_vs_9m/happo/hw3_recover_full_happo_8m_vs_9m/seed-00001-2026-05-31-20-32-33/progress.txt` | 8159 | `19898577ab9e7de75cd3ad6f103e5862bceb7b5240c60172978232f820816b19` |
 | `results/raw/full/smac/8m_vs_9m/mappo/hw3_full_full_mappo_8m_vs_9m/seed-00001-2026-05-31-10-59-45/progress.txt` | 8169 | `c18271ddf42106f8d36416577f01e1ca10b527197073d70d121242ce5b464ca9` |
 | `results/raw/pilot/smac/3s5z/happo/hw3_pilot_pilot_happo_3s5z/seed-00001-2026-05-30-23-12-25/progress.txt` | 324 | `f6ba095bf3dec3518d1aa2a3e2aca2e43e649558daf78fb61472042dae101ce9` |
 | `results/raw/pilot/smac/3s5z/mappo/hw3_pilot_mappo_3s5z/seed-00001-2026-05-30-23-20-22/progress.txt` | 323 | `25bc9203644c4ff3981bf12e21614558d4c070849481df2924b923dde1c1005a` |
@@ -53,7 +53,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `results/raw/smoke/smac/8m_vs_9m/mappo/hw3_smoke_mappo_8m_vs_9m/seed-00001-2026-05-30-22-49-39/progress.txt` | 158 | `85402f9702b66f3cc9f635b2aedd98af775924591a182df59a4055ec40731e4e` |
 | `scripts/apply_student_info.py` | 3218 | `51544b1d4e6900b5e7fa21a769be4505af64dbd725d4e70a324b83b2a89ebc86` |
 | `scripts/build_report_pdf.sh` | 1056 | `44e21fcb498693fda9025086fa95b9ae35de9cd5601128dd27e288bd33e9bc3b` |
-| `scripts/check_full_training_status.py` | 6507 | `99bf4ba9bfdcc04f91d60c9cbd10ad4fd31bfb14fe05b4f4c7f8c3b60e537d45` |
+| `scripts/check_full_training_status.py` | 6992 | `c1ff69c88fd94c120faf46df4e451e8457c2ac4448a03dba71cbc113f819f0b7` |
 | `scripts/collect_progress.py` | 3887 | `180391d42e8cb3506affeb5773f865896d38ee3863feb92d77e91371ce5c36e0` |
 | `scripts/generate_artifact_manifest.py` | 3345 | `18ae68e9a6bc0cc107807e2f1c3dec1975f7f09450f5438d23bcb11f6398019b` |
 | `scripts/launch_training_tmux.sh` | 1822 | `b131b426b915f307a218a6c354e956113579110708ae927f5b79cd1fc255f4b0` |
@@ -67,10 +67,10 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `scripts/snapshot_configs.sh` | 1006 | `8f26d36324b7c25ab04566944973f76d28d24061fd57c7aba23475bc82ae721b` |
 | `scripts/summarize_progress.py` | 4178 | `0846741b74ca6d111464aa96bcd99a8d5e798996650788fcc6689c0e97b0612b` |
 | `scripts/sync_harl_results.py` | 2585 | `65f63298f7dd2ce099ba0df1767d7e82d403101d7889c9b8db2b05e53dd7a0cc` |
-| `scripts/validate_submission.py` | 9926 | `0ee8be8c829776508fa5522e295e98d77c8167b72c097e64601e22885bfa719d` |
+| `scripts/validate_submission.py` | 10230 | `6c72ee765f158099cbbe794fce7bc3885399b86bd0b59c109ac727e7b257763e` |
 
 ## Summary
 
 - Files: 64
-- Total bytes: 1839822
+- Total bytes: 1974706
 - Excludes generated validation and manifest files to avoid self-referential churn.

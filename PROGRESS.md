@@ -8,8 +8,8 @@
 - 作业文档：已解析 `hw3.pptx`，确认任务包括 MAPPO/HAPPO 阅读、HARL+SMAC 环境配置、`3s5z` 和 `8m_vs_9m` 复现实验、win rate 绘图、研究性报告。
 - GitHub 状态：本地 Git 可用；`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`，SSH 认证通过，`main` 已同步到 `origin/main`。
 - GitHub CLI：当前未安装 `gh`；已通过 SSH remote 完成推送，不再依赖 HTTPS 交互式凭据。
-- 正式训练：已启动单 seed tmux 会话 `hw3_full_20260531_seed1`，按 `mappo/happo` × `3s5z`/`8m_vs_9m` 顺序运行 full tuned config；当前已同步 `MAPPO` + `3s5z`、`HAPPO` + `3s5z`、`MAPPO` + `8m_vs_9m` 完整 20000000-step 结果；`HAPPO` + `8m_vs_9m` 原始 full run latest synced checkpoint 为 5120000 steps。由于原始 run 长时间无新 progress 行，已另启 `hw3_recover_happo_8m` 只恢复 `HAPPO` + `8m_vs_9m`，recovery run 当前已同步到 5120000 steps。
-- 已知限制：完整训练依赖 StarCraft II、SMAC maps、GPU/CPU 资源和长时间运行环境。
+- 正式训练：单 seed full tuned config 已完成 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 四组 20000000-step 结果同步；`HAPPO` + `8m_vs_9m` 原始 full run 停在 5120000 steps，已用 recovery run 完成同组合 20000000-step 结果并作为最终矩阵结果。
+- 已知限制：报告仍保留学号、姓名、邮箱占位符；完整交付包需要用户提供身份信息后重新生成。实验结果为单 seed 复现，报告中已作为局限说明。
 
 ## 提交记录
 
@@ -215,7 +215,8 @@
 - [x] 记录 `HAPPO` + `8m_vs_9m` stale run 的非破坏性恢复命令。
 - [x] 启动 `hw3_recover_happo_8m`，只恢复 `HAPPO` + `8m_vs_9m` full run。
 - [x] 同步 `HAPPO` + `8m_vs_9m` recovery run 到 5120000 steps。
-- [ ] 完成正式训练或记录无法完成的资源原因。
+- [x] 同步 `HAPPO` + `8m_vs_9m` recovery run 到 20000000 steps。
+- [x] 完成单 seed 正式训练矩阵。
 
 ### 5. 数据与报告
 
@@ -228,20 +229,17 @@
 - [x] 生成包含阶段性 full checkpoint 的 win rate 曲线。
 - [x] 生成包含 `3s5z` full 结果的 win rate 曲线。
 - [x] 生成包含 `8m_vs_9m` MAPPO full 与 HAPPO early checkpoint 的 win rate 曲线。
-- [ ] 生成完整矩阵正式训练曲线。
+- [x] 生成完整矩阵正式训练曲线。
 - [x] 建立报告骨架。
 - [x] 写入算法简介、代码对应、环境配置、smoke/pilot 结果和讨论。
 - [x] 写入已同步正式训练结果和阶段性讨论。
-- [ ] 写入完整矩阵最终训练结果和讨论。
+- [x] 写入完整矩阵最终训练结果和讨论。
 - [x] 导出 smoke/pilot 版 PDF。
 - [x] 导出包含最新 full 结果的 PDF。
-- [ ] 导出完整矩阵正式训练版 PDF。
+- [x] 导出完整矩阵正式训练版 PDF。
 
 ## 下一步
 
-1. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python3 scripts/apply_student_info.py`，再重新导出 PDF。
-2. 监控正式训练：`tmux attach -t hw3_full_20260531_seed1`，或查看 `logs/full_training_status.md`。
-3. 如果当前 `HAPPO` + `8m_vs_9m` run 继续保持 `no recent progress`，保留旧结果并用 `SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full` 单独恢复缺失组合。
-4. `HAPPO` + `8m_vs_9m` 继续产出后运行 `python scripts/sync_harl_results.py --mode full`、`python scripts/collect_progress.py` 和 `conda run -n harl_hw3 python scripts/plot_win_rate.py`。
-5. 用完整矩阵正式训练曲线替换或补充报告中的阶段性曲线。
-6. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `bash scripts/prepare_submission.sh` 生成最终交付包。
+1. 提供 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL`，运行 `python3 scripts/apply_student_info.py` 更新报告身份信息。
+2. 重新运行 `bash scripts/prepare_submission.sh`，生成带真实身份信息的最终 PDF 和提交压缩包。
+3. 如需审计训练状态，查看 `logs/full_training_snapshot.md` 和 `results/processed/progress_summary.md`。

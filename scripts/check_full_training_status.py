@@ -107,7 +107,8 @@ def render_snapshot(source_root: Path, raw_root: Path, session: str, session_pre
         "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | ---: | --- |",
     ]
 
-    attention: list[str] = []
+    parsed_runs: list[tuple[Path, str, str, ProgressSummary]] = []
+    completed_pairs: set[tuple[str, str]] = set()
     for source_path in discover_full_progress(source_root, exp_prefix):
         relative = source_path.relative_to(source_root)
         parts = relative.parts
@@ -116,9 +117,15 @@ def render_snapshot(source_root: Path, raw_root: Path, session: str, session_pre
         map_name = parts[1]
         algo = parts[2]
         external = parse_progress(source_path, now)
-        synced = parse_progress(raw_path_for(source_path, source_root, raw_root), now)
         if external is None:
             continue
+        parsed_runs.append((source_path, map_name, algo, external))
+        if external.final_step_value >= target_steps:
+            completed_pairs.add((map_name, algo))
+
+    attention: list[str] = []
+    for source_path, map_name, algo, external in parsed_runs:
+        synced = parse_progress(raw_path_for(source_path, source_root, raw_root), now)
         if synced is None:
             sync_status = "not synced"
             synced_rows = "0"
@@ -128,7 +135,9 @@ def render_snapshot(source_root: Path, raw_root: Path, session: str, session_pre
             synced_rows = str(synced.rows)
             synced_step = synced.final_step
         state = run_state(external, target_steps, stale_minutes)
-        if state == "no recent progress":
+        if state == "no recent progress" and (map_name, algo) in completed_pairs:
+            state = "superseded by complete run"
+        elif state == "no recent progress":
             attention.append(
                 f"- `{algo}` + `{map_name}` is incomplete at {external.final_step} steps and has no new external progress for {external.age_minutes:.1f} minutes."
             )

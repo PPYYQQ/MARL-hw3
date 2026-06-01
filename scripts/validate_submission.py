@@ -231,10 +231,14 @@ def render_markdown(checks: list[Check]) -> str:
             f"- Warnings: {warnings}",
             "- GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.",
             "- Student identity fields are warnings because they require user-provided name, ID and email.",
-            "- The full training matrix remains a warning until all four MAPPO/HAPPO x SMAC runs reach the target full step count.",
-            "",
         ]
     )
+    matrix_check = next((check for check in checks if check.name == "full training matrix"), None)
+    if matrix_check and matrix_check.status == "OK":
+        lines.append("- The full training matrix has reached the target full step count for all four MAPPO/HAPPO x SMAC runs.")
+    else:
+        lines.append("- The full training matrix remains a warning until all four MAPPO/HAPPO x SMAC runs reach the target full step count.")
+    lines.append("")
     return "\n".join(lines)
 
 
