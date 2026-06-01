@@ -1,66 +1,161 @@
-# MARL HW3 Workspace
+# MARL HW3: MAPPO/HAPPO on SMAC
 
-本目录用于完成“多智能体系统作业：星际争霸对战”。当前目标是基于 HARL 和 SMAC 完成 MAPPO/HAPPO 的代码阅读、环境配置、训练复现、win rate 绘图和研究性报告。
+本仓库用于完成“多智能体系统作业：星际争霸对战”。作业目标是阅读 MAPPO/HAPPO 相关实现，配置 HARL + SMAC 环境，在 `3s5z` 和 `8m_vs_9m` 上复现实验，绘制 win rate 曲线，并形成研究性报告。
 
-## 当前进度
+## 当前完成度
 
-- `AGENTS.md`：coding agent 工作规范和完整实施计划。
-- `PROGRESS.md`：逐步进度、commit 与剩余任务追踪。
-- `external/HARL/`：本地克隆的 HARL 仓库，仅作运行和阅读参考，不纳入本作业 Git 提交。
-- `scripts/`：环境安装、训练、日志收集和绘图脚本。
-- `configs/smac/`：本作业实际使用的 MAPPO/HAPPO 配置快照。
-- `logs/`：作业摘要、环境检查、代码阅读和实验笔记。
-- `report/`：研究性报告骨架。
-- `SUBMISSION.md`：提交、GitHub 同步、正式训练和 PDF 导出的检查清单。
-- `TRAINING.md`：正式训练资源、命令和结果整理说明。
+- 环境：已完成 HARL、SMAC、StarCraft II Linux 4.10、SMAC maps、PyTorch/CUDA 环境配置与验证。
+- 代码阅读：已定位 MAPPO/HAPPO actor update、HAPPO sequential factor、GAE return、SMAC win rate logging 等关键实现。
+- 实验：已完成 4 组 smoke test、4 组 10000-step pilot，以及 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 单 seed 20000000-step full 矩阵。
+- 报告：已生成 `report/main.tex`、`report/report.html` 和 `report/main.pdf`。
+- 校验：`python3 scripts/validate_submission.py` 当前为 `31` 项检查、`0` failures、`2` warnings。
+- 剩余：需要用户提供 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL`，替换报告中的身份占位符并生成最终提交包。
 
-## 推荐流程
+## 主要结果
 
-1. 运行 `bash scripts/setup_env.sh` 创建 HARL/SMAC 环境。
-2. 安装 StarCraft II Linux 4.10，设置 `SC2PATH`，并安装 SMAC maps。当前本机已安装到 `/home/yongqian/StarCraftII`。
-3. 运行 `bash scripts/run_smac_experiments.sh dry-run` 检查 4 个实验命令。
-4. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke` 做最小验证。
-5. 运行 `PRINT_ONLY=true conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 预览短跑参数。
-6. 运行 `conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot` 做短跑检查。
-7. 运行 `bash scripts/launch_training_tmux.sh full` 在 tmux 中启动正式训练。
-8. 运行 `bash scripts/snapshot_configs.sh` 保存本次使用的配置快照。
-9. 运行 `python scripts/sync_harl_results.py --mode full` 将正式训练 `progress.txt` 复制到 `results/raw/full/`。
-10. 运行 `python scripts/collect_progress.py` 汇总 `progress.txt`。
-11. 运行 `python scripts/summarize_progress.py` 生成 Markdown 结果摘要。
-12. 运行 `python scripts/check_full_training_status.py` 生成 full training 快照，检查同步状态和长时间未更新的 run。
-13. 运行 `python scripts/plot_win_rate.py` 生成 `figures/win_rate_*.png`。
-14. 运行 `python scripts/generate_artifact_manifest.py` 生成产物哈希清单。
-15. 运行 `python scripts/validate_submission.py` 生成提交前校验报告。
-16. 设置 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL` 后运行 `python scripts/apply_student_info.py` 补全报告身份信息。
-17. 运行 `bash scripts/build_report_pdf.sh` 导出 PDF。
-18. 设置学号姓名后运行 `STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh` 生成压缩包；脚本会先运行提交校验。
+| Map | Algorithm | Step | Final reward | Final win rate | Best win rate |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `3s5z` | MAPPO | 20000000 | 19.8764 | 0.9750 | 1.0000 |
+| `3s5z` | HAPPO | 20000000 | 19.3452 | 0.8750 | 1.0000 |
+| `8m_vs_9m` | MAPPO | 20000000 | 18.9216 | 0.8750 | 0.9000 |
+| `8m_vs_9m` | HAPPO recovery | 20000000 | 17.5288 | 0.7500 | 0.9750 |
 
-也可以在学生信息确定后运行一键准备脚本：
+说明：`HAPPO + 8m_vs_9m` 的原始 full run 停在 `5120000` steps；仓库保留该 stale run 的原始记录，并使用非破坏性 recovery run 完成同组合 full 结果。
+
+## 仓库结构
+
+- `AGENTS.md`：coding agent 工作规范、作业理解、项目架构预估、实施计划和测试计划。
+- `PROGRESS.md`：逐步进度、关键 commit、验证命令和剩余事项追踪。
+- `SUBMISSION.md`：交付前检查清单、GitHub 同步、PDF 导出和打包说明。
+- `TRAINING.md`：正式训练资源需求、tmux 训练命令、监控和结果整理说明。
+- `configs/smac/`：本次实验使用的 MAPPO/HAPPO × SMAC 配置快照。
+- `figures/`：`3s5z` 与 `8m_vs_9m` 的 win rate 曲线。
+- `logs/`：代码阅读、安装、实验记录、训练快照、校验报告和产物 manifest。
+- `report/`：LaTeX 报告、HTML 报告、参考文献和导出的 PDF。
+- `results/raw/`：smoke、pilot、full 的原始 `progress.txt`。
+- `results/processed/`：统一 CSV 与 Markdown 汇总结果。
+- `scripts/`：环境安装、训练、同步、汇总、绘图、校验、PDF 导出和打包脚本。
+
+`external/HARL/` 是本地运行依赖和代码阅读对象，不纳入本作业 Git 提交。
+
+## 快速验证
 
 ```bash
-STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
+python3 scripts/validate_submission.py
 ```
 
-## 关键说明
+当前预期输出：
 
-当前 HARL commit `b1af98b0dbab72a2eee9d160751cd09aedbb8ce2` 的 `tuned_configs/smac` 中，`3s5z` 和 `8m_vs_9m` 只提供 `happo`、`hatrpo`、`hasac` 配置，没有 MAPPO tuned config。脚本对 HAPPO 使用官方 tuned config；对 MAPPO 会基于同地图 HAPPO tuned config 生成临时 MAPPO 配置，并把算法关键项切换为 `share_param: true`、`fixed_order: true`。
+```text
+checks=31
+failures=0
+warnings=2
+output=logs/submission_validation.md
+```
 
-## GitHub
-
-本地 Git 仓库已初始化，`origin` 已切换为 SSH 地址 `git@github.com:PPYYQQ/MARL-hw3.git`。SSH 认证已通过，`main` 已设置为跟踪 `origin/main`：
+查看最终结果摘要：
 
 ```bash
+sed -n '1,40p' results/processed/progress_summary.md
+```
+
+查看 full training 同步状态：
+
+```bash
+python3 scripts/check_full_training_status.py
+sed -n '1,25p' logs/full_training_snapshot.md
+```
+
+## 复现实验流程
+
+环境准备：
+
+```bash
+bash scripts/setup_env.sh
+```
+
+训练命令预览：
+
+```bash
+bash scripts/run_smac_experiments.sh dry-run
+```
+
+smoke test：
+
+```bash
+conda run -n harl_hw3 bash scripts/run_smac_experiments.sh smoke
+```
+
+pilot run：
+
+```bash
+conda run -n harl_hw3 bash scripts/run_smac_experiments.sh pilot
+```
+
+full run 建议放在 tmux 中运行：
+
+```bash
+SESSION=hw3_full_20260531_seed1 SEEDS=1 EXP_PREFIX=hw3_full bash scripts/launch_training_tmux.sh full
+```
+
+如果某个 full run 长时间不再写入 `progress.txt`，保留原始输出目录，并用新的 session 和 `EXP_PREFIX` 单独恢复缺失组合。当前 `HAPPO + 8m_vs_9m` 已通过以下命令完成 recovery：
+
+```bash
+SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_recover bash scripts/launch_training_tmux.sh full
+```
+
+同步和整理结果：
+
+```bash
+python3 scripts/sync_harl_results.py --mode full
+python3 scripts/collect_progress.py
+python3 scripts/summarize_progress.py
+python3 scripts/check_full_training_status.py
+conda run -n harl_hw3 python scripts/plot_win_rate.py
+```
+
+## 报告与打包
+
+导出 PDF：
+
+```bash
+bash scripts/build_report_pdf.sh
+```
+
+补全学生身份信息：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> python3 scripts/apply_student_info.py
+```
+
+生成最终交付包：
+
+```bash
+STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> ASSIGNMENT_NAME=星际争霸对战 bash scripts/prepare_submission.sh
+```
+
+打包产物位于 `dist/`，该目录不纳入 Git。
+
+## GitHub 同步
+
+当前 remote 使用 SSH：
+
+```bash
+git remote -v
+git status --short --branch
 git push
 ```
 
-之前 HTTPS 地址 `https://github.com/PPYYQQ/MARL-hw3.git` 推送失败的原因不是仓库地址错误，而是非交互式环境没有 GitHub 用户名/token 凭据。之后每个关键修改继续使用独立 commit，并同步更新 `PROGRESS.md`。
+remote 地址为：
 
-如果需要改回 HTTPS token 推送，可以用辅助脚本，脚本不会把 token 写入 remote URL：
-
-```bash
-GITHUB_TOKEN=<token> bash scripts/push_to_github.sh
+```text
+git@github.com:PPYYQQ/MARL-hw3.git
 ```
 
-## 提交
+之前 HTTPS 推送失败的原因是非交互式环境没有 GitHub 用户名/token 凭据；SSH remote 已验证可用。每个关键修改都应独立 commit，并同步更新 `PROGRESS.md`。
 
-交付前按 `SUBMISSION.md` 检查 PDF、补充材料、压缩包命名和 GitHub 同步状态。
+## 注意事项
+
+- 当前结果是单 seed 复现，不是多 seed 统计结论。
+- 当前 HARL commit 缺少 `3s5z` 和 `8m_vs_9m` 的 MAPPO tuned config；MAPPO 配置由同地图 HAPPO tuned config 转换得到。
+- `report/main.tex` 和 `report/report.html` 中仍有学生身份占位符，正式提交前必须替换。

@@ -5,7 +5,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | Path | Size | SHA256 |
 | --- | ---: | --- |
 | `AGENTS.md` | 9299 | `ed1038afe19137226924f4af6b5454de7e728b8eb25d8e0af12ff63560d093b4` |
-| `README.md` | 4030 | `2c98f9b3862a426fff33b6d59a7aec779bb691d528202c06e94e22a40750803c` |
+| `README.md` | 5325 | `95e812eaad457c6e97546f3bb3304d6e665661682e73719c341da2aa38c74b3e` |
 | `SUBMISSION.md` | 5419 | `6677287dd6fb62d9f0d06269209301d27f2d28bbf973a14e4534d6bea0dd883f` |
 | `TRAINING.md` | 4421 | `7a3e7477b20821afa2591fa7bef772e28573a2e2ddba59e124f67defb4f92898` |
 | `configs/overrides/README.md` | 1002 | `ffbab5b5cf748264f835006f2a59407e1c788f7c79ebfc4be9d8a94a6ac2c579` |
@@ -72,5 +72,5 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 ## Summary
 
 - Files: 64
-- Total bytes: 1974706
+- Total bytes: 1976001
 - Excludes generated validation and manifest files to avoid self-referential churn.
