@@ -146,6 +146,7 @@
 | 2026-05-31 | `cf606cb` | 同步 `HAPPO` + `8m_vs_9m` recovery run 到 5120000 steps，更新汇总、曲线、报告、PDF 和校验清单 | `sync_harl_results.py`、`plot_win_rate.py`、`build_report_pdf.sh`、`validate_submission.py` |
 | 2026-06-01 | `10b4ea0` | 同步 `HAPPO` + `8m_vs_9m` recovery run 完整 20000000-step 结果，更新完整矩阵报告、曲线、状态脚本、PDF 和校验清单 | `sync_harl_results.py`、`check_full_training_status.py`、`build_report_pdf.sh`、`validate_submission.py` |
 | 2026-06-01 | `f65ce18` | 扩写 README，补充当前完成度、主要结果、仓库结构、验证命令、复现实验流程、报告打包和 GitHub 同步说明 | `generate_artifact_manifest.py`、`validate_submission.py`、`git push` |
+| 2026-06-14 | `d647055` | 将 `report/main.tex` 改写为英文最终报告，移除中文 LaTeX 依赖，并新增 Overleaf 项目 zip 打包脚本 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
 
 ## 任务清单
 
@@ -236,12 +237,14 @@
 - [x] 写入算法简介、代码对应、环境配置、smoke/pilot 结果和讨论。
 - [x] 写入已同步正式训练结果和阶段性讨论。
 - [x] 写入完整矩阵最终训练结果和讨论。
+- [x] 将报告改写为英文最终版。
+- [x] 生成 Overleaf 可上传的 LaTeX project zip。
 - [x] 导出 smoke/pilot 版 PDF。
 - [x] 导出包含最新 full 结果的 PDF。
 - [x] 导出完整矩阵正式训练版 PDF。
 
 ## 下一步
 
-1. 提供 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL`，运行 `python3 scripts/apply_student_info.py` 更新报告身份信息。
-2. 重新运行 `bash scripts/prepare_submission.sh`，生成带真实身份信息的最终 PDF 和提交压缩包。
+1. 提供 `STUDENT_ID`、`STUDENT_NAME`、`STUDENT_EMAIL`，运行 `python3 scripts/apply_student_info.py` 更新英文 LaTeX 报告身份信息。
+2. 重新运行 `bash scripts/package_overleaf_report.sh`，生成带真实身份信息的 `dist/marl_hw3_overleaf.zip` 并上传 Overleaf。
 3. 如需审计训练状态，查看 `logs/full_training_snapshot.md` 和 `results/processed/progress_summary.md`。
