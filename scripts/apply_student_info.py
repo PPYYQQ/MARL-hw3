@@ -51,8 +51,8 @@ def update_tex(path: Path, student_id: str, name: str, email: str) -> None:
         "LaTeX author",
     )
     text = replace_one(
-        r"\\icmlaffiliation\{student\}\{学号：[^{}]+\}",
-        rf"\\icmlaffiliation{{student}}{{学号：{escaped_id}}}",
+        r"\\icmlaffiliation\{student\}\{[^{}]+\}",
+        rf"\\icmlaffiliation{{student}}{{Student ID: {escaped_id}}}",
         text,
         "LaTeX affiliation",
     )
@@ -68,8 +68,8 @@ def update_tex(path: Path, student_id: str, name: str, email: str) -> None:
 def update_html(path: Path, student_id: str, name: str, email: str) -> None:
     text = path.read_text(encoding="utf-8")
     meta = (
-        f'<div class="meta">学号：{html.escape(student_id)}　'
-        f"姓名：{html.escape(name)}　邮箱：{html.escape(email)}</div>"
+        f'<div class="meta">Student ID: {html.escape(student_id)} &nbsp; '
+        f"Name: {html.escape(name)} &nbsp; Email: {html.escape(email)}</div>"
     )
     text = replace_one(r'<div class="meta">.*?</div>', meta, text, "HTML metadata")
     path.write_text(text, encoding="utf-8")

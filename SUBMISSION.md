@@ -4,7 +4,7 @@
 
 ## 当前可提交内容
 
-- `report/main.tex`：ICML2022 模板下的报告草稿，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke/pilot 结果和单 seed full 矩阵最终结果。
+- `report/main.tex`：ICML2022 模板下的英文最终报告，已包含算法简介、HARL 代码对应、环境配置、实验设置、smoke/pilot 结果和单 seed full 矩阵最终结果。
 - `report/references.bib`：MAPPO、HAPPO/HARL、SMAC 的参考文献。
 - `scripts/`：环境安装、HARL NumPy 2 兼容补丁、实验运行、`progress.txt` 汇总和 win rate 绘图脚本。
 - `configs/smac/`：MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的配置快照。
@@ -16,13 +16,14 @@
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记和 full training 快照。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
 - `logs/submission_validation.md`：提交前产物完整性检查；full training matrix 已通过，当前 warning 只剩学生身份占位符。
+- `dist/marl_hw3_overleaf.zip`：通过 `scripts/package_overleaf_report.sh` 生成的 Overleaf 可上传 LaTeX 项目包；`dist/` 默认不纳入 Git。
 - `TRAINING.md`：正式训练资源需求、推荐命令和结果整理说明。
 
 ## 仍需人工确认
 
 - 学号、姓名、邮箱：需要填入 `report/main.tex`。
 - GitHub push：`origin` 已切换为 `git@github.com:PPYYQQ/MARL-hw3.git`；SSH 认证已通过，`main` 已同步到 `origin/main`。
-- LaTeX 编译器：当前系统没有 `xelatex` 或 `pdflatex`；PDF 已通过 Chrome HTML 导出流程生成。
+- LaTeX 编译器：本次最终交付按 Overleaf 项目 zip 准备，本地无需编译 PDF。
 - 正式训练：当前完成 1000-step smoke test、4 组 10000-step pilot，以及 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 单 seed full 矩阵；`HAPPO` + `8m_vs_9m` 原始 run 停在 5120000 steps，recovery run `hw3_recover_happo_8m` 已完成并同步到 20000000 steps。
 
 ## GitHub 同步
@@ -82,31 +83,26 @@ git commit -m "docs: add full SMAC training results"
 git push
 ```
 
-## PDF 导出
+## Overleaf 项目 zip
 
-当前本机没有 LaTeX，但有 Chrome，已经可以用 HTML 版报告导出 PDF：
-
-```bash
-bash scripts/build_report_pdf.sh
-```
-
-安装 LaTeX 后，也可以在仓库根目录执行：
+生成只包含 LaTeX 报告、ICML 样式、参考文献和图片的 Overleaf 项目：
 
 ```bash
-cd report
-xelatex main.tex
-bibtex main
-xelatex main.tex
-xelatex main.tex
+bash scripts/package_overleaf_report.sh
 ```
 
-若使用 Word 版，则根据 `report/main.tex` 和 `logs/` 中的内容整理为双栏、单倍行距，并导出 PDF。
+输出：
+
+```text
+dist/marl_hw3_overleaf.zip
+```
+
+上传到 Overleaf 后，入口文件为 `main.tex`，建议使用 pdfLaTeX 编译。正式提交前先替换 `Student Name`、`Student ID: TODO` 和 `email@example.com`。
 
 ## 打包建议
 
-压缩包命名格式为“学号+姓名+作业名称”。建议包含：
+如果课程仍要求完整归档包，压缩包命名格式为“学号+姓名+作业名称”。建议包含：
 
-- `report/main.pdf`
 - `report/main.tex`
 - `report/references.bib`
 - `figures/`
@@ -126,13 +122,13 @@ xelatex main.tex
 - `/home/yongqian/SC2.4.10.zip`
 - 大型模型 checkpoint
 
-可用脚本生成当前 smoke 版交付包：
+可用脚本生成完整归档包：
 
 ```bash
 STUDENT_ID=<id> STUDENT_NAME=<name> bash scripts/package_submission.sh
 ```
 
-打包前建议先运行：
+完整归档打包前建议先运行：
 
 ```bash
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> python3 scripts/apply_student_info.py
@@ -145,4 +141,4 @@ bash scripts/build_report_pdf.sh
 STUDENT_ID=<id> STUDENT_NAME=<name> STUDENT_EMAIL=<email> bash scripts/prepare_submission.sh
 ```
 
-打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式提交前提供学生身份信息后，再重新运行打包脚本。
+打包脚本会先运行 `python3 scripts/validate_submission.py`，若存在失败项则停止打包；当前姓名、学号、邮箱占位符只会产生 warning。输出位于 `dist/`，该目录不会纳入 Git 提交。正式提交前提供学生身份信息后，再重新运行 Overleaf zip 或完整归档脚本。

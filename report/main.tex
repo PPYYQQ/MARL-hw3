@@ -1,24 +1,23 @@
 \documentclass{article}
 
 \usepackage[accepted]{icml2022}
-\usepackage{ctex}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{hyperref}
 
-\icmltitlerunning{MAPPO 与 HAPPO 在 SMAC 上的复现实验}
+\icmltitlerunning{Reproducing MAPPO and HAPPO on SMAC}
 
 \begin{document}
 
 \twocolumn[
-\icmltitle{MAPPO 与 HAPPO 在 SMAC 上的复现实验}
+\icmltitle{Reproducing MAPPO and HAPPO on SMAC}
 
 \begin{icmlauthorlist}
-\icmlauthor{姓名}{student}
+\icmlauthor{Student Name}{student}
 \end{icmlauthorlist}
 
-\icmlaffiliation{student}{学号：待填写}
-\icmlcorrespondingauthor{姓名}{email@example.com}
+\icmlaffiliation{student}{Student ID: TODO}
+\icmlcorrespondingauthor{Student Name}{email@example.com}
 
 \icmlkeywords{Multi-Agent Reinforcement Learning, SMAC, MAPPO, HAPPO}
 
@@ -26,134 +25,147 @@
 ]
 
 \begin{abstract}
-本文基于 HARL 代码库和 SMAC 环境，复现 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 两个地图上的训练流程。当前工作已经完成环境安装、代码定位、四组 smoke test、四组 10000-step pilot、\texttt{progress.txt} 汇总和 win rate 绘图；单 seed 正式训练已同步 MAPPO/HAPPO × \texttt{3s5z}/\texttt{8m\_vs\_9m} 四组 20000000-step 结果。\texttt{8m\_vs\_9m} HAPPO 原始 full run 停在 5120000 steps，因此用 recovery run 完成同组合 full 结果。本文报告重点是复现流程、代码对应关系、完整矩阵结果和局限性分析。
+This report reproduces MAPPO and HAPPO on the StarCraft Multi-Agent Challenge (SMAC) using the HARL codebase. The study covers environment setup, implementation mapping, smoke tests, pilot runs, result collection, win-rate visualization, and a single-seed full training matrix on \texttt{3s5z} and \texttt{8m\_vs\_9m}. All four MAPPO/HAPPO by map combinations were run to 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} stopped producing new progress after 5.12 million steps, so a non-destructive recovery run was launched and used as the completed full-run result for that matrix entry. The final results show strong performance from both algorithms on \texttt{3s5z}; on \texttt{8m\_vs\_9m}, MAPPO has the higher final win rate, while the HAPPO recovery run reaches a higher best win rate but shows more late-stage fluctuation.
 \end{abstract}
 
-\section{引言}
+\section{Introduction}
 
-星际争霸多智能体挑战（SMAC）提供了完全合作的多智能体微操任务，适合评估多智能体强化学习算法的协同决策能力 \cite{samvelyan2019starcraft}。每个智能体只能观察局部信息并选择离散动作，但训练和评估关注的是团队是否能击败敌方单位。本作业关注 MAPPO 与 HAPPO 在 SMAC 上的训练、测试和分析流程。
+The StarCraft Multi-Agent Challenge (SMAC) is a cooperative multi-agent benchmark built on StarCraft II micromanagement tasks \cite{samvelyan2019starcraft}. Each allied unit is controlled by one agent with partial local observations, while the team objective is to defeat the enemy units. This setting is useful for studying decentralized execution, centralized training, credit assignment, and stability in multi-agent reinforcement learning.
 
-\section{算法概述}
+This homework focuses on two on-policy methods: MAPPO and HAPPO. MAPPO adapts PPO to cooperative multi-agent tasks and has been shown to be a strong baseline when implementation details are carefully tuned \cite{yu2022surprising}. HAPPO extends policy optimization to heterogeneous-agent settings through sequential policy updates and a factor correction term \cite{zhong2024heterogeneous}. The goal of this project is not only to run the algorithms, but also to connect the paper-level ideas with the actual HARL implementation, produce reproducible scripts, and analyze the training results on two SMAC maps.
+
+\section{Algorithms}
 
 \subsection{MAPPO}
 
-MAPPO 可以理解为将单智能体 PPO 扩展到多智能体合作场景 \cite{yu2022surprising}。每个智能体执行去中心化策略，训练阶段使用集中式信息估计价值函数，并通过 PPO clipped surrogate objective 限制策略更新幅度。相比从零设计复杂的 credit assignment 机制，MAPPO 的重点是把 PPO 中优势估计、策略比值裁剪、熵正则和集中式 critic 组合成稳定的 on-policy 多智能体训练流程。
+MAPPO can be viewed as a multi-agent version of PPO. Each agent acts with a decentralized policy, while training uses centralized information to estimate the value function. The actor update still follows the clipped PPO surrogate objective, which limits overly large policy updates by clipping the probability ratio. In cooperative SMAC tasks, the key practical ingredients are stable advantage estimation, centralized critics, entropy regularization, and careful control of rollout and evaluation settings.
+
+In this project, MAPPO configurations were generated from the corresponding HAPPO tuned configurations because the selected HARL commit did not include tuned MAPPO configuration files for \texttt{3s5z} and \texttt{8m\_vs\_9m}. The generated MAPPO configurations switch the algorithm-specific options to parameter sharing and fixed agent order, while keeping map-level training parameters aligned with the HARL tuned settings.
 
 \subsection{HAPPO}
 
-HAPPO 在异质智能体场景下引入顺序策略更新 \cite{zhong2024heterogeneous}。其核心思想是使用多智能体优势分解，并在更新当前智能体时通过 factor 修正前序智能体策略更新对联合策略概率比的影响，从而获得更稳定的单调改进性质。与 MAPPO 直接独立或共享更新 actor 不同，HAPPO 在一个 update 内按智能体顺序逐个更新策略，并把已经更新过的智能体对联合策略概率的影响累积到后续智能体的 surrogate objective 中。
+HAPPO introduces sequential policy updates for heterogeneous agents. During one update cycle, agents are updated one by one rather than all at once. A factor term tracks how earlier policy updates affect the joint policy probability ratio, and this factor is included in the later agents' surrogate objectives. This design gives HAPPO a more principled monotonic-improvement structure than a naive independent PPO-style update.
 
-\section{HARL 代码对应}
+For SMAC, the selected HAPPO runs use the official HARL tuned configurations. The final matrix uses a recovery run for HAPPO on \texttt{8m\_vs\_9m}, because the original full run became stale after reaching 5.12 million environment steps. The stale original output is preserved for auditability, while the completed recovery run is used for the final comparison.
+
+\section{Implementation Mapping in HARL}
+
+The implementation reading focused on connecting the mathematical components in MAPPO and HAPPO to the HARL source code. Table~\ref{tab:implementation} summarizes the main mapping.
 
 \begin{table}[h]
 \centering
-\caption{论文概念与 HARL 实现对应}
+\caption{Paper concepts and HARL implementation locations.}
+\label{tab:implementation}
 \begin{tabular}{lll}
 \toprule
-概念 & 文件 & 位置 \\
+Concept & File & Role \\
 \midrule
-HAPPO clip & \texttt{happo.py} & actor update \\
-HAPPO factor & \texttt{on\_policy\_ha\_runner.py} & sequential update \\
-GAE & \texttt{on\_policy\_critic\_buffer\_ep.py} & compute returns \\
-MAPPO update & \texttt{mappo.py} & actor update \\
-SMAC win rate & \texttt{smac\_logger.py} & progress.txt \\
+HAPPO actor update & \texttt{happo.py} & clipped surrogate with factor \\
+Sequential factor & \texttt{on\_policy\_ha\_runner.py} & agent-wise update order \\
+GAE returns & \texttt{on\_policy\_critic\_buffer\_ep.py} & return computation \\
+MAPPO actor update & \texttt{mappo.py} & shared PPO-style actor update \\
+SMAC win rate & \texttt{smac\_logger.py} & writes \texttt{progress.txt} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-HARL 中 HAPPO 与 MAPPO 的核心差别主要体现在 runner 和 actor update 两层。HAPPO runner 初始化 factor 为 1，按固定或随机顺序遍历智能体；每个智能体更新前把当前 factor 写入 actor buffer，更新后用新旧策略动作概率比更新 factor。HAPPO actor loss 中的 clipped surrogate 会额外乘以 \texttt{factor\_batch}。MAPPO actor 同样计算 PPO clipped surrogate，但没有 HAPPO 的顺序 factor；在参数共享模式下，它把多个智能体的数据合并后更新共享 actor。GAE 则位于 critic buffer 的 \texttt{compute\_returns} 中，由 TD residual 递推得到 return。更详细的文件和行号记录见 \texttt{logs/code\_reading.md}。
+The main difference between HAPPO and MAPPO appears at the runner and actor-update levels. HAPPO initializes the factor to one, updates agents sequentially, writes the current factor into the actor buffer, and then updates the factor with the new-to-old action-probability ratio. MAPPO also uses the PPO clipped surrogate, but it does not apply the HAPPO sequential factor. Under parameter sharing, MAPPO merges data across agents to update a shared actor.
 
-\section{环境配置}
+\section{Environment and Reproducibility}
 
-实验在本机 Linux 环境中进行。硬件为 NVIDIA GeForce RTX 5090，显存约 32GB。软件环境使用 Conda 创建 \texttt{harl\_hw3}，Python 版本为 3.10，PyTorch 为 \texttt{2.12.0+cu130}，CUDA 可用。HARL 克隆到 \texttt{external/HARL}，commit 为 \texttt{b1af98b0dbab72a2eee9d160751cd09aedbb8ce2}。
+Experiments were run on a Linux workstation with an NVIDIA GeForce RTX 5090 GPU. The Python environment uses Conda, Python 3.10, PyTorch with CUDA support, HARL at commit \texttt{b1af98b0dbab72a2eee9d160751cd09aedbb8ce2}, and the oxwhirl SMAC package. StarCraft II Linux 4.10 and SMAC maps were installed locally, and the target maps \texttt{3s5z} and \texttt{8m\_vs\_9m} were verified through SMAC map-list and random-agent checks.
 
-SMAC 依赖使用 oxwhirl 的 StarCraft Multi-Agent Challenge 包，而不是 PyPI 上同名的算法配置优化库。StarCraft II Linux 4.10 下载自 Blizzard 的 Linux package，安装到 \texttt{/home/yongqian/StarCraftII}。SMAC maps 已复制到 \texttt{/home/yongqian/StarCraftII/Maps/SMAC\_Maps}，共 23 张。环境验证包括：\texttt{python -m smac.bin.map\_list} 能列出 \texttt{3s5z} 与 \texttt{8m\_vs\_9m}；\texttt{python -m smac.examples.random\_agents} 能成功启动 SC2 并完成 10 个 episode。
+Two setup issues were addressed during the project. First, the PyPI package named \texttt{smac} installs SMAC3 rather than the StarCraft Multi-Agent Challenge environment, so the setup script installs SMAC from the oxwhirl repository. Second, the local PyTorch and NumPy combination required using NumPy 2, so a small compatibility patch replaces old HARL uses of \texttt{np.int} and \texttt{np.bool} with built-in Python types.
 
-实际安装中遇到两个问题。第一，PyPI 包名 \texttt{smac} 默认安装的是 SMAC3，而不是星际争霸环境，因此安装脚本改为从 \texttt{https://github.com/oxwhirl/smac.git} 安装。第二，当前 PyTorch 2.12 与 NumPy 1.23 的 \texttt{torch.from\_numpy} 组合会失败，因此环境使用 NumPy 2，并通过 \texttt{scripts/patch\_harl\_numpy2.py} 把 HARL 中旧的 \texttt{np.int}/\texttt{np.bool} 写法替换为 Python 内置类型。
+All scripts, configuration snapshots, raw \texttt{progress.txt} files, processed summaries, figures, and validation logs are included in the repository. The progress tracker records each major change and its Git commit.
 
-\section{复现流程}
+\section{Experimental Protocol}
 
-复现过程被拆分为环境安装、命令生成、短训练验证、日志汇总和绘图五个阶段。环境安装由 \texttt{scripts/setup\_env.sh} 管理，目标是避免在 base Python 3.13 环境中混装 PyTorch、SMAC 和 HARL。脚本会创建 \texttt{harl\_hw3} 环境、安装 HARL editable package、安装 oxwhirl SMAC、安装 gym 0.21，并执行导入检查。
+The target matrix contains MAPPO and HAPPO on \texttt{3s5z} and \texttt{8m\_vs\_9m}. The workflow has four levels:
 
-训练命令由 \texttt{scripts/run\_smac\_experiments.sh} 管理。该脚本提供四种模式：\texttt{dry-run} 打印四组实验命令；\texttt{smoke} 把训练步数、并行环境数和评估 episode 降到很小，用于确认 SC2 可以启动且 HARL 可以写出日志；\texttt{pilot} 默认使用 10000 environment steps，用于正式训练前的短跑检查；\texttt{full} 保留 tuned config 的正式训练设置。这样可以先快速验证链路，再把同一套命令用于长时间正式训练。
+\begin{enumerate}
+  \item \textbf{Dry run}: print the four experiment commands.
+  \item \textbf{Smoke test}: run very small experiments to verify that SC2, SMAC, HARL, logging, and plotting work end to end.
+  \item \textbf{Pilot run}: run each matrix entry for 10,000 environment steps to catch configuration errors before full training.
+  \item \textbf{Full run}: use HARL tuned training length, 20 million environment steps, for the final single-seed matrix.
+\end{enumerate}
 
-日志处理由 \texttt{scripts/collect\_progress.py} 和 \texttt{scripts/plot\_win\_rate.py} 完成。HARL 的 SMAC logger 在 evaluation 阶段将 \texttt{total\_num\_steps}、平均 episode reward 和 \texttt{eval\_win\_rate} 写入 \texttt{progress.txt}。收集脚本会扫描 HARL 输出目录和本作业保存的 raw 目录，按地图、算法、实验名、run 和 step 去重，再输出统一 CSV。绘图脚本读取同一批数据，按地图生成 MAPPO/HAPPO 曲线。
+HARL writes evaluation rows to \texttt{progress.txt}. The collection script scans the HARL output tree and the saved raw-result tree, deduplicates rows by map, algorithm, experiment name, run path, and step, and writes a unified CSV. A separate summarization script produces a Markdown table with final and best evaluation metrics, and the plotting script generates win-rate curves for each map.
 
-\section{实验设置}
+\section{Results}
 
-实验矩阵包括 MAPPO 与 HAPPO 在 \texttt{3s5z} 和 \texttt{8m\_vs\_9m} 上的训练。HAPPO 使用 HARL 官方 tuned config；由于当前 HARL commit 缺少这两个地图的 MAPPO tuned config，MAPPO 暂基于同地图 HAPPO tuned config 生成，并切换为 MAPPO 的参数共享和固定顺序设置。四组实验命令由 \texttt{scripts/run\_smac\_experiments.sh} 统一管理，\texttt{dry-run} 模式打印命令，\texttt{smoke} 模式将 \texttt{num\_env\_steps} 降到 1000 用于验证流程，\texttt{pilot} 模式用于低成本短跑检查，\texttt{full} 模式保留 tuned config 中的正式训练步数。
+\subsection{Pilot Runs}
 
-\begin{table}[h]
-\centering
-\caption{实验矩阵}
-\begin{tabular}{lll}
-\toprule
-算法 & 地图 & 配置来源 \\
-\midrule
-MAPPO & \texttt{3s5z} & generated config \\
-HAPPO & \texttt{3s5z} & HARL tuned config \\
-MAPPO & \texttt{8m\_vs\_9m} & generated config \\
-HAPPO & \texttt{8m\_vs\_9m} & HARL tuned config \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{结果与分析}
-
-目前已完成四组 1000 environment steps 的 smoke test，用于验证环境、训练脚本、日志收集和绘图流程。随后又完成了四组 10000-step pilot run，覆盖 MAPPO/HAPPO 与 \texttt{3s5z}/\texttt{8m\_vs\_9m} 的完整实验矩阵。2026-05-31 已在 tmux 中启动单 seed full tuned config；当前已同步四组 20000000-step full 结果。\texttt{8m\_vs\_9m} HAPPO 原始 run 长时间无新 progress 行并停在 5120000 steps，后续 recovery run 已完成同组合 20000000-step 训练，因此最终矩阵以 recovery run 作为 HAPPO/\texttt{8m\_vs\_9m} 的完整结果。
+The pilot runs confirm that all four target combinations execute successfully. Since the pilot length is only 9,600 environment steps at the last evaluation point, win rates remain zero and should not be interpreted as algorithm performance. Their role is to validate the pipeline before long training.
 
 \begin{table}[h]
 \centering
-\caption{Pilot run 最后一次 evaluation 结果}
+\caption{Last evaluation of the 10,000-step pilot runs.}
+\label{tab:pilot}
 \begin{tabular}{llrr}
 \toprule
-地图 & 算法 & Step & Eval reward / win rate \\
+Map & Algorithm & Step & Reward / Win rate \\
 \midrule
-\texttt{3s5z} & HAPPO & 9600 & 4.0629 / 0.0 \\
-\texttt{3s5z} & MAPPO & 9600 & 7.6954 / 0.0 \\
-\texttt{8m\_vs\_9m} & HAPPO & 9600 & 5.0072 / 0.0 \\
-\texttt{8m\_vs\_9m} & MAPPO & 9600 & 7.5108 / 0.0 \\
+\texttt{3s5z} & HAPPO & 9600 & 4.0629 / 0.0000 \\
+\texttt{3s5z} & MAPPO & 9600 & 7.6954 / 0.0000 \\
+\texttt{8m\_vs\_9m} & HAPPO & 9600 & 5.0072 / 0.0000 \\
+\texttt{8m\_vs\_9m} & MAPPO & 9600 & 7.5108 / 0.0000 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{Full Training Matrix}
+
+Table~\ref{tab:full} reports the single-seed full-run results. Each completed full run reaches 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} is listed separately as an audit record because it stopped at 5.12 million steps and is not used as the final matrix result.
 
 \begin{table}[h]
 \centering
-\caption{Full run 汇总；HAPPO original 为 stale 审计记录}
+\caption{Full-run results. HAPPO original is a stale audit record.}
+\label{tab:full}
 \begin{tabular}{llrll}
 \toprule
-地图 & 算法 & Step & Final reward / win rate & Best win rate \\
+Map & Algorithm & Step & Final reward / win rate & Best win rate \\
 \midrule
-\texttt{3s5z} & MAPPO & 20000000 & 19.8764 / 0.975 & 1.0 \\
-\texttt{3s5z} & HAPPO & 20000000 & 19.3452 / 0.875 & 1.0 \\
-\texttt{8m\_vs\_9m} & MAPPO & 20000000 & 18.9216 / 0.875 & 0.9 \\
-\texttt{8m\_vs\_9m} & HAPPO recovery & 20000000 & 17.5288 / 0.75 & 0.975 \\
-\texttt{8m\_vs\_9m} & HAPPO original & 5120000 & 17.9525 / 0.725 & 0.8 \\
+\texttt{3s5z} & MAPPO & 20000000 & 19.8764 / 0.9750 & 1.0000 \\
+\texttt{3s5z} & HAPPO & 20000000 & 19.3452 / 0.8750 & 1.0000 \\
+\texttt{8m\_vs\_9m} & MAPPO & 20000000 & 18.9216 / 0.8750 & 0.9000 \\
+\texttt{8m\_vs\_9m} & HAPPO recovery & 20000000 & 17.5288 / 0.7500 & 0.9750 \\
+\texttt{8m\_vs\_9m} & HAPPO original & 5120000 & 17.9525 / 0.7250 & 0.8000 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\linewidth]{../figures/win_rate_3s5z.png}
-\caption{\texttt{3s5z} smoke/pilot/full eval win rate。}
+\includegraphics[width=\linewidth]{figures/win_rate_3s5z.png}
+\caption{Evaluation win rate on \texttt{3s5z}.}
+\label{fig:3s5z}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\linewidth]{../figures/win_rate_8m_vs_9m.png}
-\caption{\texttt{8m\_vs\_9m} smoke/pilot/full eval win rate。}
+\includegraphics[width=\linewidth]{figures/win_rate_8m_vs_9m.png}
+\caption{Evaluation win rate on \texttt{8m\_vs\_9m}.}
+\label{fig:8m}
 \end{figure}
 
-正式训练曲线已经使用同一套脚本重新生成，可比较 MAPPO 与 HAPPO 的收敛速度、最终胜率和训练稳定性。主要结论是：训练、评估、日志、汇总和绘图链路已经打通；四组 pilot 均能稳定运行到 10000-step 量级；\texttt{3s5z} 上 MAPPO final eval win rate 为 0.975，HAPPO final eval win rate 为 0.875，二者 best win rate 都达到 1.0；\texttt{8m\_vs\_9m} 上 MAPPO final eval win rate 为 0.875，best win rate 为 0.9；HAPPO recovery final eval win rate 为 0.75，但 best win rate 达到 0.975。该结果说明 HAPPO 在 recovery run 中曾达到较高胜率，但末段波动更明显；由于这里只做单 seed 复现，不能把一次 final win rate 差异解释为稳定的算法优劣。
+\section{Analysis}
 
-\section{局限性}
+On \texttt{3s5z}, both algorithms learn strong policies. MAPPO finishes with a higher final win rate of 0.975, while HAPPO finishes at 0.875. Both reach a best evaluation win rate of 1.0, which suggests that the map is solvable by both methods under the selected single-seed setup.
 
-当前结果的主要局限是只完成了单 seed 复现，尚未进行多 seed 均值和方差统计。SMAC 任务需要大量交互样本才能学习到稳定微操策略，尤其是 \texttt{8m\_vs\_9m} 这种非对称地图；单次 run 的末段胜率可能受评估随机性和策略波动影响。另外，当前 HARL commit 缺少这两个地图的 MAPPO tuned config，因此 MAPPO 配置由同地图 HAPPO config 转换得到，和官方专门调参的 MAPPO config 可能不完全等价。最后，\texttt{8m\_vs\_9m} HAPPO 原始 run 曾在 5120000 steps 后停止写入新 progress 行，最终结果来自非破坏性 recovery run，这一点已在日志中保留用于审计。
+On \texttt{8m\_vs\_9m}, the final comparison is more nuanced. MAPPO reaches a final win rate of 0.875 and a best win rate of 0.9. The HAPPO recovery run reaches a higher best win rate of 0.975 but ends at 0.75, indicating larger late-stage fluctuation. This does not prove that one algorithm is generally better than the other, because the experiment uses only one seed and one generated MAPPO configuration per map. It does show that the pipeline is capable of reproducing full-length training curves and exposing stability differences across runs.
 
-\section{结论}
+The stale original HAPPO run on \texttt{8m\_vs\_9m} is an important engineering detail. Instead of deleting or overwriting it, the project preserves the original directory and launches a recovery run with a new experiment prefix. This keeps the data auditable while still completing the missing matrix entry.
 
-当前阶段已经完成环境配置、代码阅读定位、四组 smoke test、四组 10000-step pilot run、单 seed full 矩阵同步和自动绘图。结果显示两种算法在 \texttt{3s5z} 上都能达到较高胜率；在 \texttt{8m\_vs\_9m} 上，MAPPO 的 final win rate 更高，而 HAPPO recovery 的 best win rate 更高但末段波动较大。后续若要形成更稳健结论，应补充多 seed 实验并报告均值、标准差和置信区间。
+\section{Limitations}
+
+The main limitation is that the final matrix uses a single random seed. SMAC training can be noisy, especially on asymmetric maps such as \texttt{8m\_vs\_9m}, so a stronger conclusion would require multiple seeds and reporting means, standard deviations, and confidence intervals. Another limitation is configuration parity: the selected HARL commit does not provide tuned MAPPO configurations for the two target maps, so MAPPO uses generated configurations derived from the HAPPO tuned settings. This is practical for a homework reproduction, but it may differ from a fully tuned MAPPO baseline.
+
+The report also focuses on evaluation win rate and average episode reward from HARL's \texttt{progress.txt}. A deeper study could include loss curves, entropy, value estimates, replay inspection, and qualitative analysis of unit-control behavior.
+
+\section{Conclusion}
+
+This project completes an end-to-end reproduction workflow for MAPPO and HAPPO on two SMAC maps. The repository contains environment scripts, configuration snapshots, raw and processed results, plots, validation logs, and an Overleaf-ready LaTeX project. The experiments show that both algorithms can solve \texttt{3s5z} under the selected setup, while \texttt{8m\_vs\_9m} exhibits more visible stability differences. The remaining work for a publication-grade comparison would be to run multiple seeds and report aggregate statistics.
 
 \bibliography{references}
 \bibliographystyle{icml2022}

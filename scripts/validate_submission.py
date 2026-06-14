@@ -27,6 +27,7 @@ REQUIRED_FILES = [
     Path("report/main.tex"),
     Path("report/report.html"),
     Path("report/references.bib"),
+    Path("scripts/package_overleaf_report.sh"),
     Path("figures/win_rate_3s5z.png"),
     Path("figures/win_rate_8m_vs_9m.png"),
     Path("results/processed/progress_summary.csv"),
@@ -168,7 +169,15 @@ def placeholder_check(path: Path) -> Check:
     if not path.is_file():
         return fail(str(path), "missing report source")
     text = path.read_text(encoding="utf-8")
-    placeholders = ["待填写", "email@example.com", "\\icmlauthor{姓名}"]
+    placeholders = [
+        "待填写",
+        "email@example.com",
+        "\\icmlauthor{姓名}",
+        "\\icmlauthor{Student Name}",
+        "Student ID: TODO",
+        "Name: TODO",
+        "Email: TODO",
+    ]
     found = [placeholder for placeholder in placeholders if placeholder in text]
     if found:
         return warn(str(path), "student identity placeholders still present")
