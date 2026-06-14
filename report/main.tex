@@ -1,10 +1,10 @@
 \documentclass{article}
 
 \usepackage[accepted]{icml2022}
-\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{amsmath, amssymb, amsfonts}
 
 \icmltitlerunning{MAPPO and HAPPO for SMAC Micromanagement}
 
@@ -75,13 +75,17 @@ In this experiment, MAPPO is implemented with parameter sharing because the agen
 \subsection{HAPPO Design}
 
 HAPPO changes the actor update from a simultaneous shared update to a sequential agent-wise update. Suppose agents are updated in an order \(1,\ldots,n\). When updating agent \(i\), previous agents may already have changed their policies. HAPPO therefore multiplies the surrogate objective by a factor \(M_i\) that summarizes the effect of earlier policy-ratio changes. A simplified form is
-\[
-L_i^{\text{HAPPO}}(\theta_i)=
-\mathbb{E}\left[
-M_i \min\left(r_{i,t}(\theta_i)A_t,\,
-\text{clip}(r_{i,t}(\theta_i),1-\epsilon,1+\epsilon)A_t\right)
-\right].
-\]
+\begin{equation}
+\begin{aligned}
+L_i^{\text{HAPPO}}(\theta_i)
+= \mathbb{E}\Big[
+& M_i \min\big(
+r_{i,t}(\theta_i) A_t, \\
+& \mathrm{clip}(r_{i,t}(\theta_i), 1-\epsilon, 1+\epsilon) A_t
+\big)
+\Big]
+\end{aligned}
+\end{equation}
 After one agent is updated, the factor is updated with the ratio between its new and old action probabilities, and the next agent uses the updated factor. This design is more faithful to the joint-policy nature of multi-agent optimization than simply applying independent PPO updates to each agent.
 
 The HAPPO configs use separate actor parameters rather than MAPPO-style sharing. This is more expensive, but it matches HAPPO's design goal of handling heterogeneous policies. On the selected SMAC maps the agents are mostly homogeneous, so HAPPO's advantage is not guaranteed by the task structure; the experiment is therefore useful for observing whether the sequential update improves or destabilizes learning under the same training horizon.
@@ -111,6 +115,32 @@ SMAC metric logging & \texttt{smac\_logger.py} & writes reward and win rate \\
 
 The network and training settings are intentionally kept close across the two algorithms: recurrent policies are enabled, hidden layers use size 64, the actor and critic learning rates are \(5\times 10^{-4}\), the PPO/HAPPO clipping parameter is 0.05, the entropy coefficient is 0.01, and both algorithms use 20 rollout threads. These settings make the comparison primarily about the actor-update design rather than unrelated differences in rollout scale or model capacity.
 
+\section{Environment Installation Process}
+
+The installation process was a non-trivial part of the experiment because SMAC depends on both Python packages and the native StarCraft II Linux binary. I first created an isolated Conda environment for HARL instead of using the system Python, then installed HARL in editable mode, installed PyTorch with CUDA support, and installed the StarCraft Multi-Agent Challenge package from the oxwhirl repository. This repository choice matters: the package name \texttt{smac} on PyPI can refer to SMAC3, which is unrelated to the StarCraft benchmark. Installing the wrong package produces import and environment errors even though the package name looks correct.
+
+After the Python environment was prepared, I installed StarCraft II Linux 4.10, copied the SMAC map files into the StarCraft II map directory, and verified that the map registry could list \texttt{3s5z} and \texttt{8m\_vs\_9m}. I then ran a random-agent SMAC example to confirm that the SC2 binary, PySC2 controller, maps, and Python environment could work together. A second practical issue was NumPy compatibility: the HARL code used deprecated aliases such as \texttt{np.int} and \texttt{np.bool}, while the local environment used NumPy 2. I patched these aliases before running experiments. Table~\ref{tab:install} summarizes the installation checks that mattered for the final runs.
+
+\begin{table}[h]
+\centering
+\caption{Environment installation and validation checklist.}
+\label{tab:install}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lll}
+\toprule
+Component & Action & Validation \\
+\midrule
+Conda env & Python 3.10 HARL env & import HARL/SMAC \\
+PyTorch & CUDA-enabled install & CUDA available \\
+SMAC & install oxwhirl SMAC & map registry lists maps \\
+StarCraft II & Linux 4.10 binary & SC2 controller starts \\
+SMAC maps & copy map files & \texttt{3s5z}, \texttt{8m\_vs\_9m} found \\
+HARL patch & NumPy 2 aliases & smoke runs complete \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
 \section{Experimental Design}
 
 \subsection{Maps and Agents}
@@ -132,7 +162,6 @@ Item & Setting \\
 \midrule
 Algorithms & MAPPO, HAPPO \\
 Maps & \texttt{3s5z}, \texttt{8m\_vs\_9m} \\
-Seed & 1 \\
 Training horizon & 20,000,000 environment steps \\
 Rollout threads & 20 \\
 Episode length & 160 \\
@@ -218,6 +247,16 @@ On \texttt{3s5z}, both algorithms learn strong policies. MAPPO finishes with a f
 On \texttt{8m\_vs\_9m}, MAPPO reaches a final win rate of 0.875 and a best win rate of 0.9. HAPPO recovery reaches a higher best win rate of 0.975 but ends at 0.75. This pattern suggests that HAPPO did find a very strong policy during training, but its late-stage performance was less stable. One possible reason is that sequential per-agent updates introduce extra sensitivity to update order and advantage estimates; another is that the asymmetric marine map amplifies small policy changes because losing one allied marine early can quickly change the battle outcome.
 
 The comparison should therefore be read as a single-seed behavioral study rather than a final ranking. MAPPO is more stable by final win rate in this run, while HAPPO shows a stronger peak but larger fluctuation. This is exactly why both final and best win rate are reported.
+
+\section{Observations and Reflections}
+
+My first observation is that environment correctness is easy to underestimate in SMAC. A Python import check alone is not enough: the SC2 binary, game version, map files, PySC2 controller, and SMAC package must all match. The most useful engineering strategy was to build the experiment in layers: first a random-agent check, then smoke tests, then 10,000-step pilot runs, and only then full 20 million-step training. This prevented long runs from hiding simple configuration errors.
+
+My second observation is that final win rate and best win rate tell different stories. On \texttt{8m\_vs\_9m}, HAPPO recovery achieved the best win rate of 0.975, which means it did discover a strong policy. However, its final win rate was only 0.75, so the learned policy was not as stable at the end. If I only reported the final value, I would miss the peak-performance behavior; if I only reported the best value, I would hide the instability. Reporting both metrics gives a more honest picture.
+
+My third reflection concerns algorithm design. MAPPO is simpler because parameter sharing turns a homogeneous team into a large shared-policy dataset, and this seems to help stability on the selected SMAC maps. HAPPO has a more careful sequential update rule, but that rule also makes the update depend on agent order and on the quality of the correction factor. In a single-seed run, this can show up as stronger oscillation even when the method reaches a high peak win rate. Therefore, I would not conclude that HAPPO is worse; I would conclude that HAPPO needs multi-seed evaluation and possibly more tuning on \texttt{8m\_vs\_9m}.
+
+Finally, the stale original HAPPO run changed how I think about experimental bookkeeping. Long MARL experiments can fail silently by stopping progress output while the surrounding session still appears alive. Keeping the stale run, launching a separate recovery run, and recording both paths made the result easier to audit. This is a practical lesson: reproducible MARL work depends not only on algorithms, but also on conservative data management.
 
 \section{Limitations}
 

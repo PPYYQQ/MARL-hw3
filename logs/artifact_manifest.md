@@ -30,7 +30,7 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `report/icml2022.bst` | 27147 | `fcc631f383cd339d2f0cbb94490b790cd7b465c745db210a9357c27029d4dee8` |
 | `report/icml2022.sty` | 27802 | `f5e3d42a426f63097d303081319fafd9bbec745a9051098934ddc9c396c39bd0` |
 | `report/main.pdf` | 1064280 | `b739b5fca067d09dbb57a2a6d2dd74cbe01fb5fa4a1371d5c96c1875386ba721` |
-| `report/main.tex` | 15574 | `95f1dda441e02919cd406efd91981861254f235449fc2268cdb3bb7682972f39` |
+| `report/main.tex` | 19749 | `d08ccdbb2f8a8e772eb5225a6173a158f7ac7818dbcdf30eda5b0ca7e904d29d` |
 | `report/references.bib` | 1058 | `c23a6b2a26d787f8922f7e5411aa61c3286e6af153b9e059fbaf8760e4c06f54` |
 | `report/report.html` | 14055 | `8b403e84fcbe83fd320cdebda9fa503270a4aa9c7f29922067cdfa5d3683b6cf` |
 | `results/processed/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
@@ -75,5 +75,5 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 ## Summary
 
 - Files: 67
-- Total bytes: 1993395
+- Total bytes: 1997570
 - Excludes generated validation and manifest files to avoid self-referential churn.
