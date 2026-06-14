@@ -28,6 +28,8 @@ REQUIRED_FILES = [
     Path("report/report.html"),
     Path("report/references.bib"),
     Path("scripts/package_overleaf_report.sh"),
+    Path("scripts/capture_smac_teaser.py"),
+    Path("figures/teaser_smac_8m_vs_9m.png"),
     Path("figures/win_rate_3s5z.png"),
     Path("figures/win_rate_8m_vs_9m.png"),
     Path("results/processed/progress_summary.csv"),

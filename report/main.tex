@@ -28,6 +28,13 @@
 This report reproduces MAPPO and HAPPO on the StarCraft Multi-Agent Challenge (SMAC) using the HARL codebase. The study covers environment setup, implementation mapping, smoke tests, pilot runs, result collection, win-rate visualization, and a single-seed full training matrix on \texttt{3s5z} and \texttt{8m\_vs\_9m}. All four MAPPO/HAPPO by map combinations were run to 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} stopped producing new progress after 5.12 million steps, so a non-destructive recovery run was launched and used as the completed full-run result for that matrix entry. The final results show strong performance from both algorithms on \texttt{3s5z}; on \texttt{8m\_vs\_9m}, MAPPO has the higher final win rate, while the HAPPO recovery run reaches a higher best win rate but shows more late-stage fluctuation.
 \end{abstract}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/teaser_smac_8m_vs_9m.png}
+\caption{A real SMAC renderer snapshot from \texttt{8m\_vs\_9m}. Green circles are allied marines and red circles are enemy marines; cyan lines indicate issued attack commands in the sampled frame.}
+\label{fig:teaser}
+\end{figure}
+
 \section{Introduction}
 
 The StarCraft Multi-Agent Challenge (SMAC) is a cooperative multi-agent benchmark built on StarCraft II micromanagement tasks \cite{samvelyan2019starcraft}. Each allied unit is controlled by one agent with partial local observations, while the team objective is to defeat the enemy units. This setting is useful for studying decentralized execution, centralized training, credit assignment, and stability in multi-agent reinforcement learning.

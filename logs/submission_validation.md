@@ -12,6 +12,8 @@
 | `report/report.html` | OK | file present |
 | `report/references.bib` | OK | file present |
 | `scripts/package_overleaf_report.sh` | OK | file present |
+| `scripts/capture_smac_teaser.py` | OK | file present |
+| `figures/teaser_smac_8m_vs_9m.png` | OK | file present |
 | `figures/win_rate_3s5z.png` | OK | file present |
 | `figures/win_rate_8m_vs_9m.png` | OK | file present |
 | `results/processed/progress_summary.csv` | OK | file present |

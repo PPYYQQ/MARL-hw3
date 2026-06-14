@@ -36,6 +36,7 @@ copy_required report/icml2022.bst "${STAGE_DIR}/icml2022.bst"
 copy_required report/algorithm.sty "${STAGE_DIR}/algorithm.sty"
 copy_required report/algorithmic.sty "${STAGE_DIR}/algorithmic.sty"
 copy_required report/fancyhdr.sty "${STAGE_DIR}/fancyhdr.sty"
+copy_required figures/teaser_smac_8m_vs_9m.png "${STAGE_DIR}/figures/teaser_smac_8m_vs_9m.png"
 copy_required figures/win_rate_3s5z.png "${STAGE_DIR}/figures/win_rate_3s5z.png"
 copy_required figures/win_rate_8m_vs_9m.png "${STAGE_DIR}/figures/win_rate_8m_vs_9m.png"
 

@@ -29,7 +29,7 @@
 - `SUBMISSION.md`：交付前检查清单、GitHub 同步、Overleaf 项目 zip 和打包说明。
 - `TRAINING.md`：正式训练资源需求、tmux 训练命令、监控和结果整理说明。
 - `configs/smac/`：本次实验使用的 MAPPO/HAPPO × SMAC 配置快照。
-- `figures/`：`3s5z` 与 `8m_vs_9m` 的 win rate 曲线。
+- `figures/`：`3s5z` 与 `8m_vs_9m` 的 win rate 曲线，以及真实 SMAC renderer teaser 截图。
 - `logs/`：代码阅读、安装、实验记录、训练快照、校验报告和产物 manifest。
 - `report/`：英文 LaTeX 报告、参考文献、ICML 样式文件和历史 HTML/PDF 辅助产物。
 - `results/raw/`：smoke、pilot、full 的原始 `progress.txt`。
@@ -112,6 +112,12 @@ python3 scripts/collect_progress.py
 python3 scripts/summarize_progress.py
 python3 scripts/check_full_training_status.py
 conda run -n harl_hw3 python scripts/plot_win_rate.py
+```
+
+重新生成真实环境 teaser 截图：
+
+```bash
+SDL_VIDEODRIVER=dummy conda run -n harl_hw3 python scripts/capture_smac_teaser.py
 ```
 
 ## 报告与打包

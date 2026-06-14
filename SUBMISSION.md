@@ -13,6 +13,7 @@
 - `results/raw/full/`：正式训练同步进来的 `progress.txt`；当前包含 MAPPO/HAPPO × `3s5z`/`8m_vs_9m` 的单 seed 20000000-step 结果，并保留 `HAPPO` + `8m_vs_9m` 原始 stale run 的 5120000-step checkpoint 作为审计记录。
 - `results/processed/progress_summary.csv`、`results/processed/progress_summary.md`：smoke test、pilot 与 full checkpoint 的汇总结果。
 - `figures/win_rate_3s5z.png`、`figures/win_rate_8m_vs_9m.png`：smoke/pilot 与 full 曲线。
+- `figures/teaser_smac_8m_vs_9m.png`：真实 SMAC renderer 截图，用作英文报告 teaser figure。
 - `logs/`：作业摘要、安装记录、代码阅读笔记、实验笔记和 full training 快照。
 - `logs/artifact_manifest.md`：提交产物的文件大小与 SHA256 清单。
 - `logs/submission_validation.md`：提交前产物完整性检查；full training matrix 已通过，当前 warning 只剩学生身份占位符。
@@ -81,6 +82,12 @@ SESSION=hw3_recover_happo_8m SEEDS=1 MAPS=8m_vs_9m ALGOS=happo EXP_PREFIX=hw3_re
 git add report/main.tex results/processed/progress_summary.csv figures/
 git commit -m "docs: add full SMAC training results"
 git push
+```
+
+如需重新生成环境 teaser 截图：
+
+```bash
+SDL_VIDEODRIVER=dummy conda run -n harl_hw3 python scripts/capture_smac_teaser.py
 ```
 
 ## Overleaf 项目 zip
