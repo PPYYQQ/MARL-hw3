@@ -56,6 +56,7 @@ The implementation reading focused on connecting the mathematical components in 
 \centering
 \caption{Paper concepts and HARL implementation locations.}
 \label{tab:implementation}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lll}
 \toprule
 Concept & File & Role \\
@@ -67,6 +68,7 @@ MAPPO actor update & \texttt{mappo.py} & shared PPO-style actor update \\
 SMAC win rate & \texttt{smac\_logger.py} & writes \texttt{progress.txt} \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 The main difference between HAPPO and MAPPO appears at the runner and actor-update levels. HAPPO initializes the factor to one, updates agents sequentially, writes the current factor into the actor buffer, and then updates the factor with the new-to-old action-probability ratio. MAPPO also uses the PPO clipped surrogate, but it does not apply the HAPPO sequential factor. Under parameter sharing, MAPPO merges data across agents to update a shared actor.
@@ -102,6 +104,7 @@ The pilot runs confirm that all four target combinations execute successfully. S
 \centering
 \caption{Last evaluation of the 10,000-step pilot runs.}
 \label{tab:pilot}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{llrr}
 \toprule
 Map & Algorithm & Step & Reward / Win rate \\
@@ -112,6 +115,7 @@ Map & Algorithm & Step & Reward / Win rate \\
 \texttt{8m\_vs\_9m} & MAPPO & 9600 & 7.5108 / 0.0000 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \subsection{Full Training Matrix}
@@ -122,6 +126,7 @@ Table~\ref{tab:full} reports the single-seed full-run results. Each completed fu
 \centering
 \caption{Full-run results. HAPPO original is a stale audit record.}
 \label{tab:full}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{llrll}
 \toprule
 Map & Algorithm & Step & Final reward / win rate & Best win rate \\
@@ -133,6 +138,7 @@ Map & Algorithm & Step & Final reward / win rate & Best win rate \\
 \texttt{8m\_vs\_9m} & HAPPO original & 5120000 & 17.9525 / 0.7250 & 0.8000 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \begin{figure}[h]
