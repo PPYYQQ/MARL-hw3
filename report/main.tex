@@ -1,105 +1,154 @@
 \documentclass{article}
 
 \usepackage[accepted]{icml2022}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{hyperref}
 
-\icmltitlerunning{Reproducing MAPPO and HAPPO on SMAC}
+\icmltitlerunning{MAPPO and HAPPO for SMAC Micromanagement}
 
 \begin{document}
 
 \twocolumn[
-\icmltitle{Reproducing MAPPO and HAPPO on SMAC}
+\icmltitle{MAPPO and HAPPO for Cooperative StarCraft Micromanagement}
 
 \begin{icmlauthorlist}
-\icmlauthor{Student Name}{student}
+\icmlauthor{Yongqian Peng}{pku}
 \end{icmlauthorlist}
 
-\icmlaffiliation{student}{Student ID: TODO}
-\icmlcorrespondingauthor{Student Name}{email@example.com}
+\icmlaffiliation{pku}{Student ID: 2100017731; Course: Multi-Agent Reinforcement Learning}
+\icmlcorrespondingauthor{Yongqian Peng}{yqpeng@stu.pku.edu.cn}
 
 \icmlkeywords{Multi-Agent Reinforcement Learning, SMAC, MAPPO, HAPPO}
 
 \vskip 0.3in
 ]
 
+\printAffiliationsAndNotice{}
+
 \begin{abstract}
-This report reproduces MAPPO and HAPPO on the StarCraft Multi-Agent Challenge (SMAC) using the HARL codebase. The study covers environment setup, implementation mapping, smoke tests, pilot runs, result collection, win-rate visualization, and a single-seed full training matrix on \texttt{3s5z} and \texttt{8m\_vs\_9m}. All four MAPPO/HAPPO by map combinations were run to 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} stopped producing new progress after 5.12 million steps, so a non-destructive recovery run was launched and used as the completed full-run result for that matrix entry. The final results show strong performance from both algorithms on \texttt{3s5z}; on \texttt{8m\_vs\_9m}, MAPPO has the higher final win rate, while the HAPPO recovery run reaches a higher best win rate but shows more late-stage fluctuation.
+This report studies the design and empirical behavior of MAPPO and HAPPO on two cooperative StarCraft Multi-Agent Challenge (SMAC) maps: \texttt{3s5z} and \texttt{8m\_vs\_9m}. Both algorithms are on-policy actor-critic methods trained under centralized training and decentralized execution. MAPPO uses a shared PPO-style actor update with a centralized critic, while HAPPO updates agent policies sequentially and corrects later updates with a factor that accounts for earlier policy changes. I implement the comparison in HARL, run smoke and pilot checks, and then train a single-seed full matrix for 20 million environment steps per completed run. On \texttt{3s5z}, MAPPO and HAPPO both reach a best win rate of 1.0. On \texttt{8m\_vs\_9m}, MAPPO obtains the higher final win rate, while the HAPPO recovery run reaches the higher best win rate but shows stronger late-stage fluctuation.
 \end{abstract}
 
-\begin{figure}[t]
+\begin{figure}[ht!]
 \centering
 \includegraphics[width=\linewidth]{figures/teaser_smac_8m_vs_9m.png}
-\caption{A real SMAC renderer snapshot from \texttt{8m\_vs\_9m}. Green circles are allied marines and red circles are enemy marines; cyan lines indicate issued attack commands in the sampled frame.}
+\caption{\textbf{SMAC \texttt{8m\_vs\_9m} micromanagement scenario.} Green allied marines act as decentralized agents under partial observability, while the team objective is to coordinate focus fire and defeat the larger enemy group.}
 \label{fig:teaser}
 \end{figure}
 
 \section{Introduction}
 
-The StarCraft Multi-Agent Challenge (SMAC) is a cooperative multi-agent benchmark built on StarCraft II micromanagement tasks \cite{samvelyan2019starcraft}. Each allied unit is controlled by one agent with partial local observations, while the team objective is to defeat the enemy units. This setting is useful for studying decentralized execution, centralized training, credit assignment, and stability in multi-agent reinforcement learning.
+The StarCraft Multi-Agent Challenge (SMAC) evaluates cooperative control in partially observable micromanagement tasks \cite{samvelyan2019starcraft}. Each allied unit is controlled by one agent. During execution, an agent observes only local unit features and legal actions; during training, algorithms may use global state information to learn better value functions. This setting naturally tests centralized training with decentralized execution (CTDE), because good performance requires both individual action selection and team-level coordination.
 
-This homework focuses on two on-policy methods: MAPPO and HAPPO. MAPPO adapts PPO to cooperative multi-agent tasks and has been shown to be a strong baseline when implementation details are carefully tuned \cite{yu2022surprising}. HAPPO extends policy optimization to heterogeneous-agent settings through sequential policy updates and a factor correction term \cite{zhong2024heterogeneous}. The goal of this project is not only to run the algorithms, but also to connect the paper-level ideas with the actual HARL implementation, produce reproducible scripts, and analyze the training results on two SMAC maps.
+This report focuses on MAPPO and HAPPO. MAPPO extends PPO to cooperative multi-agent tasks and is a strong practical baseline when implementation details are tuned carefully \cite{yu2022surprising}. HAPPO is designed for heterogeneous-agent policy optimization and updates agents sequentially with a correction factor, which gives a more structured multi-agent policy improvement step \cite{zhong2024heterogeneous}. Rather than only reporting final numbers, the report explains the algorithm design choices, how those choices are realized in HARL, and how the experiment matrix is controlled.
 
-\section{Algorithms}
+\section{Algorithm Design}
 
-\subsection{MAPPO}
+\subsection{Problem Formulation}
 
-MAPPO can be viewed as a multi-agent version of PPO. Each agent acts with a decentralized policy, while training uses centralized information to estimate the value function. The actor update still follows the clipped PPO surrogate objective, which limits overly large policy updates by clipping the probability ratio. In cooperative SMAC tasks, the key practical ingredients are stable advantage estimation, centralized critics, entropy regularization, and careful control of rollout and evaluation settings.
+SMAC can be modeled as a cooperative partially observable Markov game. At step \(t\), each agent \(i\) receives a local observation \(o_i^t\), selects a discrete action \(a_i^t\), and shares a team reward \(r^t\). The joint action is \(\mathbf{a}^t=(a_1^t,\ldots,a_n^t)\). The training objective is to maximize the expected discounted return
+\[
+J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^{T}\gamma^t r^t\right],
+\]
+where \(\gamma\) is the discount factor. In the implementation used here, agents execute recurrent policies and the critic can use centralized information, matching the CTDE design.
 
-In this project, MAPPO configurations were generated from the corresponding HAPPO tuned configurations because the selected HARL commit did not include tuned MAPPO configuration files for \texttt{3s5z} and \texttt{8m\_vs\_9m}. The generated MAPPO configurations switch the algorithm-specific options to parameter sharing and fixed agent order, while keeping map-level training parameters aligned with the HARL tuned settings.
+\subsection{MAPPO Design}
 
-\subsection{HAPPO}
+MAPPO keeps PPO's clipped policy-gradient update and adapts it to a multi-agent rollout. The actor maps each agent's local observation and recurrent hidden state to an action distribution. The critic estimates a centralized value function from global information, which reduces variance in advantage estimation while preserving decentralized execution.
 
-HAPPO introduces sequential policy updates for heterogeneous agents. During one update cycle, agents are updated one by one rather than all at once. A factor term tracks how earlier policy updates affect the joint policy probability ratio, and this factor is included in the later agents' surrogate objectives. This design gives HAPPO a more principled monotonic-improvement structure than a naive independent PPO-style update.
+For an action sampled under the old policy, the PPO ratio is
+\[
+r_t(\theta)=\frac{\pi_\theta(a_t\mid o_t)}{\pi_{\theta_{\text{old}}}(a_t\mid o_t)}.
+\]
+The clipped actor objective is
+\[
+L^{\text{MAPPO}}(\theta)=
+\mathbb{E}\left[\min\left(r_t(\theta)A_t,\,
+\text{clip}(r_t(\theta),1-\epsilon,1+\epsilon)A_t\right)\right].
+\]
+Advantages are computed with generalized advantage estimation using \(\gamma=0.95\) and \(\lambda=0.95\). The training design also includes entropy regularization to avoid premature deterministic policies, gradient clipping for stable updates, recurrent actors for partial observability, and value normalization for critic learning.
 
-For SMAC, the selected HAPPO runs use the official HARL tuned configurations. The final matrix uses a recovery run for HAPPO on \texttt{8m\_vs\_9m}, because the original full run became stale after reaching 5.12 million environment steps. The stale original output is preserved for auditability, while the completed recovery run is used for the final comparison.
+In this experiment, MAPPO is implemented with parameter sharing because the agents in the selected SMAC maps are homogeneous within each team. The selected HARL commit does not provide tuned MAPPO configs for \texttt{3s5z} and \texttt{8m\_vs\_9m}, so I generate MAPPO configs from the same-map HAPPO tuned configs and switch the algorithm-specific settings to the MAPPO shared-actor design. This keeps map-level rollout, evaluation, and network settings comparable across algorithms while acknowledging that MAPPO is not using a separately tuned map-specific config.
 
-\section{Implementation Mapping in HARL}
+\subsection{HAPPO Design}
 
-The implementation reading focused on connecting the mathematical components in MAPPO and HAPPO to the HARL source code. Table~\ref{tab:implementation} summarizes the main mapping.
+HAPPO changes the actor update from a simultaneous shared update to a sequential agent-wise update. Suppose agents are updated in an order \(1,\ldots,n\). When updating agent \(i\), previous agents may already have changed their policies. HAPPO therefore multiplies the surrogate objective by a factor \(M_i\) that summarizes the effect of earlier policy-ratio changes. A simplified form is
+\[
+L_i^{\text{HAPPO}}(\theta_i)=
+\mathbb{E}\left[
+M_i \min\left(r_{i,t}(\theta_i)A_t,\,
+\text{clip}(r_{i,t}(\theta_i),1-\epsilon,1+\epsilon)A_t\right)
+\right].
+\]
+After one agent is updated, the factor is updated with the ratio between its new and old action probabilities, and the next agent uses the updated factor. This design is more faithful to the joint-policy nature of multi-agent optimization than simply applying independent PPO updates to each agent.
+
+The HAPPO configs use separate actor parameters rather than MAPPO-style sharing. This is more expensive, but it matches HAPPO's design goal of handling heterogeneous policies. On the selected SMAC maps the agents are mostly homogeneous, so HAPPO's advantage is not guaranteed by the task structure; the experiment is therefore useful for observing whether the sequential update improves or destabilizes learning under the same training horizon.
+
+\section{Implementation Design in HARL}
+
+Table~\ref{tab:implementation} maps the design components to HARL implementation files. The important implementation distinction is where the policy update is coordinated. MAPPO performs a PPO-style shared actor update, while HAPPO's runner controls the per-agent update order and maintains the correction factor used by the HAPPO actor loss.
 
 \begin{table}[h]
 \centering
-\caption{Paper concepts and HARL implementation locations.}
+\caption{Design components and corresponding HARL implementation.}
 \label{tab:implementation}
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lll}
 \toprule
-Concept & File & Role \\
+Design component & HARL file & Implementation role \\
 \midrule
-HAPPO actor update & \texttt{happo.py} & clipped surrogate with factor \\
-Sequential factor & \texttt{on\_policy\_ha\_runner.py} & agent-wise update order \\
-GAE returns & \texttt{on\_policy\_critic\_buffer\_ep.py} & return computation \\
-MAPPO actor update & \texttt{mappo.py} & shared PPO-style actor update \\
-SMAC win rate & \texttt{smac\_logger.py} & writes \texttt{progress.txt} \\
+MAPPO actor objective & \texttt{mappo.py} & shared PPO-style actor loss \\
+HAPPO actor objective & \texttt{happo.py} & clipped loss multiplied by factor \\
+Sequential update & \texttt{on\_policy\_ha\_runner.py} & agent order and factor update \\
+GAE returns & \texttt{on\_policy\_critic\_buffer\_ep.py} & return and advantage computation \\
+SMAC metric logging & \texttt{smac\_logger.py} & writes reward and win rate \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-The main difference between HAPPO and MAPPO appears at the runner and actor-update levels. HAPPO initializes the factor to one, updates agents sequentially, writes the current factor into the actor buffer, and then updates the factor with the new-to-old action-probability ratio. MAPPO also uses the PPO clipped surrogate, but it does not apply the HAPPO sequential factor. Under parameter sharing, MAPPO merges data across agents to update a shared actor.
+The network and training settings are intentionally kept close across the two algorithms: recurrent policies are enabled, hidden layers use size 64, the actor and critic learning rates are \(5\times 10^{-4}\), the PPO/HAPPO clipping parameter is 0.05, the entropy coefficient is 0.01, and both algorithms use 20 rollout threads. These settings make the comparison primarily about the actor-update design rather than unrelated differences in rollout scale or model capacity.
 
-\section{Environment and Reproducibility}
+\section{Experimental Design}
 
-Experiments were run on a Linux workstation with an NVIDIA GeForce RTX 5090 GPU. The Python environment uses Conda, Python 3.10, PyTorch with CUDA support, HARL at commit \texttt{b1af98b0dbab72a2eee9d160751cd09aedbb8ce2}, and the oxwhirl SMAC package. StarCraft II Linux 4.10 and SMAC maps were installed locally, and the target maps \texttt{3s5z} and \texttt{8m\_vs\_9m} were verified through SMAC map-list and random-agent checks.
+\subsection{Maps and Agents}
 
-Two setup issues were addressed during the project. First, the PyPI package named \texttt{smac} installs SMAC3 rather than the StarCraft Multi-Agent Challenge environment, so the setup script installs SMAC from the oxwhirl repository. Second, the local PyTorch and NumPy combination required using NumPy 2, so a small compatibility patch replaces old HARL uses of \texttt{np.int} and \texttt{np.bool} with built-in Python types.
+The experiment uses two SMAC maps with different difficulty profiles. The \texttt{3s5z} map contains a mixed allied group of stalkers and zealots, testing coordination among unit types with different combat roles. The \texttt{8m\_vs\_9m} map is an asymmetric marine battle where eight allied marines must defeat nine enemy marines, making focus fire and damage trading important. The second map is harder because the allied team starts with a numerical disadvantage.
 
-All scripts, configuration snapshots, raw \texttt{progress.txt} files, processed summaries, figures, and validation logs are included in the repository. The progress tracker records each major change and its Git commit.
+\subsection{Training Matrix}
 
-\section{Experimental Protocol}
+The full matrix is MAPPO/HAPPO \(\times\) \texttt{3s5z}/\texttt{8m\_vs\_9m}. For each combination, I first run a short smoke test to ensure that StarCraft II, SMAC, HARL, logging, and plotting work. I then run a 10,000-step pilot to catch configuration errors. The final comparison uses a single seed and 20 million environment steps for each completed full run. Table~\ref{tab:expdesign} summarizes the controlled design.
 
-The target matrix contains MAPPO and HAPPO on \texttt{3s5z} and \texttt{8m\_vs\_9m}. The workflow has four levels:
+\begin{table}[h]
+\centering
+\caption{Full-run experimental design.}
+\label{tab:expdesign}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ll}
+\toprule
+Item & Setting \\
+\midrule
+Algorithms & MAPPO, HAPPO \\
+Maps & \texttt{3s5z}, \texttt{8m\_vs\_9m} \\
+Seed & 1 \\
+Training horizon & 20,000,000 environment steps \\
+Rollout threads & 20 \\
+Episode length & 160 \\
+Evaluation interval & every 80,000 environment steps \\
+Evaluation episodes & 40 \\
+Metrics & final reward, final win rate, best win rate \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
 
-\begin{enumerate}
-  \item \textbf{Dry run}: print the four experiment commands.
-  \item \textbf{Smoke test}: run very small experiments to verify that SC2, SMAC, HARL, logging, and plotting work end to end.
-  \item \textbf{Pilot run}: run each matrix entry for 10,000 environment steps to catch configuration errors before full training.
-  \item \textbf{Full run}: use HARL tuned training length, 20 million environment steps, for the final single-seed matrix.
-\end{enumerate}
+The evaluation interval follows from the tuned config: 20 rollout threads, episode length 160, and evaluation every 25 rollout batches, giving \(20 \times 160 \times 25 = 80{,}000\) environment steps between evaluation points. Thus a 20 million-step run produces 250 evaluation rows. I report both final win rate and best win rate because final performance reflects the state at the end of training, while best win rate reveals whether a method learned a strong policy but later became unstable.
 
-HARL writes evaluation rows to \texttt{progress.txt}. The collection script scans the HARL output tree and the saved raw-result tree, deduplicates rows by map, algorithm, experiment name, run path, and step, and writes a unified CSV. A separate summarization script produces a Markdown table with final and best evaluation metrics, and the plotting script generates win-rate curves for each map.
+\subsection{Recovery Policy for Failed Runs}
+
+The original HAPPO run on \texttt{8m\_vs\_9m} stopped producing new progress after 5.12 million steps. To avoid overwriting data, I kept that run as a stale checkpoint and launched a new recovery run with the same map, algorithm, and seed but a different experiment prefix. The recovery run reached 20 million environment steps and is used as the full HAPPO result for \texttt{8m\_vs\_9m}. The stale checkpoint remains in the result table only to make the data lineage clear.
 
 \section{Results}
 
@@ -127,11 +176,11 @@ Map & Algorithm & Step & Reward / Win rate \\
 
 \subsection{Full Training Matrix}
 
-Table~\ref{tab:full} reports the single-seed full-run results. Each completed full run reaches 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} is listed separately as an audit record because it stopped at 5.12 million steps and is not used as the final matrix result.
+Table~\ref{tab:full} reports the single-seed full-run results. Each completed full run reaches 20 million environment steps. The original HAPPO run on \texttt{8m\_vs\_9m} is listed separately as a stale checkpoint and is not used as the final matrix result.
 
 \begin{table}[h]
 \centering
-\caption{Full-run results. HAPPO original is a stale audit record.}
+\caption{Full-run results. HAPPO original is a stale checkpoint.}
 \label{tab:full}
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{llrll}
@@ -164,21 +213,19 @@ Map & Algorithm & Step & Final reward / win rate & Best win rate \\
 
 \section{Analysis}
 
-On \texttt{3s5z}, both algorithms learn strong policies. MAPPO finishes with a higher final win rate of 0.975, while HAPPO finishes at 0.875. Both reach a best evaluation win rate of 1.0, which suggests that the map is solvable by both methods under the selected single-seed setup.
+On \texttt{3s5z}, both algorithms learn strong policies. MAPPO finishes with a final win rate of 0.975, while HAPPO finishes at 0.875. Both reach a best evaluation win rate of 1.0. This indicates that the mixed-unit map can be solved by both update designs under the selected training budget. MAPPO's higher final value suggests that the shared update is stable on this homogeneous cooperative task.
 
-On \texttt{8m\_vs\_9m}, the final comparison is more nuanced. MAPPO reaches a final win rate of 0.875 and a best win rate of 0.9. The HAPPO recovery run reaches a higher best win rate of 0.975 but ends at 0.75, indicating larger late-stage fluctuation. This does not prove that one algorithm is generally better than the other, because the experiment uses only one seed and one generated MAPPO configuration per map. It does show that the pipeline is capable of reproducing full-length training curves and exposing stability differences across runs.
+On \texttt{8m\_vs\_9m}, MAPPO reaches a final win rate of 0.875 and a best win rate of 0.9. HAPPO recovery reaches a higher best win rate of 0.975 but ends at 0.75. This pattern suggests that HAPPO did find a very strong policy during training, but its late-stage performance was less stable. One possible reason is that sequential per-agent updates introduce extra sensitivity to update order and advantage estimates; another is that the asymmetric marine map amplifies small policy changes because losing one allied marine early can quickly change the battle outcome.
 
-The stale original HAPPO run on \texttt{8m\_vs\_9m} is an important engineering detail. Instead of deleting or overwriting it, the project preserves the original directory and launches a recovery run with a new experiment prefix. This keeps the data auditable while still completing the missing matrix entry.
+The comparison should therefore be read as a single-seed behavioral study rather than a final ranking. MAPPO is more stable by final win rate in this run, while HAPPO shows a stronger peak but larger fluctuation. This is exactly why both final and best win rate are reported.
 
 \section{Limitations}
 
-The main limitation is that the final matrix uses a single random seed. SMAC training can be noisy, especially on asymmetric maps such as \texttt{8m\_vs\_9m}, so a stronger conclusion would require multiple seeds and reporting means, standard deviations, and confidence intervals. Another limitation is configuration parity: the selected HARL commit does not provide tuned MAPPO configurations for the two target maps, so MAPPO uses generated configurations derived from the HAPPO tuned settings. This is practical for a homework reproduction, but it may differ from a fully tuned MAPPO baseline.
-
-The report also focuses on evaluation win rate and average episode reward from HARL's \texttt{progress.txt}. A deeper study could include loss curves, entropy, value estimates, replay inspection, and qualitative analysis of unit-control behavior.
+The main limitation is the single-seed design. SMAC training is noisy, and a stronger claim would require multiple seeds with mean and standard deviation. A second limitation is configuration parity: HAPPO uses official HARL tuned configs, while MAPPO uses generated configs derived from the same-map HAPPO settings because tuned MAPPO configs for the selected maps were unavailable in the chosen HARL commit. Finally, the analysis uses evaluation reward and win rate only; replay-level behavior, loss curves, entropy, and value estimates would provide a more detailed view of why a run becomes stable or unstable.
 
 \section{Conclusion}
 
-This project completes an end-to-end reproduction workflow for MAPPO and HAPPO on two SMAC maps. The repository contains environment scripts, configuration snapshots, raw and processed results, plots, validation logs, and an Overleaf-ready LaTeX project. The experiments show that both algorithms can solve \texttt{3s5z} under the selected setup, while \texttt{8m\_vs\_9m} exhibits more visible stability differences. The remaining work for a publication-grade comparison would be to run multiple seeds and report aggregate statistics.
+This report compares MAPPO and HAPPO from both a design and experimental perspective. MAPPO uses a shared PPO-style actor update with a centralized critic, while HAPPO applies sequential agent updates with a correction factor. In the single-seed SMAC experiments, both algorithms solve \texttt{3s5z}; on \texttt{8m\_vs\_9m}, MAPPO has the better final win rate, whereas HAPPO reaches the better best win rate but fluctuates more near the end of training. The results support the practical value of MAPPO as a stable baseline and show that HAPPO's sequential design can reach strong policies but may require more careful multi-seed evaluation.
 
 \bibliography{references}
 \bibliographystyle{icml2022}

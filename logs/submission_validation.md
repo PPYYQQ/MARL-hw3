@@ -32,15 +32,15 @@
 | `results/raw/pilot` | OK | 4 progress.txt files; expected at least 4 |
 | `results/raw/full` | OK | 5 progress.txt files; expected at least 4 |
 | `configs/smac` | OK | 4 config.json files; expected at least 4 |
-| `report/main.tex` | WARN | student identity placeholders still present |
-| `report/report.html` | WARN | student identity placeholders still present |
+| `report/main.tex` | OK | student identity placeholders not found |
+| `report/report.html` | OK | student identity placeholders not found |
 | `git remote origin` | OK | git@github.com:PPYYQQ/MARL-hw3.git |
 | `git upstream` | OK | branch is synchronized with upstream |
 
 ## Summary
 
 - Failures: 0
-- Warnings: 2
+- Warnings: 0
 - GitHub push state is checked through the git upstream status; `PROGRESS.md` records the push history.
 - Student identity fields are warnings because they require user-provided name, ID and email.
 - The full training matrix has reached the target full step count for all four MAPPO/HAPPO x SMAC runs.

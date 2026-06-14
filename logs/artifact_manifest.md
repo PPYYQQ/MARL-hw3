@@ -30,9 +30,9 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 | `report/icml2022.bst` | 27147 | `fcc631f383cd339d2f0cbb94490b790cd7b465c745db210a9357c27029d4dee8` |
 | `report/icml2022.sty` | 27802 | `f5e3d42a426f63097d303081319fafd9bbec745a9051098934ddc9c396c39bd0` |
 | `report/main.pdf` | 1064280 | `b739b5fca067d09dbb57a2a6d2dd74cbe01fb5fa4a1371d5c96c1875386ba721` |
-| `report/main.tex` | 12900 | `ec57f84270d704218d345c3ec728489387073daa41bb9557ca6fc5577b2de727` |
+| `report/main.tex` | 15574 | `95f1dda441e02919cd406efd91981861254f235449fc2268cdb3bb7682972f39` |
 | `report/references.bib` | 1058 | `c23a6b2a26d787f8922f7e5411aa61c3286e6af153b9e059fbaf8760e4c06f54` |
-| `report/report.html` | 14030 | `1939609142ed418d51d463b83af83101f1ad2c23235a8d21a46bbb8a0b391ea6` |
+| `report/report.html` | 14055 | `8b403e84fcbe83fd320cdebda9fa503270a4aa9c7f29922067cdfa5d3683b6cf` |
 | `results/processed/.gitkeep` | 1 | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
 | `results/processed/generated_mappo_3s5z.json` | 2432 | `1c2c4611a42c67f6efd17ab3802056f14c846a1c239ac7eecdf42ab1d71c3318` |
 | `results/processed/generated_mappo_8m_vs_9m.json` | 2437 | `dcc9e05f4e9fd732e9070d7c646aed16b4b68d5dd5497348882363ada81bdb34` |
@@ -75,5 +75,5 @@ This manifest records deterministic SHA256 hashes for submitted source, report, 
 ## Summary
 
 - Files: 67
-- Total bytes: 1990696
+- Total bytes: 1993395
 - Excludes generated validation and manifest files to avoid self-referential churn.
