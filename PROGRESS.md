@@ -149,6 +149,7 @@
 | 2026-06-14 | `d647055` | 将 `report/main.tex` 改写为英文最终报告，移除中文 LaTeX 依赖，并新增 Overleaf 项目 zip 打包脚本 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
 | 2026-06-14 | `25d7919` | 给英文 LaTeX 报告中的三张表格加上 `\resizebox{\linewidth}{!}{...}`，避免 Overleaf 双栏排版溢出 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
 | 2026-06-14 | `614cfa1` | 生成真实 `8m_vs_9m` SMAC renderer 截图作为英文报告 teaser figure，并加入 Overleaf zip 打包流程 | `capture_smac_teaser.py`、`package_overleaf_report.sh`、`validate_submission.py`、`git push` |
+| 2026-06-14 | `70c148c` | 重构英文最终报告，删除 `Environment and Reproducibility` 章节，详细补充 MAPPO/HAPPO 算法设计、HARL 实现设计和实验设计 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
 
 ## 任务清单
 
