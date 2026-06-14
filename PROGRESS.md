@@ -147,6 +147,7 @@
 | 2026-06-01 | `10b4ea0` | 同步 `HAPPO` + `8m_vs_9m` recovery run 完整 20000000-step 结果，更新完整矩阵报告、曲线、状态脚本、PDF 和校验清单 | `sync_harl_results.py`、`check_full_training_status.py`、`build_report_pdf.sh`、`validate_submission.py` |
 | 2026-06-01 | `f65ce18` | 扩写 README，补充当前完成度、主要结果、仓库结构、验证命令、复现实验流程、报告打包和 GitHub 同步说明 | `generate_artifact_manifest.py`、`validate_submission.py`、`git push` |
 | 2026-06-14 | `d647055` | 将 `report/main.tex` 改写为英文最终报告，移除中文 LaTeX 依赖，并新增 Overleaf 项目 zip 打包脚本 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
+| 2026-06-14 | `25d7919` | 给英文 LaTeX 报告中的三张表格加上 `\resizebox{\linewidth}{!}{...}`，避免 Overleaf 双栏排版溢出 | `package_overleaf_report.sh`、`validate_submission.py`、`git push` |
 
 ## 任务清单
 
